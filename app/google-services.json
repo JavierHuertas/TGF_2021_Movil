@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "643722844946",
+    "project_id": "jardinerias-paca",
+    "storage_bucket": "jardinerias-paca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:643722844946:android:3b3a5dce40cc9dc6cbf1cb",
+        "android_client_info": {
+          "package_name": "com.example.anteproyectoidea"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "643722844946-343jtk738abq30nac9njpr6isapacdg0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.anteproyectoidea",
+            "certificate_hash": "3e0b4315bcfe10959fe1e246fefefb60db698dd5"
+          }
+        },
+        {
+          "client_id": "643722844946-0urqpbt6ngvpaful9nch5u7grm6a2924.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbP-dApmiqpKKlBrpzaW4rqiu_V2b1FwQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "643722844946-0urqpbt6ngvpaful9nch5u7grm6a2924.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
