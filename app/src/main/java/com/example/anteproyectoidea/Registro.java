@@ -48,6 +48,7 @@ public class Registro extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
+        getSupportActionBar().hide();
         crearPeticion();
         mAuth= FirebaseAuth.getInstance();
 
@@ -62,12 +63,14 @@ public class Registro extends AppCompatActivity {
             case R.id.btnGoogle:
                 Toast.makeText(getApplicationContext(),"google",Toast.LENGTH_SHORT).show();
                 // Configure Google Sign In
-
                 mGoogleSingInClient.signOut();
                 signInGoogle();
-
-
-
+                break;
+            case R.id.btnEmailPasww:
+                Toast.makeText(getApplicationContext(),"Email y contraseña",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btnregistrar:
+                Toast.makeText(getApplicationContext(),"Rellena todos los campos",Toast.LENGTH_SHORT).show();
                 break;
 
         }
@@ -128,7 +131,7 @@ public class Registro extends AppCompatActivity {
         }
     }
 
-    private void firebaseAuthWithGoogle(String idToken) {
+    /*private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -149,7 +152,7 @@ public class Registro extends AppCompatActivity {
                         // ...
                     }
                 });
-    }
+    }*/
 
     @Override
     protected void onDestroy() {
