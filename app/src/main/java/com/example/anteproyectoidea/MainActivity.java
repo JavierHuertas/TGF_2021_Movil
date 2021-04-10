@@ -2,6 +2,7 @@ package com.example.anteproyectoidea;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -61,8 +63,10 @@ public class MainActivity extends AppCompatActivity {
         t = header.findViewById(R.id.ImagenUsuario);
         r.setText(email);
         f.setText(name);
-        t.setImageURI(foto);
+        Picasso.get().load(foto.toString()).into(t);
+        //t.setImageURI(foto);
         Toast.makeText(getApplicationContext(),foto.toString(),Toast.LENGTH_SHORT).show();
+        //Log.i("Imagen",foto.toString());
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
