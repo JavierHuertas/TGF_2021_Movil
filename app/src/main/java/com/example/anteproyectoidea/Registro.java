@@ -38,7 +38,7 @@ public class Registro extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
 
         if(user != null){
-            Intent intent = new Intent(getApplicationContext(), MagicApiIntrinsics.class);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
         }
 
@@ -158,7 +158,7 @@ public class Registro extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        FirebaseAuth.getInstance().signOut();
+        //FirebaseAuth.getInstance().signOut();
 
     }
 }
