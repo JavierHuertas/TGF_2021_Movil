@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroundimg"
+    android:background="@drawable/imagenmono"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -30,36 +30,7 @@
             android:textColor="@color/white"
             android:textSize="14sp" />
 
-        <RelativeLayout
-            android:id="@+id/btnFacebook"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="40dp"
-            android:background="@drawable/fb_circularborderbtn"
-            android:onClick="iniciar"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:background="@android:color/transparent"
-                android:fontFamily="@font/ralewayregular"
-                android:text="@string/facebook"
-                android:textColor="@color/white"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="4dp"
-                android:paddingStart="26dp"
-                android:src="@drawable/facebook_logo" />
-        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/btnGoogle"

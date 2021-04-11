@@ -16,6 +16,7 @@ public class splash extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        getSupportActionBar().hide();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {

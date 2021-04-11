@@ -7,7 +7,7 @@
     tools:context=".splash"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="@color/teal_200">
+    android:background="@color/logo">
 
 
     <ImageView

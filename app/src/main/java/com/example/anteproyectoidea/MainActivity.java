@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         Bundle bundle = getIntent().getExtras();
         String name= bundle.getString("nombre");
         String email = bundle.getString("email");

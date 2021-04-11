@@ -57,9 +57,6 @@ public class Registro extends AppCompatActivity {
     public void iniciar(View view) {
 
         switch (view.getId()){
-            case R.id.btnFacebook:
-                Toast.makeText(getApplicationContext(),"Faceboock",Toast.LENGTH_SHORT).show();
-                break;
             case R.id.btnGoogle:
                 Toast.makeText(getApplicationContext(),"google",Toast.LENGTH_SHORT).show();
                 // Configure Google Sign In
@@ -68,9 +65,13 @@ public class Registro extends AppCompatActivity {
                 break;
             case R.id.btnEmailPasww:
                 Toast.makeText(getApplicationContext(),"Email y contraseña",Toast.LENGTH_SHORT).show();
+
+
                 break;
             case R.id.btnregistrar:
                 Toast.makeText(getApplicationContext(),"Rellena todos los campos",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(),Registrarse_actividad.class);
+                    startActivity(intent);
                 break;
 
         }
