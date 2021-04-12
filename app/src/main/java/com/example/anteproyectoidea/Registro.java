@@ -29,7 +29,7 @@ public class Registro extends AppCompatActivity {
 
     private GoogleSignInClient mGoogleSingInClient;
     private final static int RC_SIGN_IN=100;
-    private FirebaseAuth mAuth;
+    public static FirebaseAuth mAuth;
 
    /* @Override
     protected void onStart() {
@@ -70,7 +70,9 @@ public class Registro extends AppCompatActivity {
                 break;
             case R.id.btnregistrar:
                 Toast.makeText(getApplicationContext(),"Rellena todos los campos",Toast.LENGTH_SHORT).show();
+                mAuth.signOut();
                     Intent intent = new Intent(getApplicationContext(),Registrarse_actividad.class);
+                    intent.putExtra("mAuth",mAuth.toString());
                     startActivity(intent);
                 break;
 

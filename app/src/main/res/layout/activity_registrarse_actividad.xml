@@ -93,6 +93,7 @@
         android:id="@+id/buttonRegistrarse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="cambiarImagen"
         android:text="Registrarse"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
