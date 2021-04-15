@@ -7,15 +7,18 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.storage.StorageManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,6 +28,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +44,10 @@ public class Registrarse_actividad extends AppCompatActivity {
     private static final int PERMISO_CODE=100;
     private static final int IMAGEN_GALLERY=101;
     private FirebaseFirestore db;
+    private  Uri uri;
+    private Uri defaultImage;
+    private StorageReference mReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +55,21 @@ public class Registrarse_actividad extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrarse_actividad);
         defaultUser = findViewById(R.id.ImagenUsuarioLogin);
-        defaultUser.setImageResource(R.drawable.default_users);
+        //defaultUser.setImageResource(R.drawable.default_users);
+
+
+
+
+        mReference = FirebaseStorage.getInstance().getReference();
+
+        mReference.child("/Imagenusuario/default_users.png").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                Picasso.get().load(task.getResult()).into(defaultUser);
+            }
+        });
+        //defaultImage = Uri.parse(mReference.child("Imagenusuario").child("default_users.png").getPath());
+
 
        // mAuth.signOut();
 
@@ -94,8 +118,10 @@ public class Registrarse_actividad extends AppCompatActivity {
                                         data.put("Nombre",nombre.getText().toString());
                                         data.put("Direcion",direcion.getText().toString());
                                         data.put("email",email.getText().toString());
-                                        data.put("foto","probar");
+                                        data.put("foto","aaaaa");
 
+                                        StorageReference filepath = mReference.child("Imagenusuario").child("id"+Registro.mAuth.getUid());
+                                        filepath.putFile(uri);
                                         Toast.makeText(getApplicationContext(), "Cuenta creada.",Toast.LENGTH_SHORT).show();
                                         db.collection("users").document(Registro.mAuth.getUid()).set(data);
 
@@ -125,6 +151,7 @@ public class Registrarse_actividad extends AppCompatActivity {
         if(requestCode==IMAGEN_GALLERY){
             if(resultCode== Activity.RESULT_OK && data != null){
                 Uri foto = data.getData();
+                uri = foto;
                 defaultUser.setImageURI(foto);
             }else{
                 Toast.makeText(this,"no has oogido nada de la galeria",Toast.LENGTH_SHORT).show();
