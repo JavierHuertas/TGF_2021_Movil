@@ -7,6 +7,25 @@
     android:background="@drawable/imagenmono"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/btnRegistrarEmpresa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="119dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/ralewayregular"
+        android:onClick="iniciar"
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="10dp"
+        android:text="¿Eres una empresa?"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
     <LinearLayout
         android:onClick="iniciar"
         android:layout_width="match_parent"
@@ -102,16 +121,16 @@
             android:id="@+id/btnregistrar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="iniciar"
-            android:text="Registrate gratis"
-            android:textSize="15sp"
-            android:paddingTop="15dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="15dp"
-            android:textStyle="bold"
             android:fontFamily="@font/ralewayregular"
+            android:onClick="iniciar"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
             android:paddingRight="15dp"
-            android:textColor="@color/white"/>
+            android:paddingBottom="10dp"
+            android:text="Registrate gratis"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
 
     </LinearLayout>

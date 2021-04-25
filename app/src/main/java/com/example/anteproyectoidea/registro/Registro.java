@@ -1,14 +1,18 @@
-package com.example.anteproyectoidea;
+package com.example.anteproyectoidea.registro;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.anteproyectoidea.EmpresaRegistrarLogin;
+import com.example.anteproyectoidea.MainActivity;
+import com.example.anteproyectoidea.R;
+import com.example.anteproyectoidea.dto.UserDTO;
+import com.example.anteproyectoidea.logins.login;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -16,20 +20,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-
-import kotlin.jvm.internal.MagicApiIntrinsics;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Registro extends AppCompatActivity {
 
-    private GoogleSignInClient mGoogleSingInClient;
+    public static GoogleSignInClient mGoogleSingInClient;
     private final static int RC_SIGN_IN=100;
     public static FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
    /* @Override
     protected void onStart() {
@@ -39,6 +41,7 @@ public class Registro extends AppCompatActivity {
 
         if(user != null){
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra("Google",true);
             startActivity(intent);
         }
 
@@ -51,6 +54,8 @@ public class Registro extends AppCompatActivity {
         getSupportActionBar().hide();
         crearPeticion();
         mAuth= FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
 
     }
 
@@ -61,19 +66,27 @@ public class Registro extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"google",Toast.LENGTH_SHORT).show();
                 // Configure Google Sign In
                 mGoogleSingInClient.signOut();
+
                 signInGoogle();
+
                 break;
             case R.id.btnEmailPasww:
                 Toast.makeText(getApplicationContext(),"Email y contraseña",Toast.LENGTH_SHORT).show();
-
+                Intent intent2 = new Intent(getApplicationContext(), login.class);
+                startActivity(intent2);
 
                 break;
             case R.id.btnregistrar:
                 Toast.makeText(getApplicationContext(),"Rellena todos los campos",Toast.LENGTH_SHORT).show();
                 mAuth.signOut();
-                    Intent intent = new Intent(getApplicationContext(),Registrarse_actividad.class);
+                    Intent intent = new Intent(getApplicationContext(), Registrarse_actividad.class);
                     intent.putExtra("mAuth",mAuth.toString());
                     startActivity(intent);
+                break;
+            case R.id.btnRegistrarEmpresa:
+                Intent empresaIntent = new Intent(getApplicationContext(), EmpresaRegistrarLogin.class);
+
+                startActivity(empresaIntent);
                 break;
 
         }
@@ -113,11 +126,15 @@ public class Registro extends AppCompatActivity {
                     FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                            intent.putExtra("email",account.getEmail().toString());
-                            intent.putExtra("nombre",account.getDisplayName().toString());
-                            String uriImagen = account.getPhotoUrl().toString();
-                            intent.putExtra("imagen",uriImagen);
+                           // public UserDTO(String key, String nombre, String email, String direccion, String imagenUri)
+
+                            UserDTO userDTO = new UserDTO(mAuth.getCurrentUser().getUid(),account.getDisplayName(),account.getEmail()," ",account.getPhotoUrl().toString());
+
+                            db.collection("usersGoogle").document(mAuth.getCurrentUser().getUid()).set(userDTO);
+
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+                            intent.putExtra("esGoogle",true);
                             startActivity(intent);
                         }
                     });

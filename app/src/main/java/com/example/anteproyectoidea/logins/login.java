@@ -1,13 +1,16 @@
-package com.example.anteproyectoidea;
+package com.example.anteproyectoidea.logins;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
+import com.example.anteproyectoidea.MainActivity;
+import com.example.anteproyectoidea.R;
+import com.example.anteproyectoidea.registro.Registro;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -34,6 +37,11 @@ public class login extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
+
+
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.putExtra("esGoogle",false);
+                        startActivity(intent);
 
                     }else{
                         

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 
+import com.example.anteproyectoidea.registro.Registro;
 
 import java.util.Timer;
 import java.util.TimerTask;

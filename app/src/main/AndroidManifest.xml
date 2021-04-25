@@ -12,9 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AnteproyectoIdea">
-        <activity android:name=".login"></activity>
-        <activity android:name=".Registrarse_actividad" />
-        <activity android:name=".Registro" />
+        <activity android:name=".logins.LoginEmpresa"></activity>
+        <activity android:name=".EmpresaRegistrarLogin" />
+        <activity android:name=".logins.login" />
+        <activity android:name=".registro.Registrarse_actividad" />
+        <activity android:name=".registro.Registro" />
         <activity android:name=".splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

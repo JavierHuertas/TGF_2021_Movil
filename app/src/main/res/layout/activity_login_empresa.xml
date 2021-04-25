@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/logo"
-    tools:context=".logins.login">
-
+    tools:context=".logins.LoginEmpresa"
+    android:background="@color/logo">
     <EditText
-        android:id="@+id/emailLogin"
+        android:id="@+id/emailLoginEmpresa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Email"
+        android:textColor="@color/white"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,8 +22,9 @@
         app:layout_constraintVertical_bias="0.446" />
 
     <EditText
-        android:id="@+id/passwordlogin"
+        android:id="@+id/PasswordLoginEmpresa"
         android:hint="Pasword"
+        android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -39,8 +40,9 @@
         android:id="@+id/buttonLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="login"
+        android:onClick="iniciarSesion"
         android:text="Inciar sesion"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

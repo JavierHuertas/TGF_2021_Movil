@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Registrarse_actividad"
+    tools:context=".registro.Registrarse_actividad"
     android:background="@color/logo">
 
     <EditText

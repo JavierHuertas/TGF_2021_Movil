@@ -2,17 +2,21 @@ package com.example.anteproyectoidea;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.anteproyectoidea.registro.Registro;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import androidx.navigation.NavController;
@@ -26,27 +30,87 @@ import androidx.appcompat.widget.Toolbar;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
-    TextView r;
-    TextView f;
-    ImageView t;
+    private TextView r;
+    private TextView f;
+    private ImageView t;
+    private StorageReference mReference;
+    private FirebaseFirestore db;
+    private String name;
+    private String email;
+    private Uri uri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        db = FirebaseFirestore.getInstance();
+        mReference = FirebaseStorage.getInstance().getReference();
 
         Bundle bundle = getIntent().getExtras();
-        String name= bundle.getString("nombre");
-        String email = bundle.getString("email");
-        String uriFoto = bundle.getString("imagen");
-        Uri foto = Uri.parse(uriFoto);
+        Boolean esGoogle =bundle.getBoolean("esGoogle");
 
-        //r.setText(email);
+        Toast.makeText(getApplicationContext(),esGoogle+"",Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),Registro.mAuth.getUid(),Toast.LENGTH_LONG).show();
 
-        //f.setText(name);
-        //NavigationView navigationView = findViewById(R.id.nav_view);
-        Toast.makeText(getApplicationContext(),"Email: "+email+" Nombre: "+name,Toast.LENGTH_SHORT).show();
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+        r = header.findViewById(R.id.EmailUsuario);
+        f = header.findViewById(R.id.NombreUsuario);
+        t = header.findViewById(R.id.ImagenUsuario);
+
+
+
+        if(esGoogle){
+            //Login google
+            db.collection("usersGoogle").document(Registro.mAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if(documentSnapshot.exists()){
+                        String name2 =  documentSnapshot.getString("nombre");
+                        String email2 = documentSnapshot.getString("email");
+                        Uri uri2 = Uri.parse(documentSnapshot.getString("imagenUri"));
+
+                        r.setText(email2);
+                        f.setText(name2);
+                        Picasso.get().load(uri2).into(t);
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Hay un error buscar solucioness",Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+            Toast.makeText(getApplicationContext(),"email"+ email,Toast.LENGTH_LONG).show();
+
+        }else{
+            db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if(documentSnapshot.exists()){
+
+                       String name2 =  documentSnapshot.getString("nombre");
+                       String email2 = documentSnapshot.getString("email");
+                       Uri uri2 = Uri.parse(documentSnapshot.getString("imagenUri"));
+                        Toast.makeText(getApplicationContext(),"email"+ email2,Toast.LENGTH_LONG).show();
+                        r.setText(email2);
+                        f.setText(name2);
+                        Picasso.get().load(uri2).into(t);
+
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Hay un error buscar solucioness",Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+
+
+        }
+
+
+
+
+
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -57,19 +121,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        View header = navigationView.getHeaderView(0);
-        r = header.findViewById(R.id.EmailUsuario);
-        f = header.findViewById(R.id.NombreUsuario);
-        t = header.findViewById(R.id.ImagenUsuario);
-        r.setText(email);
-        f.setText(name);
-        Picasso.get().load(foto.toString()).into(t);
-        //t.setImageURI(foto);
-        Toast.makeText(getApplicationContext(),foto.toString(),Toast.LENGTH_SHORT).show();
-        //Log.i("Imagen",foto.toString());
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
                 .setDrawerLayout(drawer)
@@ -93,5 +145,11 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    public String[] infoUsuarioNoGoogle(String email,String nombre,String uri){
+
+        String[] array = {email,nombre,uri};
+
+        return array;
+    }
 
     }

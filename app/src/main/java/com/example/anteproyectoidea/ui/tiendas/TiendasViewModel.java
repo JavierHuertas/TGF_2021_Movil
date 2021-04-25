@@ -1,14 +1,14 @@
-package com.example.anteproyectoidea.ui.home;
+package com.example.anteproyectoidea.ui.tiendas;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class TiendasViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public TiendasViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("This is home fragment");
     }
