@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,22 +6,65 @@
     tools:context=".registro.Registrarse_actividad"
     android:background="@color/Carne">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imagenLogoTienda"
+        android:layout_width="150dp"
+        android:layout_height="139dp"
+        android:onClick="cambiarImagen"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.076"
+        app:srcCompat="@drawable/default_users" />
+
+
     <EditText
-        android:id="@+id/editTextTextPassword2"
+        android:id="@+id/editTextNombreDuenio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Repetir Contraseña"
-        android:inputType="textPassword"
+        android:hint="Nombre dueño"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
-        app:layout_constraintVertical_bias="0.059" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.295" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/editTextNombreNegocio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Nombre dueño"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.376" />
+
+    <EditText
+        android:id="@+id/editTextDireccionTienda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Direccion"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.463" />
+
+    <EditText
+        android:id="@+id/editTextTextEmailAddressTienda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -33,10 +75,10 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.46" />
+        app:layout_constraintVertical_bias="0.674" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/editTextTextPasswordTienda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -44,53 +86,27 @@
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress"
-        app:layout_constraintVertical_bias="0.033" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/ImagenUsuarioLogin"
-        android:layout_width="150dp"
-        android:layout_height="139dp"
-        android:onClick="cambiarImagen"
-        app:civ_border_color="#FF000000"
-        app:civ_border_width="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.22"
-        app:srcCompat="@drawable/default_users" />
+        app:layout_constraintVertical_bias="0.758" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/editTextTextPassword2Tienda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Nombre completo"
-        app:layout_constraintBottom_toTopOf="@+id/editTextDireccion"
+        android:hint="Repetir Contraseña"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ImagenUsuarioLogin" />
-
-    <EditText
-        android:id="@+id/editTextDireccion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Direccion"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ImagenUsuarioLogin"
-        app:layout_constraintVertical_bias="0.817" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.841" />
 
     <RelativeLayout
-        android:id="@+id/buttonRegistrarse"
+        android:id="@+id/buttonRegistrarseTienda"
         android:layout_width="168dp"
         android:layout_height="59dp"
         android:layout_alignParentStart="true"
@@ -105,7 +121,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.754">
+        app:layout_constraintVertical_bias="0.95">
 
 
         <TextView

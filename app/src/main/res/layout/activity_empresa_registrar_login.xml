@@ -9,28 +9,30 @@
     android:background="@drawable/fondo_login_empresa1">
 
     <TextView
-        android:layout_width="139dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/loginEmpresa"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="137dp"
-        android:layout_marginEnd="135dp"
-        android:layout_marginBottom="116dp"
-        android:text="Bienvenido"
+        android:layout_marginStart="122dp"
+        android:layout_marginTop="251dp"
+        android:layout_marginEnd="98dp"
+        android:text="Bienvenid@"
         android:textColor="@color/white"
-        android:textSize="25sp" />
+        android:textSize="35sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="97dp"
-        android:layout_marginBottom="286dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginEnd="59dp"
+        android:layout_marginBottom="323dp"
         android:text="Facilita los pedidos a tus clientes"
         android:textColor="@color/white"
-        android:textSize="15sp" />
+        android:textSize="20sp" />
 
     <RelativeLayout
         android:id="@+id/btnRegistraseEmpresa"
@@ -55,7 +57,7 @@
             android:gravity="center"
             android:text="sign up"
             android:textColor="@color/black"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -83,7 +85,7 @@
             android:gravity="center"
             android:text="@string/login"
             android:textColor="@color/black"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
     </RelativeLayout>

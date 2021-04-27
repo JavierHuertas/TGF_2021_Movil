@@ -54,6 +54,7 @@ public class Registrarse_actividad extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         db = FirebaseFirestore.getInstance();
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_registrarse_actividad);
         defaultUser = findViewById(R.id.ImagenUsuarioLogin);
         mReference = FirebaseStorage.getInstance().getReference();
