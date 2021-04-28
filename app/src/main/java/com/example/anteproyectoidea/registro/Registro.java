@@ -2,8 +2,14 @@ package com.example.anteproyectoidea.registro;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -55,8 +61,24 @@ public class Registro extends AppCompatActivity {
         crearPeticion();
         mAuth= FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        permisosGPS();
 
 
+    }
+
+    private void permisosGPS() {
+        int permisionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+
+        if (permisionCheck == PackageManager.PERMISSION_DENIED) {
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
+
+
+            }else{
+                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},1);
+
+
+            }
+        }
     }
 
     public void iniciar(View view) {
@@ -128,7 +150,12 @@ public class Registro extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                            // public UserDTO(String key, String nombre, String email, String direccion, String imagenUri)
 
-                            UserDTO userDTO = new UserDTO(mAuth.getCurrentUser().getUid(),account.getDisplayName(),account.getEmail()," ",account.getPhotoUrl().toString());
+                            //Location location = new Location( LocationManager.GPS_PROVIDER);
+
+                            //double latitud = location.getLatitude();
+                            //double longitud = location.getLongitude();
+
+                            UserDTO userDTO = new UserDTO(mAuth.getCurrentUser().getUid(),account.getDisplayName(),account.getEmail(),account.getPhotoUrl().toString(),0,0);
 
                             db.collection("usersGoogle").document(mAuth.getCurrentUser().getUid()).set(userDTO);
 

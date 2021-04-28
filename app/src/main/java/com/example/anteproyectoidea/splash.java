@@ -1,8 +1,13 @@
 package com.example.anteproyectoidea;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 
@@ -18,6 +23,8 @@ public class splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         getSupportActionBar().hide();
+
+
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -29,7 +36,12 @@ public class splash extends AppCompatActivity {
 
         Timer timer = new Timer();
 
-        timer.schedule(task ,2000);
+        timer.schedule(task, 2000);
 
-    }
+
+
+        }
+
+
+
 }

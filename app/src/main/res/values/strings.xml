@@ -6,10 +6,10 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="api_key">AIzaSyDbP-dApmiqpKKlBrpzaW4rqiu_V2b1FwQ</string>
+    <string name="menu_home">Tiendas</string>
+    <string name="menu_gallery">Perfil</string>
+    <string name="menu_slideshow">EditarPerfil</string>
 
 
     <string name="facebook">Facebook</string>

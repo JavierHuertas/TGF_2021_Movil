@@ -8,6 +8,15 @@
     android:id="@+id/latoutEmpresaLogin"
     android:background="@drawable/fondo_login_empresa1">
 
+    <fragment
+        android:id="@+id/placesAutocmplete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+        />
+
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

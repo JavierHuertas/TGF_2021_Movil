@@ -33,7 +33,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.46" />
+        app:layout_constraintVertical_bias="0.4" />
 
     <EditText
         android:id="@+id/editTextTextPassword"
@@ -64,30 +64,20 @@
         app:layout_constraintVertical_bias="0.22"
         app:srcCompat="@drawable/default_users" />
 
+
     <EditText
         android:id="@+id/editTextTextPersonName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Nombre completo"
-        app:layout_constraintBottom_toTopOf="@+id/editTextDireccion"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ImagenUsuarioLogin" />
-
-    <EditText
-        android:id="@+id/editTextDireccion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Direccion"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextEmailAddress"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ImagenUsuarioLogin"
-        app:layout_constraintVertical_bias="0.817" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.311" />
 
     <RelativeLayout
         android:id="@+id/buttonRegistrarse"
@@ -105,7 +95,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.754">
+        app:layout_constraintVertical_bias="0.703">
 
 
         <TextView

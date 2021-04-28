@@ -10,16 +10,35 @@ public class UserDTO implements Serializable {
 
     private String email;
 
-    private String direccion;
+   private  Double latitud;
+
+   private Double longitud;
 
     private String imagenUri;
 
-    public UserDTO(String key, String nombre, String email, String direccion, String imagenUri) {
+    public UserDTO(String key, String nombre, String email,  String imagenUri,double latitud,double longitud) {
         this.key = key;
         this.nombre = nombre;
         this.email = email;
-        this.direccion = direccion;
+        this.latitud = latitud;
+        this.longitud = longitud;
         this.imagenUri = imagenUri;
+    }
+
+    public Double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(Double latitud) {
+        this.latitud = latitud;
+    }
+
+    public Double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(Double longitud) {
+        this.longitud = longitud;
     }
 
     public String getKey() {
@@ -46,13 +65,6 @@ public class UserDTO implements Serializable {
         this.email = email;
     }
 
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
 
     public String getImagenUri() {
         return imagenUri;

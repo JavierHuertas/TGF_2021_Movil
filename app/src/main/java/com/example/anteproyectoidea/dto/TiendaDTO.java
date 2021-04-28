@@ -4,27 +4,33 @@ import java.io.Serializable;
 
 public class TiendaDTO  implements Serializable {
 
-        private String key;
+    private String key;
 
-        private String nombreDueño;
+    private String nombreDueño;
 
-        private String email;
+    private String email;
 
-        private String logoTienda;
+    private String logoTienda;
 
-        private String nombreComercio;
+    private String nombreComercio;
 
-        private String localizacion;
+    private String localizacion;
 
-        private String cadenaConexion;
+    private double longitud;
 
-    public TiendaDTO(String key, String nombreDueño, String email, String logoTienda, String nombreComercio, String localizacion) {
+    private double latitud;
+
+    private String cadenaConexion;
+
+    public TiendaDTO(String key, String nombreDueño, String email, String logoTienda, String nombreComercio, String localizacion,double longitud, double latitud) {
         this.key = key;
         this.nombreDueño = nombreDueño;
         this.email = email;
         this.logoTienda = logoTienda;
         this.nombreComercio = nombreComercio;
         this.localizacion = localizacion;
+        this.latitud = latitud;
+        this.longitud = longitud;
     }
 
     public String getKey() {
@@ -81,5 +87,21 @@ public class TiendaDTO  implements Serializable {
 
     public void setCadenaConexion(String cadenaConexion) {
         this.cadenaConexion = cadenaConexion;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    public double getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
     }
 }

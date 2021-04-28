@@ -10,6 +10,13 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.anteproyectoidea.logins.LoginEmpresa;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.RectangularBounds;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.firebase.firestore.model.Values;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -18,6 +25,7 @@ import java.util.Random;
 public class EmpresaRegistrarLogin extends AppCompatActivity {
 
     private RelativeLayout empresaLogin;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +40,8 @@ public class EmpresaRegistrarLogin extends AppCompatActivity {
     }
 
     public void hacerclick(View v){
+
+
 
         Intent intent;
         if(v.getId() == R.id.loginEmpresa){

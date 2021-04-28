@@ -6,10 +6,11 @@
     tools:context=".registro.Registrarse_actividad"
     android:background="@color/Carne">
 
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imagenLogoTienda"
-        android:layout_width="150dp"
-        android:layout_height="139dp"
+        android:layout_width="213dp"
+        android:layout_height="142dp"
         android:onClick="cambiarImagen"
         app:civ_border_color="#FF000000"
         app:civ_border_width="2dp"
@@ -18,42 +19,41 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.076"
+        app:layout_constraintVertical_bias="0.027"
         app:srcCompat="@drawable/default_users" />
 
-
     <EditText
-        android:id="@+id/editTextNombreDuenio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Nombre dueño"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.295" />
+                android:id="@+id/editTextNombreDuenio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Nombre dueño"
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.295" />
 
-    <EditText
-        android:id="@+id/editTextNombreNegocio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Nombre dueño"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.376" />
+            <EditText
+            android:id="@+id/editTextNombreNegocio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Nombre dueño"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.376" />
 
     <EditText
         android:id="@+id/editTextDireccionTienda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="347dp"
+        android:layout_height="43dp"
         android:ems="10"
         android:hint="Direccion"
         android:inputType="textPersonName"
@@ -63,79 +63,110 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.463" />
 
-    <EditText
-        android:id="@+id/editTextTextEmailAddressTienda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.674" />
 
-    <EditText
-        android:id="@+id/editTextTextPasswordTienda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Contraseña"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.758" />
-
-    <EditText
-        android:id="@+id/editTextTextPassword2Tienda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Repetir Contraseña"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.841" />
-
-    <RelativeLayout
-        android:id="@+id/buttonRegistrarseTienda"
-        android:layout_width="168dp"
-        android:layout_height="59dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/boton_login_empresa"
-        android:onClick="cambiarImagen"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.95">
+        <RelativeLayout
+            android:id="@+id/intetnDirecion"
+            android:layout_width="168dp"
+            android:layout_height="59dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/boton_login_empresa"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.568">
 
 
-        <TextView
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/ralewayregular"
+                android:gravity="center"
+                android:text="Selecionar Dinerccion"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/editTextTextEmailAddressTienda"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_centerInParent="true"
-            android:fontFamily="@font/ralewayregular"
-            android:gravity="center"
-            android:text="Registrarse"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.674" />
 
-    </RelativeLayout>
+        <EditText
+            android:id="@+id/editTextTextPasswordTienda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.758" />
+
+        <EditText
+            android:id="@+id/editTextTextPassword2Tienda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Repetir Contraseña"
+            android:inputType="textPassword"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.841" />
+
+        <RelativeLayout
+            android:id="@+id/buttonRegistrarseTienda"
+            android:layout_width="168dp"
+            android:layout_height="59dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/boton_login_empresa"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.95">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/ralewayregular"
+                android:gravity="center"
+                android:text="Registrarse"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
