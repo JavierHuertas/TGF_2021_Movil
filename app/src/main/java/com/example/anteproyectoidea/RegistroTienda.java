@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.anteproyectoidea.dto.TiendaDTO;
 import com.example.anteproyectoidea.dto.UserDTO;
+import com.example.anteproyectoidea.logins.LoginEmpresa;
 import com.example.anteproyectoidea.registro.Registrarse_actividad;
 import com.example.anteproyectoidea.registro.Registro;
 import com.google.android.gms.common.api.Status;
@@ -168,6 +169,9 @@ public class RegistroTienda extends AppCompatActivity {
                                 });
                             }
                             db.collection("shops").document(Registro.mAuth.getUid()).set(tiendaDTO);
+                            Registro.mAuth.signOut();
+                            Intent intent = new Intent(getApplicationContext(), LoginEmpresa.class);
+                            startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
 

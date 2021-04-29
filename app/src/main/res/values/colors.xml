@@ -8,9 +8,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="Carne">#f3dba3</color>
+
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="textcolor">#1A1A1A</color>
     <color name="logo">#444c5c</color>
+    <color name="logo_transparente">#80B4FCD0</color>
 </resources>
