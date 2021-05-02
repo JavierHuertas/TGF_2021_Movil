@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class TiendaDTO  implements Serializable {
 
     private String key;
-
+    private String tipo;
     private String nombreDueño;
 
     private String email;
@@ -22,8 +22,9 @@ public class TiendaDTO  implements Serializable {
 
     private String cadenaConexion;
 
-    public TiendaDTO(String key, String nombreDueño, String email, String logoTienda, String nombreComercio, String localizacion,double longitud, double latitud) {
+    public TiendaDTO(String key, String tipo,String nombreDueño, String email, String logoTienda, String nombreComercio, String localizacion,double longitud, double latitud) {
         this.key = key;
+        this.tipo = tipo;
         this.nombreDueño = nombreDueño;
         this.email = email;
         this.logoTienda = logoTienda;
@@ -31,6 +32,27 @@ public class TiendaDTO  implements Serializable {
         this.localizacion = localizacion;
         this.latitud = latitud;
         this.longitud = longitud;
+    }
+
+    public TiendaDTO(String nombreDueño, String logoTienda, String nombreComercio, String localizacion, double longitud, double latitud, String cadenaConexion) {
+        this.nombreDueño = nombreDueño;
+        this.logoTienda = logoTienda;
+        this.nombreComercio = nombreComercio;
+        this.localizacion = localizacion;
+        this.longitud = longitud;
+        this.latitud = latitud;
+        this.cadenaConexion = cadenaConexion;
+    }
+
+    public TiendaDTO() {
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getKey() {

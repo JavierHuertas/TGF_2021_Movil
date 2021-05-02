@@ -9,7 +9,12 @@
     android:orientation="vertical"
     android:background="@color/logo">
 
-
+<TextView
+    android:id="@+id/preubajdbc"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="preuba"
+    android:textColor="@color/white"></TextView>
     <ImageView
         android:layout_marginTop="150dp"
         android:layout_width="250dp"

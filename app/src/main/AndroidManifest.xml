@@ -26,7 +26,7 @@
         <activity android:name=".logins.LoginEmpresa" />
         <activity android:name=".EmpresaRegistrarLogin" />
         <activity android:name=".logins.login" />
-        <activity android:name=".registro.Registrarse_actividad" />
+        <activity android:name=".registro.RegistrarseUsuarios" />
         <activity android:name=".registro.Registro" />
         <activity android:name=".splash">
             <intent-filter>

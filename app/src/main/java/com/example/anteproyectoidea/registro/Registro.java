@@ -8,15 +8,15 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.anteproyectoidea.EmpresaRegistrarLogin;
 import com.example.anteproyectoidea.MainActivity;
 import com.example.anteproyectoidea.R;
+import com.example.anteproyectoidea.RegistroTienda;
 import com.example.anteproyectoidea.dto.UserDTO;
 import com.example.anteproyectoidea.logins.login;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -32,12 +32,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Random;
+
 public class Registro extends AppCompatActivity {
 
     public static GoogleSignInClient mGoogleSingInClient;
     private final static int RC_SIGN_IN=100;
     public static FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private RelativeLayout imagenes;
 
    /* @Override
     protected void onStart() {
@@ -62,6 +65,8 @@ public class Registro extends AppCompatActivity {
         mAuth= FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         permisosGPS();
+        imagenes = findViewById(R.id.principalLogin);
+        elegirFondo(imagenes);
 
 
     }
@@ -88,7 +93,7 @@ public class Registro extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"google",Toast.LENGTH_SHORT).show();
                 // Configure Google Sign In
                 mGoogleSingInClient.signOut();
-
+                mAuth.signOut();
                 signInGoogle();
 
                 break;
@@ -101,14 +106,14 @@ public class Registro extends AppCompatActivity {
             case R.id.btnregistrar:
                 Toast.makeText(getApplicationContext(),"Rellena todos los campos",Toast.LENGTH_SHORT).show();
                 mAuth.signOut();
-                    Intent intent = new Intent(getApplicationContext(), Registrarse_actividad.class);
+                    Intent intent = new Intent(getApplicationContext(), RegistrarseUsuarios.class);
                     intent.putExtra("mAuth",mAuth.toString());
                     startActivity(intent);
                 break;
             case R.id.btnRegistrarEmpresa:
-                Intent empresaIntent = new Intent(getApplicationContext(), EmpresaRegistrarLogin.class);
-
-                startActivity(empresaIntent);
+                intent = new Intent(getApplicationContext(), RegistroTienda.class);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(),"Iniciar actividad registrase",Toast.LENGTH_SHORT).show();
                 break;
 
         }
@@ -155,7 +160,7 @@ public class Registro extends AppCompatActivity {
                             //double latitud = location.getLatitude();
                             //double longitud = location.getLongitude();
 
-                            UserDTO userDTO = new UserDTO(mAuth.getCurrentUser().getUid(),account.getDisplayName(),account.getEmail(),account.getPhotoUrl().toString(),0,0);
+                            UserDTO userDTO = new UserDTO(mAuth.getCurrentUser().getUid(),"usuario",account.getDisplayName(),account.getEmail(),account.getPhotoUrl().toString(),0,0);
 
                             db.collection("usersGoogle").document(mAuth.getCurrentUser().getUid()).set(userDTO);
 
@@ -186,4 +191,28 @@ public class Registro extends AppCompatActivity {
         //FirebaseAuth.getInstance().signOut();
 
     }
+
+    private void elegirFondo(RelativeLayout empresaLogin) {
+        int numero = new Random().nextInt(5);
+
+        switch (numero){
+            case 0:
+                empresaLogin.setBackground(getDrawable(R.drawable.backgroundimg));
+                break;
+            case 1:
+                empresaLogin.setBackground(getDrawable(R.drawable.fondo_login_empresa1));
+                break;
+            case 2:
+                empresaLogin.setBackground(getDrawable(R.drawable.fondo_login_empresa2));
+                break;
+            case 3:
+                empresaLogin.setBackground(getDrawable(R.drawable.fondo_login_empresa3));
+                break;
+            case 4:
+                empresaLogin.setBackground(getDrawable(R.drawable.fondo_login_empresa4));
+                break;
+        }
+
+    }
+
 }

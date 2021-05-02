@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 <com.google.android.material.card.MaterialCardView android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
 
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    >
 
     <LinearLayout
-        android:background="@color/Carne"
+        android:background="@color/secondaryColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -17,76 +20,75 @@
         <ImageView
             android:id="@+id/listTiendaLogo"
             android:layout_width="match_parent"
-            android:layout_height="194dp"
-            app:srcCompat="@drawable/default_users"
-            android:scaleType="centerCrop"
+            android:layout_height="188dp"
             android:contentDescription=""
-            />
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/default_users"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp"
-            android:background="@color/logo_transparente">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/primaryLightColortransparente"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <!-- Title, secondary and supporting text -->
-            <TextView
-                android:id="@+id/listTiendasName"
+                <!-- Title, secondary and supporting text -->
+                <TextView
+                    android:id="@+id/listTiendasName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre"
+                    android:textAppearance="?attr/textAppearanceHeadline6" />
+
+                <TextView
+                    android:id="@+id/listTiendaDireccion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="direccion"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?android:attr/textColorSecondary" />
+
+                <TextView
+                    android:id="@+id/listTiendaDescripcion"
+                    android:layout_width="363dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="pequeña descripcion"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="?android:attr/textColorSecondary" />
+
+
+            </LinearLayout>
+
+            <!-- Buttons -->
+            <LinearLayout
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nombre"
-                android:textAppearance="?attr/textAppearanceHeadline6"
-                />
-            <TextView
-                android:id="@+id/listTiendaDireccion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text=""
-                android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?android:attr/textColorSecondary"
-                />
+                android:layout_margin="8dp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/listTiendaDescripcion"
-                android:layout_width="363dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text=""
-                android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?android:attr/textColorSecondary" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/listTiendabtnUno"
+                    style="?attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
 
-        </LinearLayout>
+                    android:text="" />
 
-        <!-- Buttons -->
-        <LinearLayout
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:orientation="horizontal">
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/listTiendabtnUno"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text=""
-
-                style="?attr/borderlessButtonStyle"
-                />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/listTiendabtnDos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:shadowColor="@color/logo"
-                android:text=""
-                style="?attr/borderlessButtonStyle"
-                />
-        </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/listTiendabtnDos"
+                    style="?attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:shadowColor="@color/logo"
+                    android:text="" />
+            </LinearLayout>
 
 
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

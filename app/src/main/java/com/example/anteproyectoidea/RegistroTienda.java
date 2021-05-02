@@ -20,9 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.anteproyectoidea.dto.TiendaDTO;
-import com.example.anteproyectoidea.dto.UserDTO;
 import com.example.anteproyectoidea.logins.LoginEmpresa;
-import com.example.anteproyectoidea.registro.Registrarse_actividad;
 import com.example.anteproyectoidea.registro.Registro;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
@@ -32,13 +30,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.RectangularBounds;
-import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -75,6 +69,7 @@ public class RegistroTienda extends AppCompatActivity {
         setContentView(R.layout.activity_registro_tienda);
         mReference = FirebaseStorage.getInstance().getReference();
         db = FirebaseFirestore.getInstance();
+        getSupportActionBar().hide();
         String key = getString(R.string.google_api_key) ;
 
 
@@ -142,7 +137,7 @@ public class RegistroTienda extends AppCompatActivity {
                             latitudTienda = latLng.latitude;
                             Toast.makeText(getApplicationContext(),longitudTienda+" "+latitudTienda,Toast.LENGTH_SHORT).show();
 
-                            tiendaDTO = new TiendaDTO(Registro.mAuth.getUid(),nombreDuenio.getText().toString(),email.getText().toString(),ImagenDefault,nombreEstabelecimiento.getText().toString(),direccionTienda.getText().toString(),longitudTienda,latitudTienda );
+                            tiendaDTO = new TiendaDTO(Registro.mAuth.getUid(),"tienda",nombreDuenio.getText().toString(),email.getText().toString(),ImagenDefault,nombreEstabelecimiento.getText().toString(),direccionTienda.getText().toString(),longitudTienda,latitudTienda );
                             if (uri != null) {
                                 mReference = mReference.child("imagenTiendas/" + uri.getLastPathSegment() + "Tienda" + Registro.mAuth.getUid());
                                 UploadTask uploadTask = mReference.putFile(uri);
@@ -169,9 +164,9 @@ public class RegistroTienda extends AppCompatActivity {
                                 });
                             }
                             db.collection("shops").document(Registro.mAuth.getUid()).set(tiendaDTO);
-                            Registro.mAuth.signOut();
-                            Intent intent = new Intent(getApplicationContext(), LoginEmpresa.class);
-                            startActivity(intent);
+                            //Registro.mAuth.signOut();
+                            //Intent intent = new Intent(getApplicationContext(), LoginEmpresa.class);
+                            //startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
 

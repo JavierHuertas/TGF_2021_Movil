@@ -32,8 +32,8 @@ public class EmpresaRegistrarLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_empresa_registrar_login);
         getSupportActionBar().hide();
-    empresaLogin = findViewById(R.id.latoutEmpresaLogin);
-    elegirFondo(empresaLogin);
+   // empresaLogin = findViewById(R.id.latoutEmpresaLogin);
+        // elegirFondo(empresaLogin);
 
 
 
@@ -59,28 +59,7 @@ public class EmpresaRegistrarLogin extends AppCompatActivity {
 
     }
 
-    private void elegirFondo(RelativeLayout empresaLogin) {
-        int numero = new Random().nextInt(4);
 
-        switch (numero){
-            case 0:
-               empresaLogin.setBackground(getDrawable(R.drawable.fondo_login_empresa0));
-                break;
-            case 1:
-                empresaLogin.setBackground(getDrawable(R.drawable.fondo_login_empresa1));
-                break;
-            case 2:
-                empresaLogin.setBackground(getDrawable(R.drawable.fondo_login_empresa2));
-                break;
-            case 3:
-                empresaLogin.setBackground(getDrawable(R.drawable.fondo_login_empresa3));
-                break;
-            case 4:
-                empresaLogin.setBackground(getDrawable(R.drawable.fondo_login_empresa4));
-                break;
-        }
-
-    }
 
 
 }

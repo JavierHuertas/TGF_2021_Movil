@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="primaryColor">#f2daa2</color>
+    <color name="primaryLightColor">#ffffd4</color>
+    <color name="primaryDarkColor">#bea973</color>
+    <color name="secondaryColor">#444c5c</color>
+    <color name="secondaryLightColor">#707889</color>
+    <color name="secondaryDarkColor">#1c2433</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#ffffff</color>
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#80000000</color>
@@ -9,10 +18,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="Carne">#f3dba3</color>
 
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+
     <color name="textcolor">#1A1A1A</color>
+    <color name="transparent">#80B4FCD0</color>
     <color name="logo">#444c5c</color>
     <color name="logo_transparente">#80B4FCD0</color>
+    <color name="primaryLightColortransparente">#80ffffd4</color>
 </resources>

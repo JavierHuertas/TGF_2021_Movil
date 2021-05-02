@@ -25,15 +25,12 @@ import android.widget.Toast;
 import com.example.anteproyectoidea.R;
 import com.example.anteproyectoidea.dto.UserDTO;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
@@ -41,7 +38,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-public class Registrarse_actividad extends AppCompatActivity {
+public class RegistrarseUsuarios extends AppCompatActivity {
 
     private ImageView defaultUser;
     private FirebaseAuth mAuth;
@@ -63,7 +60,7 @@ public class Registrarse_actividad extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_registrarse_actividad);
+        setContentView(R.layout.activity_registrarse_usuarios);
         defaultUser = findViewById(R.id.ImagenUsuarioLogin);
         mReference = FirebaseStorage.getInstance().getReference();
 
@@ -111,10 +108,10 @@ public class Registrarse_actividad extends AppCompatActivity {
 
             case R.id.ImagenUsuarioLogin:
 
-                if (ActivityCompat.checkSelfPermission(Registrarse_actividad.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(RegistrarseUsuarios.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     abrirGaleria();
                 } else {
-                    ActivityCompat.requestPermissions(Registrarse_actividad.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISO_CODE);
+                    ActivityCompat.requestPermissions(RegistrarseUsuarios.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISO_CODE);
                 }
                 break;
             case R.id.buttonRegistrarse:
@@ -129,7 +126,7 @@ public class Registrarse_actividad extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        userDTO = new UserDTO(Registro.mAuth.getUid(), nombre.getText().toString(), email.getText().toString(), " ", latitud, longitud);
+                                        userDTO = new UserDTO(Registro.mAuth.getUid(),"usuario", nombre.getText().toString(), email.getText().toString(), " ", latitud, longitud);
                                         if (uri != null) {
                                             mReference = mReference.child("Imagenusuario/" + uri.getLastPathSegment() + "User" + Registro.mAuth.getUid());
                                             UploadTask uploadTask = mReference.putFile(uri);

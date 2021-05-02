@@ -15,10 +15,15 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class adapterTiendas extends BaseAdapter {
+public class AdapterTiendas extends BaseAdapter {
 
     private ArrayList<TiendaDTO> tiendasDTOs;
     private Context contexto;
+
+    public AdapterTiendas(ArrayList<TiendaDTO> tiendasDTOs, Context contexto) {
+        this.tiendasDTOs = tiendasDTOs;
+        this.contexto = contexto;
+    }
 
     @Override
     public int getCount() {

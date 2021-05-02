@@ -20,8 +20,7 @@ public class PedidosFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        pedidosViewModel =
-                new ViewModelProvider(this).get(PedidosViewModel.class);
+        pedidosViewModel = new ViewModelProvider(this).get(PedidosViewModel.class);
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
         final TextView textView = root.findViewById(R.id.text_gallery);
         pedidosViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {

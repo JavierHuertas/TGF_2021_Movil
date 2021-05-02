@@ -5,24 +5,29 @@ import java.io.Serializable;
 public class UserDTO implements Serializable {
 
     private String key;
-
+    private String tipo;
     private String nombre;
-
     private String email;
-
-   private  Double latitud;
-
-   private Double longitud;
-
+    private  Double latitud;
+    private Double longitud;
     private String imagenUri;
 
-    public UserDTO(String key, String nombre, String email,  String imagenUri,double latitud,double longitud) {
+    public UserDTO(String key, String tipo,String nombre, String email,  String imagenUri,double latitud,double longitud) {
         this.key = key;
+        this.tipo = tipo;
         this.nombre = nombre;
         this.email = email;
         this.latitud = latitud;
         this.longitud = longitud;
         this.imagenUri = imagenUri;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public Double getLatitud() {
