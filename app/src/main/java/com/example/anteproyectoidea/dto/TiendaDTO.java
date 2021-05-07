@@ -7,19 +7,13 @@ public class TiendaDTO  implements Serializable {
     private String key;
     private String tipo;
     private String nombreDueño;
-
     private String email;
-
+    private String contrasenia;
     private String logoTienda;
-
     private String nombreComercio;
-
     private String localizacion;
-
     private double longitud;
-
     private double latitud;
-
     private String cadenaConexion;
 
     public TiendaDTO(String key, String tipo,String nombreDueño, String email, String logoTienda, String nombreComercio, String localizacion,double longitud, double latitud) {
@@ -45,6 +39,14 @@ public class TiendaDTO  implements Serializable {
     }
 
     public TiendaDTO() {
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 
     public String getTipo() {

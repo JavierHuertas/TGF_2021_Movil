@@ -49,14 +49,6 @@
                     android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="?android:attr/textColorSecondary" />
 
-                <TextView
-                    android:id="@+id/listTiendaDescripcion"
-                    android:layout_width="363dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="pequeña descripcion"
-                    android:textAppearance="?attr/textAppearanceBody2"
-                    android:textColor="?android:attr/textColorSecondary" />
 
 
             </LinearLayout>
@@ -76,15 +68,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
 
-                    android:text="" />
+                    app:icon="@android:drawable/ic_dialog_map"
+                    android:text="Ir a googleMaps" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/listTiendabtnDos"
-                    style="?attr/borderlessButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:shadowColor="@color/logo"
-                    android:text="" />
+
             </LinearLayout>
 
 

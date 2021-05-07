@@ -35,8 +35,6 @@ public class TiendasFragment extends Fragment {
     private TiendasViewModel tiendasViewModel;
     private AdapterTiendasRV adapterRV;
     private RecyclerView tiendasView;
-    TiendaDTO formar;
-    ArrayList<TiendaDTO> devolver = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -60,29 +58,15 @@ public class TiendasFragment extends Fragment {
 
     public void allShops(){
 
-
         Query query = FirebaseFirestore.getInstance()
                 .collection("shops");
-
         FirestoreRecyclerOptions<TiendaDTO> options = new FirestoreRecyclerOptions.Builder<TiendaDTO>().setQuery(query,TiendaDTO.class).build();
-
         adapterRV = new AdapterTiendasRV(options);
         tiendasView.setAdapter(adapterRV);
         adapterRV.startListening();
-        /*devolver.clear();
-       // public TiendaDTO(String nombreDueño, String logoTienda, String nombreComercio, String localizacion, double longitud, double latitud, String cadenaConexion) {
-        db.collection("shops").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for(QueryDocumentSnapshot result : queryDocumentSnapshots){
-                    Toast.makeText(getActivity().getApplicationContext(),result.getString("nombreDueño"),Toast.LENGTH_SHORT).show();
-                    formar = new TiendaDTO(result.getString("nombreDueño"),result.getString("logoTienda"),result.getString("nombreComercio"),result.getString("localizacion"),result.getDouble("longitud"),result.getDouble("latitud"),result.getString("cadenaConexion"));
-                    devolver.add(formar);
-                }
 
 
-            }
-        });*/
+
 
 
 

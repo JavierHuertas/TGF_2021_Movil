@@ -17,11 +17,13 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.anteproyectoidea.ProgressBarCargando;
 import com.example.anteproyectoidea.R;
 import com.example.anteproyectoidea.dto.UserDTO;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -29,6 +31,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -42,7 +46,7 @@ public class RegistrarseUsuarios extends AppCompatActivity {
 
     private ImageView defaultUser;
     private FirebaseAuth mAuth;
-    private EditText email, nombre, contraseñaUno, contraseñaDos;
+    private TextInputLayout email, nombre, contraseñaUno, contraseñaDos;
     private double latitud, longitud;
     private static final int PERMISO_CODE = 100;
     private static final int IMAGEN_GALLERY = 101;
@@ -53,6 +57,8 @@ public class RegistrarseUsuarios extends AppCompatActivity {
     private UserDTO userDTO;
     private LocationManager locManager;
     private LocationListener locationListenerGPS;
+    //MaterialAlertDialogBuilder correcto;
+    private ProgressBarCargando progressBarCargando = new ProgressBarCargando(RegistrarseUsuarios.this);
 
 
     @Override
@@ -63,6 +69,14 @@ public class RegistrarseUsuarios extends AppCompatActivity {
         setContentView(R.layout.activity_registrarse_usuarios);
         defaultUser = findViewById(R.id.ImagenUsuarioLogin);
         mReference = FirebaseStorage.getInstance().getReference();
+
+       /*correcto = new MaterialAlertDialogBuilder(getBaseContext());
+        correcto.setMessage("Cuenta creada exitosamente");
+        correcto.setPositiveButton(("Aceptar"),(dialog, which) -> {
+            //Toast.makeText(getContext(),"operacion cancelada",Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getApplicationContext(), Registro.class);
+            startActivity(intent);
+        });*/
 
         mReference.child("/Imagenusuario/default_users.png").getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
@@ -118,15 +132,15 @@ public class RegistrarseUsuarios extends AppCompatActivity {
 
                 if (comprobarCosasIntroducidas() == 0) {
 
-                    String correo = email.getText().toString();
-                    String contrasenia = contraseñaUno.getText().toString();
+                    String correo = email.getEditText().getText().toString().trim();
+                    String contrasenia = contraseñaUno.getEditText().getText().toString();
 
                     Registro.mAuth.createUserWithEmailAndPassword(correo, contrasenia)
                             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        userDTO = new UserDTO(Registro.mAuth.getUid(),"usuario", nombre.getText().toString(), email.getText().toString(), " ", latitud, longitud);
+                                        userDTO = new UserDTO(Registro.mAuth.getUid(),"usuario", nombre.getEditText().getText().toString().trim(), email.getEditText().getText().toString().trim(), " ", latitud, longitud);
                                         if (uri != null) {
                                             mReference = mReference.child("Imagenusuario/" + uri.getLastPathSegment() + "User" + Registro.mAuth.getUid());
                                             UploadTask uploadTask = mReference.putFile(uri);
@@ -152,7 +166,25 @@ public class RegistrarseUsuarios extends AppCompatActivity {
                                                 }
                                             });
                                         }
+
+                                        progressBarCargando.StarProgressBar();
                                         db.collection("users").document(Registro.mAuth.getUid()).set(userDTO);
+                                        Handler handler = new Handler();
+                                        handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+
+
+
+
+                                                progressBarCargando.finishProgressBar();
+                                                irNuevaActividad();
+                                            }
+                                        }, 3000);
+
+
+                                      //  correcto.show();
+
                                     } else {
                                         // If sign in fails, display a message to the user.
 
@@ -165,6 +197,12 @@ public class RegistrarseUsuarios extends AppCompatActivity {
                 break;
         }
     }
+
+    private void irNuevaActividad() {
+        Intent intent = new Intent(getApplicationContext(), Registro.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if(requestCode==IMAGEN_GALLERY){
@@ -213,7 +251,7 @@ public class RegistrarseUsuarios extends AppCompatActivity {
         contraseñaDos.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         contraseñaDos.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
         int comprobador =0;
-        if(nombre.getText().toString().isEmpty()){
+        if(nombre.getEditText().getText().toString().trim().isEmpty()){
             //Toast.makeText(getApplicationContext(),"No has introdfucido ningun nombre",Toast.LENGTH_SHORT).show();
             nombre.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
             nombre.setError("No has introdfucido ningun nombre");
@@ -226,37 +264,37 @@ public class RegistrarseUsuarios extends AppCompatActivity {
             direcion.setError("No has entroducido ninguna direcion");
             comprobador =1;
         }*/
-        if(email.getText().toString().isEmpty()){
+        if(email.getEditText().getText().toString().trim().isEmpty()){
             //Toast.makeText(getApplicationContext(),"No has introducido ningun email",Toast.LENGTH_SHORT).show();
             email.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
             email.setError("no has intricucido niungun email");
             comprobador =1;
         }
-        if(!isEmailValid(email.getText().toString())){
+        if(!isEmailValid(email.getEditText().getText().toString().trim())){
             email.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
             email.setError("Email no valido");
             comprobador =1;
         }
-        if(contraseñaUno.getText().toString().isEmpty() ){
+        if(contraseñaUno.getEditText().getText().toString().trim().isEmpty() ){
             contraseñaUno.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
             //Toast.makeText(getApplicationContext(),"No has introducido ninguna Contraseña o es demasiado pequeña",Toast.LENGTH_SHORT).show();
             comprobador =1;
             contraseñaUno.setError("No has introducido ninguna Contraseña");
         }
-        if(!(contraseñaUno.getText().toString().length()>6)){
+        if(!(contraseñaUno.getEditText().getText().toString().trim().length()>6)){
             contraseñaUno.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
             //Toast.makeText(getApplicationContext(),"No has introducido ninguna Contraseña o es demasiado pequeña",Toast.LENGTH_SHORT).show();
             contraseñaUno.setError("La contraseña es demasiado pequeña minimo 6 caracteres");
             comprobador =1;
         }
-        if(contraseñaDos.getText().toString().isEmpty()){
+        if(contraseñaDos.getEditText().getText().toString().trim().isEmpty()){
             contraseñaDos.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
             //Toast.makeText(getApplicationContext(),"No has introducido ninguna Contraseña",Toast.LENGTH_SHORT).show();
             contraseñaDos.setError("No has introducido ninguna Contraseña");
             comprobador =1;
         }
-        if(!contraseñaDos.getText().toString().equals(contraseñaUno.getText().toString())){
-            contraseñaDos.setText("");
+        if(!contraseñaDos.getEditText().getText().toString().trim().equals(contraseñaUno.getEditText().getText().toString().trim())){
+            contraseñaDos.getEditText().setText("");
             contraseñaDos.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
             //Toast.makeText(getApplicationContext(),"La contraseña no coincide",Toast.LENGTH_SHORT).show();
             contraseñaDos.setError("La contraseña no coincide");

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="400dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="30dp"
+    android:background="@android:color/transparent">
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieLoad"
+        android:layout_width="226dp"
+        android:layout_height="204dp"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/spinner_only" />
+
+    <TextView
+        android:id="@+id/porgresbarMensaje"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Cargando..."
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

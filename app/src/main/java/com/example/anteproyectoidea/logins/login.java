@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.animation.Animator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,11 +15,14 @@ import android.widget.Toast;
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 import com.example.anteproyectoidea.MainActivity;
+import com.example.anteproyectoidea.ProgressBarCargando;
 import com.example.anteproyectoidea.R;
 import com.example.anteproyectoidea.registro.Registro;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -31,12 +35,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class login extends AppCompatActivity {
 
     private FirebaseFirestore db;
-    private EditText testEmail,testContra;
+    private TextInputLayout testEmail,testContra;
     boolean EsTienda ;
     private FirebaseUser user;
     private String tipo;
     private LottieAnimationView animation;
-
+    private ProgressBarCargando progressBarCargando = new ProgressBarCargando(login.this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,18 +50,15 @@ public class login extends AppCompatActivity {
         testContra = findViewById(R.id.passwordlogin);
         db = FirebaseFirestore.getInstance();
         animation = findViewById(R.id.loginAnimation);
-        empezarAnimacion(animation);
-
-    }
-
-    private void empezarAnimacion(LottieAnimationView animation) {
-        animation.setAnimation(R.raw.spinner_only);
-
-        animation.playAnimation();
 
 
 
     }
+
+
+
+
+
     private void goodAnimation(){
         animation.setAnimation(R.raw.spinner_only);
         animation.playAnimation();
@@ -71,10 +72,7 @@ public class login extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-
-
                 goHomeUser();
-
             }
 
             @Override
@@ -93,9 +91,9 @@ public class login extends AppCompatActivity {
 
     public void login(View view) {
 
-        if(isEmailValid(testEmail.getText().toString())){
+        if(isEmailValid(testEmail.getEditText().getText().toString().trim())){
 
-            Registro.mAuth.signInWithEmailAndPassword(testEmail.getText().toString(),testContra.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            Registro.mAuth.signInWithEmailAndPassword(testEmail.getEditText().getText().toString().trim(),testContra.getEditText().getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
@@ -145,11 +143,23 @@ public class login extends AppCompatActivity {
     }
 
     public void goHomeUser(){
-        //goodAnimation();
-        Toast.makeText(getApplicationContext(),"No es tienda",Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.putExtra("esGoogle",false);
-        startActivity(intent);
+        progressBarCargando.StarProgressBar();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressBarCargando.finishProgressBar();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("esGoogle",false);
+                progressBarCargando.finishProgressBar();
+                startActivity(intent);
+               finish();
+            }
+        }, 2000);
+
+
+
     }
     public void goHomeShop(){
         //intent tiendas

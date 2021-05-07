@@ -15,11 +15,11 @@
         android:id="@+id/nav_gallery"
         android:name="com.example.anteproyectoidea.ui.pedidos.PedidosFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragmen_pedidos_usuario" />
 
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.example.anteproyectoidea.ui.editarperfil.EditarPerfilFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_editar_usuario" />
 </navigation>

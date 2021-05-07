@@ -1,49 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/Carne"
-    tools:context=".logins.login">
+    tools:context=".logins.login"
+    android:orientation="vertical"
+    android:gravity="center|top">
 
 
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="100dp"/>
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/loginAnimation"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginEnd="136dp"
-        android:layout_marginBottom="456dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.446" />
+        android:layout_width="300dp"
+        android:layout_height="80dp"
 
-    <EditText
+        android:background="@android:color/transparent"
+        android:hint="Correo Electronico"
+        android:textColorHint="@color/quantum_grey700"
+        app:boxBackgroundColor="@android:color/transparent"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeErrorColor="@android:color/holo_red_dark"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@android:drawable/stat_notify_error"
+        app:errorIconTint="@android:color/holo_red_dark"
+        app:placeholderTextColor="@color/black"
+        app:startIconDrawable="@android:drawable/ic_dialog_email"
+        app:startIconTint="@color/black">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:text=""
+            android:textColor="@color/black"
+            android:textColorHint="@android:color/white" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordlogin"
-        android:hint="Pasword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.545" />
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+
+        android:background="@android:color/transparent"
+        android:hint="Correo Electronico"
+        android:textColorHint="@color/quantum_grey700"
+        app:boxBackgroundColor="@android:color/transparent"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeErrorColor="@android:color/holo_red_dark"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@android:drawable/stat_notify_error"
+        app:errorIconTint="@android:color/holo_red_dark"
+        app:placeholderTextColor="@color/black"
+        app:startIconDrawable="@android:drawable/ic_lock_lock"
+        app:startIconTint="@color/black">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:text=""
+            android:textColor="@color/black"
+            android:textColorHint="@android:color/white" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 
 
     <RelativeLayout
@@ -76,9 +111,21 @@
             android:textStyle="bold" />
 
     </RelativeLayout>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="100dp"/>
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="¿Has olvidado tu contraseña?"
+    ></TextView>
+    <TextView
+        android:id="@+id/changePassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Haz Click para cambiarla"></TextView>
 
 
 
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

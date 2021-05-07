@@ -20,7 +20,7 @@
 
 
     <color name="textcolor">#1A1A1A</color>
-    <color name="transparent">#80B4FCD0</color>
+    <color name="transparent">#80000000</color>
     <color name="logo">#444c5c</color>
     <color name="logo_transparente">#80B4FCD0</color>
     <color name="primaryLightColortransparente">#80ffffd4</color>

@@ -19,5 +19,6 @@
     <string name="text_subrayado"><u>Informacion Personal</u></string>
     <string name="elige_imagen"><u>Seleciona una imagen</u></string>
     <string name="direccion"><u>Seleciona direccion</u></string>
+    <string name="emailypass"><u>Correo electronico</u></string>
 
 </resources>
