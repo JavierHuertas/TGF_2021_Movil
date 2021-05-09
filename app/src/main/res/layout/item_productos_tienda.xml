@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/itemProductos"
+    android:layout_margin="5dp"
+    android:elevation="2dp">
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:elevation="50dp"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/listProducImagen"
+        android:layout_width="200dp"
+        android:layout_height="147dp"
+        android:elevation="150dp"
+       />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"/>
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center">
+    <TextView
+        android:id="@+id/listProducNombre"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_weight="1"
+        android:text="nombre del item"/>
+
+        <TextView
+            android:id="@+id/listProducPrecio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Precio" />
+    </LinearLayout>
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="12dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="12dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+
+        <Button
+            android:id="@+id/listProducComprar"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:textColor="@color/logo"
+            android:outlineAmbientShadowColor="@color/Carne"
+            android:text="Comprar"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>
+
+
+</LinearLayout>

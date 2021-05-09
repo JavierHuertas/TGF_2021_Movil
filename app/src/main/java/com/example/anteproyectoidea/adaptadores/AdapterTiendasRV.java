@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.anteproyectoidea.MainActivity;
 import com.example.anteproyectoidea.R;
+import com.example.anteproyectoidea.TiendaUsuarios;
 import com.example.anteproyectoidea.dto.TiendaDTO;
 import com.example.anteproyectoidea.logins.login;
 import com.example.anteproyectoidea.registro.Registro;
@@ -61,10 +62,8 @@ public class AdapterTiendasRV extends FirestoreRecyclerAdapter<TiendaDTO, Adapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(v.getId()==holder.googleMaps.getId()){
-
-
-            }
+               Intent intent = new Intent(holder.itemView.getContext(), TiendaUsuarios.class);
+                holder.itemView.getContext().startActivity(intent);
             }
         });
 

@@ -16,6 +16,9 @@ public class TiendaDTO  implements Serializable {
     private double latitud;
     private String cadenaConexion;
 
+
+
+
     public TiendaDTO(String key, String tipo,String nombreDueño, String email, String logoTienda, String nombreComercio, String localizacion,double longitud, double latitud) {
         this.key = key;
         this.tipo = tipo;
