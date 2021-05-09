@@ -1,8 +1,11 @@
 package com.example.anteproyectoidea.dto;
 
+import com.google.gson.annotations.JsonAdapter;
+
 import java.io.Serializable;
 
 public class UserDTO implements Serializable {
+
 
     private String key;
     private String tipo;
@@ -20,6 +23,12 @@ public class UserDTO implements Serializable {
         this.latitud = latitud;
         this.longitud = longitud;
         this.imagenUri = imagenUri;
+    }
+    //user para API
+    public UserDTO(String id, String nombre, String email) {
+        this.key = id;
+        this.nombre = nombre;
+        this.email = email;
     }
 
     public String getTipo() {

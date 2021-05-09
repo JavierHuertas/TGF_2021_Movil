@@ -21,51 +21,20 @@ import java.util.List;
 public class AdapterProductosRV extends RecyclerView.Adapter<AdapterProductosRV.ViewHolder>{
 
     private List<ProductoDTO> productos;
-
-    public AdapterProductosRV(List<ProductoDTO> productos) {
+    private OnButtonListenerClick onClickButton;
+    public AdapterProductosRV(List<ProductoDTO> productos,OnButtonListenerClick onClickButton) {
         this.productos = productos;
+        this.onClickButton=onClickButton;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView nombre , precio;
         private Button btnComprar;
         private ImageView imagenProducto;
+        OnButtonListenerClick onClickButton;
 
 
-
-        public TextView getNombre() {
-            return nombre;
-        }
-
-        public void setNombre(TextView nombre) {
-            this.nombre = nombre;
-        }
-
-        public TextView getPrecio() {
-            return precio;
-        }
-
-        public void setPrecio(TextView precio) {
-            this.precio = precio;
-        }
-
-        public Button getBtnComprar() {
-            return btnComprar;
-        }
-
-        public void setBtnComprar(Button btnComprar) {
-            this.btnComprar = btnComprar;
-        }
-
-        public ImageView getImagenProducto() {
-            return imagenProducto;
-        }
-
-        public void setImagenProducto(ImageView imagenProducto) {
-            this.imagenProducto = imagenProducto;
-        }
-
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView ,OnButtonListenerClick onClickButton) {
             super(itemView);
 
             nombre = itemView.findViewById(R.id.listProducNombre);
@@ -73,15 +42,17 @@ public class AdapterProductosRV extends RecyclerView.Adapter<AdapterProductosRV.
             btnComprar = itemView.findViewById(R.id.listProducComprar);
             imagenProducto = itemView.findViewById(R.id.listProducImagen);
 
-            btnComprar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(itemView.getContext(),productos.get(getAbsoluteAdapterPosition()).getNombre(),Toast.LENGTH_SHORT);
-                }
-            });
+            this.onClickButton = onClickButton;
+
+            btnComprar.setOnClickListener(this);
 
             //Picasso.get().load(imagenUri).into(imagen);
 
+        }
+
+        @Override
+        public void onClick(View v) {
+        onClickButton.onButtonClick(getAbsoluteAdapterPosition());
         }
     }
 
@@ -92,7 +63,7 @@ public class AdapterProductosRV extends RecyclerView.Adapter<AdapterProductosRV.
                 .inflate(R.layout.item_productos_tienda, parent, false);
 
 
-        return new ViewHolder(view);
+        return new ViewHolder(view,onClickButton);
     }
 
     @Override
@@ -100,13 +71,8 @@ public class AdapterProductosRV extends RecyclerView.Adapter<AdapterProductosRV.
         Picasso.get().load(productos.get(position).getUrlImagen()).into(holder.imagenProducto);
         holder.nombre.setText(productos.get(position).getNombre());
         holder.precio.setText(String.valueOf(productos.get(position).getPrecio()));
-        holder.imagenProducto.setPadding(5,5,5,5);
-        holder.imagenProducto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(holder.itemView.getContext(),"hola prueba "+productos.get(position).getNombre(),Toast.LENGTH_SHORT).show();
-            }
-        });
+        //holder.imagenProducto.setPadding(5,5,5,5);
+
 
 
     }
@@ -118,5 +84,9 @@ public class AdapterProductosRV extends RecyclerView.Adapter<AdapterProductosRV.
         return productos.size();
     }
 
+    public interface OnButtonListenerClick{
+        void onButtonClick(int posicion);
+
+    }
 
 }

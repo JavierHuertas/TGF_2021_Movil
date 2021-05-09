@@ -15,7 +15,7 @@
     <string name="facebook">Facebook</string>
     <string name="google">Google</string>
     <string name="login">Login</string>
-
+    <string name="conexionAPI">http://192.168.1.43:8080/</string>
     <string name="text_subrayado"><u>Informacion Personal</u></string>
     <string name="elige_imagen"><u>Seleciona una imagen</u></string>
     <string name="direccion"><u>Seleciona direccion</u></string>
