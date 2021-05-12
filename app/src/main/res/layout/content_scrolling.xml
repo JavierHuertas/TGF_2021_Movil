@@ -16,7 +16,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".TiendaUsuarios"
+    tools:context=".ui.TiendaUsuarios"
     android:fillViewport="false"
     tools:showIn="@layout/activity_tienda_usuarios"
     android:background="@color/Carne"

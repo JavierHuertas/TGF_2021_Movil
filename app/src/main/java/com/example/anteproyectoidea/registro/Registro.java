@@ -13,10 +13,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.example.anteproyectoidea.EmpresaRegistrarLogin;
 import com.example.anteproyectoidea.MainActivity;
 import com.example.anteproyectoidea.R;
-import com.example.anteproyectoidea.RegistroTienda;
 import com.example.anteproyectoidea.dto.UserDTO;
 import com.example.anteproyectoidea.logins.login;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;

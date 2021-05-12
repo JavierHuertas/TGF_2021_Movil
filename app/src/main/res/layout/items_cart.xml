@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_margin="5dp"
+    android:layout_height="145dp"
+    android:orientation="horizontal"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/carritoImagen"
+        android:layout_width="150dp"
+        android:layout_height="match_parent">
+
+    </ImageView>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/nombreCarrito"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="nombre"></TextView>
+        <TextView
+            android:id="@+id/cantidadCarrito"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="cantidad"></TextView>
+    </LinearLayout>
+    <Space
+        android:layout_width="15dp"
+        android:layout_height="match_parent"></Space>
+    <TextView
+        android:id="@+id/precioTotalProductoCarrito"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Precio"></TextView>
+    <ImageButton
+        android:id="@+id/carritoBorrar"
+        android:background="#00ffffff"
+        android:layout_width="50dp"
+        android:src="@drawable/ic_trash_can"
+        android:layout_height="50dp"></ImageButton>
+
+</LinearLayout>

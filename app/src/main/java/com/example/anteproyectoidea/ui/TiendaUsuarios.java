@@ -1,19 +1,20 @@
-package com.example.anteproyectoidea;
+package com.example.anteproyectoidea.ui;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
-import com.example.anteproyectoidea.adaptadores.AdapterProductos;
+import com.example.anteproyectoidea.BokyTakeAPI;
+import com.example.anteproyectoidea.R;
+import com.example.anteproyectoidea.dialogos.DialogCarrito;
+import com.example.anteproyectoidea.dialogos.DialogHacerPedido;
 import com.example.anteproyectoidea.adaptadores.AdapterProductosRV;
 import com.example.anteproyectoidea.dto.ProductoDTO;
-import com.example.anteproyectoidea.dto.UserDTO;
+import com.example.anteproyectoidea.dto.ProductosCantidad;
 import com.example.anteproyectoidea.dto.UserDTOAPI;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
@@ -21,12 +22,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.GridView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,14 +35,17 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class TiendaUsuarios extends AppCompatActivity implements AdapterProductosRV.OnButtonListenerClick {
+public class TiendaUsuarios extends AppCompatActivity implements AdapterProductosRV.OnButtonListenerClick, DialogHacerPedido.DialogoPedidoListener {
 
     private AdapterProductosRV adaptador;
     private List<ProductoDTO> lista;
     private RecyclerView listaProductos;
     private SwipeRefreshLayout refrescarPorductos;
     private Retrofit retrofit;
-
+    FloatingActionButton fab;
+    private ArrayList<ProductosCantidad> pedidoActual = new ArrayList<ProductosCantidad>();
+    DialogHacerPedido hacerPedido;
+    DialogCarrito carrito;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,12 +90,13 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
         //refrescarPorductos.setEnabled(true);
         //refrescarPorductos.setRefreshing(false);
         //
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                carrito = new DialogCarrito();
+                carrito.setProductosPedido(pedidoActual);
+                carrito.show(getSupportFragmentManager(),"example dialog");
             }
         });
 
@@ -166,7 +169,47 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
 
     @Override
     public void onButtonClick(int posicion) {
-        DialogHacerPedido hacerPedido = new DialogHacerPedido();
+        //Toast.makeText(getApplicationContext(),"nombre producto "+lista.get(posicion).getNombre(),Toast.LENGTH_SHORT).show();
+        hacerPedido = new DialogHacerPedido();
+        hacerPedido.producto = lista.get(posicion);
         hacerPedido.show(getSupportFragmentManager(),"example dialog");
+
+       //hacerPedido.precioProducto.setText(lista.get(posicion).getPrecio()+" €");
+        //hacerPedido.nombreProducto.setText(lista.get(posicion).getNombre());
+    }
+
+    @Override
+    public void applyPedido(ProductosCantidad productosCantidad) {
+        if(pedidoActual.isEmpty()) {
+
+            pedidoActual.add(productosCantidad);
+
+        }else{
+
+                if(pedidoActual.contains(productosCantidad)){
+                    pedidoActual.remove(productosCantidad);
+                    carrito.productosCarrito.notifyDataSetChanged();
+                    productosCantidad.setCantidad(productosCantidad.getCantidad()+ productosCantidad.getCantidad());
+                    pedidoActual.add(productosCantidad);
+
+                }else{
+                    pedidoActual.add(productosCantidad);
+
+
+
+                }
+
+        }
+
+        reCargar();
+
+    }
+
+    private void reCargar() {
+
+        Toast.makeText(getApplicationContext(),"numero de items metidos"+ pedidoActual.size(),Toast.LENGTH_SHORT).show();
+
+        fab.setImageDrawable(getDrawable(R.drawable.cart_shopping_items));
+
     }
 }

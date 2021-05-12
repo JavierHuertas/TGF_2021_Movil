@@ -3,24 +3,13 @@ package com.example.anteproyectoidea;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.anteproyectoidea.registro.RegistroTienda;
 import com.example.anteproyectoidea.logins.LoginEmpresa;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.model.RectangularBounds;
-import com.google.android.libraries.places.api.model.TypeFilter;
-import com.google.android.libraries.places.api.net.PlacesClient;
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
-import com.google.firebase.firestore.model.Values;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Random;
 
 public class EmpresaRegistrarLogin extends AppCompatActivity {
 

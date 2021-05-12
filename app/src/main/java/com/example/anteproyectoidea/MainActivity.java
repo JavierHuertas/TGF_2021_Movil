@@ -51,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         Boolean esGoogle =bundle.getBoolean("esGoogle");
 
-        Toast.makeText(getApplicationContext(),esGoogle+"",Toast.LENGTH_LONG).show();
-        Toast.makeText(getApplicationContext(),Registro.mAuth.getUid(),Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),esGoogle+"",Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(),Registro.mAuth.getUid(),Toast.LENGTH_LONG).show();
 
         NavigationView navigationView = findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
@@ -145,11 +145,6 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    public String[] infoUsuarioNoGoogle(String email,String nombre,String uri){
 
-        String[] array = {email,nombre,uri};
-
-        return array;
-    }
 
     }

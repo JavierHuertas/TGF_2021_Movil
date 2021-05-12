@@ -55,7 +55,7 @@
         android:layout_height="80dp"
 
         android:background="@android:color/transparent"
-        android:hint="Correo Electronico"
+        android:hint="Contraseña"
         android:textColorHint="@color/quantum_grey700"
         app:boxBackgroundColor="@android:color/transparent"
         app:boxBackgroundMode="outline"

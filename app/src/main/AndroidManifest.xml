@@ -19,13 +19,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AnteproyectoIdea">
         <activity
-            android:name=".TiendaUsuarios"
+            android:name=".ui.TiendaUsuarios"
             android:label="@string/title_activity_tienda_usuarios"
             android:theme="@style/Theme.AnteproyectoIdea.NoActionBar"></activity>
 
 
 
-        <activity android:name=".ProgressBarCargando" />
+        <activity android:name=".dialogos.ProgressBarCargando" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -34,13 +34,13 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".RegistroTienda" />
+        <activity android:name=".registro.RegistroTienda" />
         <activity android:name=".logins.LoginEmpresa" />
         <activity android:name=".EmpresaRegistrarLogin" />
         <activity android:name=".logins.login" />
         <activity android:name=".registro.RegistrarseUsuarios" />
         <activity android:name=".registro.Registro" />
-        <activity android:name=".splash">
+        <activity android:name=".utils.splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

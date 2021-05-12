@@ -1,4 +1,4 @@
-package com.example.anteproyectoidea;
+package com.example.anteproyectoidea.utils;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.os.StrictMode;
 import android.widget.TextView;
 
 
+import com.example.anteproyectoidea.R;
 import com.example.anteproyectoidea.registro.Registro;
 
 

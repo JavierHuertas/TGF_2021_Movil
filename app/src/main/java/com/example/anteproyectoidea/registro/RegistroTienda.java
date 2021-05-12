@@ -1,4 +1,4 @@
-package com.example.anteproyectoidea;
+package com.example.anteproyectoidea.registro;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -16,15 +15,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.anteproyectoidea.R;
+import com.example.anteproyectoidea.dialogos.ProgressBarCargando;
 import com.example.anteproyectoidea.dto.TiendaDTO;
-import com.example.anteproyectoidea.logins.LoginEmpresa;
-import com.example.anteproyectoidea.logins.login;
-import com.example.anteproyectoidea.registro.Registro;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;

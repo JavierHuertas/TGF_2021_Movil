@@ -1,32 +1,24 @@
 package com.example.anteproyectoidea.adaptadores;
 
 
-import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.anteproyectoidea.MainActivity;
 import com.example.anteproyectoidea.R;
-import com.example.anteproyectoidea.TiendaUsuarios;
+import com.example.anteproyectoidea.ui.TiendaUsuarios;
 import com.example.anteproyectoidea.dto.TiendaDTO;
-import com.example.anteproyectoidea.logins.login;
-import com.example.anteproyectoidea.registro.Registro;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 public class AdapterTiendasRV extends FirestoreRecyclerAdapter<TiendaDTO, AdapterTiendasRV.TiendasViewHolder> {

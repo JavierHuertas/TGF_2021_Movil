@@ -1,12 +1,8 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <item name="colorPrimary">@color/Carne</item>
-        <item name="colorPrimaryDark">@color/logo</item>
-        <item name="colorAccent">@color/primaryLightColor</item>
 
-    </style>
+
+
     <style name="Theme.MyApp" parent="Theme.MaterialComponents.Light.Bridge">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/Carne</item>

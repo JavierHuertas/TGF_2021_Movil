@@ -1,9 +1,11 @@
-package com.example.anteproyectoidea;
+package com.example.anteproyectoidea.dialogos;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.widget.TextView;
+
+import com.example.anteproyectoidea.R;
 
 public class ProgressBarCargando {
 

@@ -21,4 +21,7 @@ public interface BokyTakeAPI {
     @POST("/usuarios/nuevo")
     Call<Map<String,String>> crearUsuario(@Body UserDTOAPI user);
 
+    @POST("/usuarios/nuevo")
+    Call<Map<String,String>> crearTienda(@Body TiendaDTOAPI tienda);
+
 }
