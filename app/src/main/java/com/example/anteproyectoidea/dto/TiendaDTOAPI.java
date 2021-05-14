@@ -1,4 +1,4 @@
-package com.example.anteproyectoidea;
+package com.example.anteproyectoidea.dto;
 
 public class TiendaDTOAPI {
 

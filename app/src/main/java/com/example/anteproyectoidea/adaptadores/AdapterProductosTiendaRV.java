@@ -5,9 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,11 +16,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class AdapterProductosRV extends RecyclerView.Adapter<AdapterProductosRV.ViewHolder>{
+public class AdapterProductosTiendaRV extends RecyclerView.Adapter<AdapterProductosTiendaRV.ViewHolder>{
 
     private List<ProductoDTO> productos;
-    private OnButtonListenerClick onClickButton;
-    public AdapterProductosRV(List<ProductoDTO> productos, OnButtonListenerClick onClickButton) {
+    private AdapterProductosTiendaRV.OnButtonListenerClick onClickButton;
+
+    public AdapterProductosTiendaRV(List<ProductoDTO> productos, AdapterProductosTiendaRV.OnButtonListenerClick onClickButton) {
         this.productos = productos;
         this.onClickButton=onClickButton;
     }
@@ -31,19 +30,19 @@ public class AdapterProductosRV extends RecyclerView.Adapter<AdapterProductosRV.
         private TextView nombre , precio;
         private Button btnComprar;
         private ImageView imagenProducto;
-        OnButtonListenerClick onClickButton;
+        private ImageView monstrarApp;
+        AdapterProductosTiendaRV.OnButtonListenerClick onClickButton;
 
 
-        public ViewHolder(@NonNull View itemView ,OnButtonListenerClick onClickButton) {
+        public ViewHolder(@NonNull View itemView , AdapterProductosTiendaRV.OnButtonListenerClick onClickButton) {
             super(itemView);
 
-            nombre = itemView.findViewById(R.id.listProducNombre);
-            precio = itemView.findViewById(R.id.listProducPrecio);
-            btnComprar = itemView.findViewById(R.id.listProducComprar);
-            imagenProducto = itemView.findViewById(R.id.listProducImagen);
-
+            nombre = itemView.findViewById(R.id.listProducNombretienda);
+            precio = itemView.findViewById(R.id.listProducPreciotienda);
+            btnComprar = itemView.findViewById(R.id.listProducComprartienda);
+            imagenProducto = itemView.findViewById(R.id.listProducImagentienda);
+            monstrarApp = itemView.findViewById(R.id.monstrarAppicn);
             this.onClickButton = onClickButton;
-
             btnComprar.setOnClickListener(this);
 
             //Picasso.get().load(imagenUri).into(imagen);
@@ -51,24 +50,29 @@ public class AdapterProductosRV extends RecyclerView.Adapter<AdapterProductosRV.
         }
 
         @Override
-        public void onClick(View v) {
-        onClickButton.onButtonClick(getAbsoluteAdapterPosition());
+        public void onClick(View v) { onClickButton.onButtonClick(getAbsoluteAdapterPosition());
         }
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdapterProductosTiendaRV.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_productos_tienda, parent, false);
+                .inflate(R.layout.item_tienda_productos, parent, false);
 
 
-        return new ViewHolder(view,onClickButton);
+        return new AdapterProductosTiendaRV.ViewHolder(view, onClickButton);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterProductosTiendaRV.ViewHolder holder, int position) {
         Picasso.get().load(productos.get(position).getUrlImagen()).into(holder.imagenProducto);
+        if(productos.get(position).getMostrarApp()){
+           holder.monstrarApp.setImageResource(R.drawable.ic_si_mosntrar);
+        }else{
+            holder.monstrarApp.setImageResource(R.drawable.ic_no_mosntrar);
+        }
+
         holder.nombre.setText(productos.get(position).getNombre());
         holder.precio.setText(String.valueOf(productos.get(position).getPrecio()+" €"));
         //holder.imagenProducto.setPadding(5,5,5,5);
@@ -90,3 +94,6 @@ public class AdapterProductosRV extends RecyclerView.Adapter<AdapterProductosRV.
     }
 
 }
+
+
+

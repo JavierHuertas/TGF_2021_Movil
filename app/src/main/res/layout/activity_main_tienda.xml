@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".MainTienda">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:tooltipText="hola"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        android:fitsSystemWindows="true"
+        android:theme="@style/Theme.AnteproyectoIdea.AppBarOverlay">
+
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout_tienda"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_anchor="@+id/app_bar"
+            app:layout_anchorGravity="center"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:toolbarId="@+id/toolbar">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin"
+            app:menu="@menu/menu_main_tienda"
+            app:popupTheme="@style/Theme.AnteproyectoIdea.PopupOverlay" >
+
+
+
+        </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <include
+        layout="@layout/content_scrolling_tienda" />
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:layout_marginTop="390dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:fab_expandDirection="up"
+        app:layout_anchor="@+id/app_bar"
+        app:layout_anchorGravity="end|bottom"
+        app:fab_addButtonColorNormal="@color/logo"
+        app:fab_addButtonColorPressed="@color/black"
+        app:fab_labelsPosition="left"
+        app:fab_labelStyle="@style/Theme.AnteproyectoIdea">
+
+
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="@color/transparent"
+            app:fab_colorPressed="@color/logo"
+            app:fab_icon="@drawable/ic_pedidos_tienda"/>
+            <!--app:fab_title="hola"-->
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            app:fab_colorNormal="@color/transparent"
+            app:fab_colorPressed="@color/logo"
+            android:layout_height="wrap_content"
+            app:fab_icon="@drawable/ic_plus_new"
+           />
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

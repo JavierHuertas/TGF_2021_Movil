@@ -1,7 +1,7 @@
 package com.example.anteproyectoidea;
 
 import com.example.anteproyectoidea.dto.ProductoDTO;
-import com.example.anteproyectoidea.dto.UserDTO;
+import com.example.anteproyectoidea.dto.TiendaDTOAPI;
 import com.example.anteproyectoidea.dto.UserDTOAPI;
 
 import java.util.List;

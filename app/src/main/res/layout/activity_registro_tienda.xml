@@ -90,7 +90,7 @@
                     android:maxLines="1"
                     android:text=""
                     android:textColor="@color/black"
-                    android:textColorHint="@android:color/white" />
+                    android:textColorHint="@android:color/black" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

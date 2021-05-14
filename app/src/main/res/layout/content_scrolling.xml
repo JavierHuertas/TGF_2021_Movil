@@ -15,18 +15,13 @@
     android:id="@+id/scrollViewUp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".ui.TiendaUsuarios"
     android:fillViewport="false"
     tools:showIn="@layout/activity_tienda_usuarios"
     android:background="@color/Carne"
     >
 
-
-
-
     <androidx.recyclerview.widget.RecyclerView
-
         android:gravity="center"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"

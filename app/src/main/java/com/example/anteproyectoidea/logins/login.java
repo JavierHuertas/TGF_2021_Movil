@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.anteproyectoidea.MainActivity;
+import com.example.anteproyectoidea.MainTienda;
 import com.example.anteproyectoidea.dialogos.ProgressBarCargando;
 import com.example.anteproyectoidea.R;
 import com.example.anteproyectoidea.registro.Registro;
@@ -153,7 +154,9 @@ public class login extends AppCompatActivity {
 
     }
     public void goHomeShop(){
-        //intent tiendas
+        Intent intent = new Intent(getApplicationContext(), MainTienda.class);
+        startActivity(intent);
+        //progressBarCargando.finishProgressBar();
         Toast.makeText(getApplicationContext(),"es tienda",Toast.LENGTH_SHORT).show();
 
     }

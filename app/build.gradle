@@ -51,9 +51,10 @@ dependencies {
     //firebase analytics
     implementation 'com.google.firebase:firebase-analytics'
     //firebase auth
-    implementation 'com.google.firebase:firebase-auth:20.0.4'
+
+    implementation 'com.google.firebase:firebase-auth:21.0.0'
     //firebase FireStore
-    implementation 'com.google.firebase:firebase-firestore:22.1.2'
+    implementation 'com.google.firebase:firebase-firestore:23.0.0'
     //complementos visuales de firebase
     implementation "com.firebaseui:firebase-ui-auth:6.4.0"
     implementation 'com.firebaseui:firebase-ui-firestore:6.4.0'
@@ -62,6 +63,8 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
 
+    //menu botones flotantes
+    implementation 'com.getbase:floatingactionbutton:1.10.1'
 
     //google places
     implementation 'com.google.android.libraries.places:places:2.4.0'

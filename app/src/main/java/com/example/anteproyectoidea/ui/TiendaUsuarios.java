@@ -39,6 +39,7 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
 
     private AdapterProductosRV adaptador;
     private List<ProductoDTO> lista;
+    private List<ProductoDTO> listaCorrecta = new ArrayList<>();
     private RecyclerView listaProductos;
     private SwipeRefreshLayout refrescarPorductos;
     private Retrofit retrofit;
@@ -51,15 +52,20 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tienda_usuarios);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         NestedScrollView scrollview = (NestedScrollView) findViewById(R.id.scrollViewUp);
         scrollview.setNestedScrollingEnabled(true);
+
         toolbar.setBackgroundColor(getResources().getColor(R.color.Carne));
         setSupportActionBar(toolbar);
+
         CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         toolBarLayout.setTitle("tienda");
+
         toolBarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.logo));
         toolBarLayout.setExpandedTitleColor(getResources().getColor(R.color.logo));
         toolBarLayout.setBackgroundColor(getResources().getColor(R.color.Carne));
+
         LinearLayoutManager manager = new LinearLayoutManager(this);
         refrescarPorductos = findViewById(R.id.refreshProductos);
        retrofit = new Retrofit.Builder()
@@ -148,10 +154,17 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
             @Override
             public void onResponse(Call<List<ProductoDTO>> call, Response<List<ProductoDTO>> response) {
                 if(response.isSuccessful()){
+                    listaCorrecta.clear();
                     lista = response.body();
 
+                    for (ProductoDTO pdto: lista){
+                        if(pdto.getMostrarApp()){
+                            listaCorrecta.add(pdto);
+                        }
+                    }
 
-                    adaptador = new AdapterProductosRV(lista,TiendaUsuarios.this::onButtonClick);
+
+                    adaptador = new AdapterProductosRV(listaCorrecta,TiendaUsuarios.this::onButtonClick);
                     Toast.makeText(getApplicationContext(),"HOLA???"+adaptador.getItemCount(),Toast.LENGTH_SHORT).show();
 
                     listaProductos.setAdapter(adaptador);
