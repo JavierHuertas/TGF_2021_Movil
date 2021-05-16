@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditarProducto"
+    android:orientation="vertical"
+    android:background="@color/Carne">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="45dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:text="@string/imagen_producto"></TextView>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp"/>
+            <ImageView
+                android:id="@+id/editarimagenProdcuto"
+                android:layout_width="180dp"
+                android:src="@drawable/ic_producto"
+                android:layout_height="180dp">
+
+            </ImageView>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp"/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editarnombreProducto"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:background="@android:color/transparent"
+        android:hint="Nombre Producto"
+        android:textColorHint="@color/quantum_grey700"
+        app:boxBackgroundColor="@android:color/transparent"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeErrorColor="@android:color/holo_red_dark"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@android:drawable/stat_notify_error"
+        app:errorIconTint="@android:color/holo_red_dark"
+        app:placeholderTextColor="@color/black"
+        app:startIconDrawable="@drawable/ic_producto"
+        app:startIconTint="@color/black">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLines="1"
+            android:text=""
+            android:textColor="@color/black"
+            android:textColorHint="@android:color/white" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp"/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editardescripcionProducto"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:hint="Descripcion producto"
+        android:textColorHint="@color/quantum_grey700"
+        app:boxBackgroundColor="@android:color/transparent"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeErrorColor="@android:color/holo_red_dark"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@android:drawable/stat_notify_error"
+        app:errorIconTint="@android:color/holo_red_dark"
+        app:placeholderTextColor="@color/black"
+        app:startIconDrawable="@drawable/ic_descripcion"
+        app:startIconTint="@color/black">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:maxLines="10"
+            android:text=""
+            android:textColor="@color/black"
+            android:textColorHint="@android:color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editarprecioProducto"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="Precio"
+                android:textColorHint="@color/quantum_grey700"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeErrorColor="@android:color/holo_red_dark"
+                app:errorEnabled="true"
+                app:errorIconDrawable="@android:drawable/stat_notify_error"
+                app:errorIconTint="@android:color/holo_red_dark"
+                app:placeholderTextColor="@color/black"
+                app:startIconDrawable="@drawable/ic_euro"
+                app:startIconTint="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textColorHint="@android:color/white" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="30dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="Stock"/>
+                <NumberPicker
+                    android:id="@+id/editarcantidaTienda"
+                    android:layout_width="wrap_content"
+                    android:layout_height="150dp"/>
+            </LinearLayout>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="25dp"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="25dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:text="¿Ocultar producto?"/>
+                <Space
+                    android:layout_width="15dp"
+                    android:layout_height="match_parent"></Space>
+                <CheckBox
+                    android:id="@+id/editarVisibleProducto"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:button="@drawable/check_selector"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_height="wrap_content"></CheckBox>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/btnCancelar"
+                android:layout_width="168dp"
+                android:layout_height="59dp"
+
+                android:background="@drawable/boton_login_empresa"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.703">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/ralewayregular"
+                    android:gravity="center"
+                    android:text="Cancelar"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+                <Space
+                    android:layout_width="15dp"
+                    android:layout_height="match_parent"/>
+                <RelativeLayout
+                android:id="@+id/btnAceptar"
+                android:layout_width="168dp"
+                android:layout_height="59dp"
+                android:background="@drawable/boton_login_empresa"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.703">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/ralewayregular"
+                    android:gravity="center"
+                    android:text="Aceptar"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+        </LinearLayout>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="45dp"/>
+</LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

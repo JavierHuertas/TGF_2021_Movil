@@ -34,6 +34,7 @@
             android:layout_height="?attr/actionBarSize"
             app:layout_collapseMode="pin"
             app:menu="@menu/menu_main_tienda"
+
             app:popupTheme="@style/Theme.AnteproyectoIdea.PopupOverlay" >
 
 

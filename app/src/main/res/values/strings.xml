@@ -20,6 +20,7 @@
     <string name="elige_imagen"><u>Seleciona una imagen</u></string>
     <string name="direccion"><u>Seleciona direccion</u></string>
     <string name="emailypass"><u>Correo electronico</u></string>
+    <string name="imagen_producto"><u>Imagen producto</u></string>
     <string name="title_activity_tienda_usuarios">ScrollingActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -110,6 +111,6 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-    <string name="title_activity_main_tienda">ScrollingActivity</string>
+    <string name="title_activity_main_tienda">Tienda</string>
 
 </resources>

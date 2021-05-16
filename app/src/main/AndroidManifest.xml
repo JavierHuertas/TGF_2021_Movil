@@ -18,10 +18,11 @@
         android:roundIcon="@mipmap/ic_launcher_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AnteproyectoIdea">
+        <activity android:name=".EditarProducto"></activity>
         <activity
             android:name=".MainTienda"
             android:label="@string/title_activity_main_tienda"
-            android:theme="@style/Theme.AnteproyectoIdea.NoActionBar"></activity>
+            android:theme="@style/Theme.AnteproyectoIdea.NoActionBar" />
         <activity
             android:name=".ui.TiendaUsuarios"
             android:label="@string/title_activity_tienda_usuarios"

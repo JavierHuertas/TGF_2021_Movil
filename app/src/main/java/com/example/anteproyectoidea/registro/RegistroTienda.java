@@ -130,11 +130,9 @@ public class RegistroTienda extends AppCompatActivity {
                             longitudTienda = latLng.longitude;
                             latitudTienda = latLng.latitude;
                             //Toast.makeText(getApplicationContext(),longitudTienda+" "+latitudTienda,Toast.LENGTH_SHORT).show();
-
                             tiendaDTO = new TiendaDTO(Registro.mAuth.getUid(),"tienda",nombreDuenio.getEditText().getText().toString().trim(),email.getEditText().getText().toString().trim()
                                     ," ",nombreEstabelecimiento.getEditText().getText().toString().trim(),direccionTienda.getEditText().getText().toString().trim(),longitudTienda,latitudTienda);
                             tiendaDTO.setContrasenia(contrasenia);
-
                             db.collection("shops").document(Registro.mAuth.getUid()).set(tiendaDTO);
 
                             if (uri != null) {

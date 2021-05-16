@@ -1,15 +1,22 @@
 package com.example.anteproyectoidea;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.anteproyectoidea.adaptadores.AdapterProductosRV;
 import com.example.anteproyectoidea.adaptadores.AdapterProductosTiendaRV;
 import com.example.anteproyectoidea.dialogos.DialogHacerPedido;
 import com.example.anteproyectoidea.dto.ProductoDTO;
+import com.example.anteproyectoidea.registro.Registro;
 import com.example.anteproyectoidea.ui.TiendaUsuarios;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -37,13 +44,15 @@ public class MainTienda extends AppCompatActivity implements AdapterProductosTie
     private List<ProductoDTO> lista;
     private SwipeRefreshLayout refrescarPorductos;
     private Retrofit retrofit;
+    CollapsingToolbarLayout toolBarLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tienda);
         LinearLayoutManager manager = new LinearLayoutManager(this);
-        CollapsingToolbarLayout toolBarLayout = findViewById(R.id.toolbar_layout_tienda);
-        toolBarLayout.setTitle("bolita");
+        toolBarLayout = findViewById(R.id.toolbar_layout_tienda);
+        findNameShop();
+
         refrescarPorductos = findViewById(R.id.refreshProductostienda);
         retrofit = new Retrofit.Builder()
                 .baseUrl(getResources().getString(R.string.conexionAPI))
@@ -68,6 +77,24 @@ public class MainTienda extends AppCompatActivity implements AdapterProductosTie
                         .setAction("Action", null).show();
             }
         });*/
+    }
+
+    private void findNameShop() {
+      String nameShop = "error";
+
+        FirebaseFirestore.getInstance().collection("shops").document(Registro.mAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()){
+                   toolBarLayout.setTitle(documentSnapshot.getString("nombreComercio"));
+
+
+                    //Picasso.get().load(uri2).into();
+                }else{
+                    Toast.makeText(getApplicationContext(),"Hay un error buscar solucioness",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     public void getProductos(){
@@ -104,8 +131,14 @@ public class MainTienda extends AppCompatActivity implements AdapterProductosTie
     }
     @Override
     public void onButtonClick(int posicion) {
-        //Toast.makeText(getApplicationContext(),"nombre producto "+lista.get(posicion).getNombre(),Toast.LENGTH_SHORT).show();
-        //hacerPedido.precioProducto.setText(lista.get(posicion).getPrecio()+" €");
-        //hacerPedido.nombreProducto.setText(lista.get(posicion).getNombre());
+        Intent intent = new Intent(getApplicationContext(),EditarProducto.class);
+        intent.putExtra("editar",lista.get(posicion));
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getProductos();
     }
 }
