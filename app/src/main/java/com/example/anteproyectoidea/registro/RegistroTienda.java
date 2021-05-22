@@ -19,9 +19,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.anteproyectoidea.BokyTakeAPI;
 import com.example.anteproyectoidea.R;
 import com.example.anteproyectoidea.dialogos.ProgressBarCargando;
 import com.example.anteproyectoidea.dto.TiendaDTO;
+import com.example.anteproyectoidea.dto.TiendaDTOAPI;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -45,6 +47,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegistroTienda extends AppCompatActivity {
 
@@ -131,7 +140,7 @@ public class RegistroTienda extends AppCompatActivity {
                             latitudTienda = latLng.latitude;
                             //Toast.makeText(getApplicationContext(),longitudTienda+" "+latitudTienda,Toast.LENGTH_SHORT).show();
                             tiendaDTO = new TiendaDTO(Registro.mAuth.getUid(),"tienda",nombreDuenio.getEditText().getText().toString().trim(),email.getEditText().getText().toString().trim()
-                                    ," ",nombreEstabelecimiento.getEditText().getText().toString().trim(),direccionTienda.getEditText().getText().toString().trim(),longitudTienda,latitudTienda);
+                                    ,ImagenDefault,nombreEstabelecimiento.getEditText().getText().toString().trim(),direccionTienda.getEditText().getText().toString().trim(),longitudTienda,latitudTienda);
                             tiendaDTO.setContrasenia(contrasenia);
                             db.collection("shops").document(Registro.mAuth.getUid()).set(tiendaDTO);
 
@@ -164,6 +173,27 @@ public class RegistroTienda extends AppCompatActivity {
 
                             progressBarCargando.StarProgressBar();
                             db.collection("shops").document(Registro.mAuth.getUid()).set(tiendaDTO);
+                            Retrofit retro = new Retrofit.Builder()
+                                    .baseUrl(getResources().getString(R.string.conexionAPI))
+                                    .addConverterFactory(GsonConverterFactory.create())
+                                    .build();
+
+                            BokyTakeAPI bokyTakeAPI = retro.create(BokyTakeAPI.class);
+
+                            Call<Map<String,String>> llamada = bokyTakeAPI.crearTienda(new TiendaDTOAPI(tiendaDTO.getKey(),tiendaDTO.getNombreComercio(),tiendaDTO.getLocalizacion(),tiendaDTO.getContrasenia(),tiendaDTO.getEmail()));
+
+                            llamada.enqueue(new Callback<Map<String, String>>() {
+                                @Override
+                                public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<Map<String, String>> call, Throwable t) {
+
+                                }
+                            });
+
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
                                 @Override

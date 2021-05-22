@@ -50,6 +50,7 @@ public class RegistrarseUsuarios extends AppCompatActivity {
     private static final int IMAGEN_GALLERY = 101;
     private FirebaseFirestore db;
     private Uri uri;
+    private String defaultImagen ="https://firebasestorage.googleapis.com/v0/b/jardinerias-paca.appspot.com/o/Imagenusuario%2Fdefault_users.png?alt=media&token=a3487ccd-64f3-4872-8c0d-6335cbbf8b64";
     private StorageReference mReference;
     private FusedLocationProviderClient client;
     private UserDTO userDTO;
@@ -138,7 +139,7 @@ public class RegistrarseUsuarios extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        userDTO = new UserDTO(Registro.mAuth.getUid(),"usuario", nombre.getEditText().getText().toString().trim(), email.getEditText().getText().toString().trim(), " ", latitud, longitud);
+                                        userDTO = new UserDTO(Registro.mAuth.getUid(),"usuario", nombre.getEditText().getText().toString().trim(), email.getEditText().getText().toString().trim(), defaultImagen, latitud, longitud);
                                         if (uri != null) {
                                             mReference = mReference.child("Imagenusuario/" + uri.getLastPathSegment() + "User" + Registro.mAuth.getUid());
                                             UploadTask uploadTask = mReference.putFile(uri);

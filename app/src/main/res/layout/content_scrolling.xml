@@ -20,6 +20,92 @@
     tools:showIn="@layout/activity_tienda_usuarios"
     android:background="@color/Carne"
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/tieneProductos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/buscarPorNombre"
+                android:layout_width="250dp"
+                android:layout_height="70dp"
+                android:background="@android:color/transparent"
+                android:hint="Nombre Producto"
+                android:textColorHint="@color/quantum_grey700"
+                app:boxBackgroundColor="@android:color/transparent"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeErrorColor="@android:color/holo_red_dark"
+                app:errorEnabled="true"
+                app:errorIconDrawable="@android:drawable/stat_notify_error"
+                app:errorIconTint="@android:color/holo_red_dark"
+                app:placeholderTextColor="@color/black"
+                app:startIconDrawable="@drawable/ic_producto"
+                app:startIconTint="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:textSize="10dp"
+                    android:maxLines="1"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textColorHint="@android:color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <Space
+                android:layout_width="25dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/buscarfiltro1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Buscar"/>
+        </LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="25dp"/>
+    </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/noProductos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="75dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No hay productos Disponibles por el momento\nPrueba a Refrescar"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:id="@+id/textoEnseñar"/>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="75dp"/>
+            <Button
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="recargar pagina"
+                android:id="@+id/recargarSinProducto"/>
+        </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:gravity="center"
@@ -31,7 +117,7 @@
         android:id="@+id/listProductos"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
+    </LinearLayout>
 
 
 </androidx.core.widget.NestedScrollView>

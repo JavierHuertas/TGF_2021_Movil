@@ -27,6 +27,15 @@ public class ProductoDTO implements Serializable {
         this.descripcion=descripcion;
     }
 
+    public ProductoDTO(String nombre, double precio, int cantidad, Boolean mostrarApp, String descripcion, String urlImg) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.cantidad = cantidad;
+        this.mostrarApp = mostrarApp;
+        this.descripcion = descripcion;
+        this.urlImg = urlImg;
+    }
+
     public String getDescripcion() {
         return descripcion;
     }

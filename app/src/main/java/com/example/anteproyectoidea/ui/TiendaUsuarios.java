@@ -13,6 +13,7 @@ import com.example.anteproyectoidea.dto.UserDTOAPI;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -40,9 +44,16 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
     private AdapterProductosRV adaptador;
     private List<ProductoDTO> lista;
     private List<ProductoDTO> listaCorrecta = new ArrayList<>();
+    private List<ProductoDTO> listafiltrada = new ArrayList<>();
     private RecyclerView listaProductos;
+    private LinearLayout noProductos;
+    private TextInputLayout filtro;
+    private Button filtrar;
+    private Button refresh;
     private SwipeRefreshLayout refrescarPorductos;
     private Retrofit retrofit;
+    private String tiendaKey;
+    private String tiendaNombre;
     FloatingActionButton fab;
     private ArrayList<ProductosCantidad> pedidoActual = new ArrayList<ProductosCantidad>();
     DialogHacerPedido hacerPedido;
@@ -51,6 +62,9 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tienda_usuarios);
+        tiendaKey = getIntent().getStringExtra("keyTienda");
+        tiendaNombre= getIntent().getStringExtra("nombreTienda");
+        Toast.makeText(getApplicationContext(),tiendaKey,Toast.LENGTH_SHORT).show();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         NestedScrollView scrollview = (NestedScrollView) findViewById(R.id.scrollViewUp);
@@ -60,11 +74,23 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
         setSupportActionBar(toolbar);
 
         CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        toolBarLayout.setTitle("tienda");
+        toolBarLayout.setTitle(tiendaNombre);
 
         toolBarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.logo));
         toolBarLayout.setExpandedTitleColor(getResources().getColor(R.color.logo));
         toolBarLayout.setBackgroundColor(getResources().getColor(R.color.Carne));
+
+        filtro = findViewById(R.id.buscarPorNombre);
+        filtrar = findViewById(R.id.buscarfiltro1);
+        filtrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listafiltrada.clear();
+                getProductos();
+                ponerTodoOK();
+            }
+        });
+
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         refrescarPorductos = findViewById(R.id.refreshProductos);
@@ -80,6 +106,16 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
         
 
         listaProductos = findViewById(R.id.listProductos);
+        noProductos = findViewById(R.id.noProductos);
+        refresh = findViewById(R.id.recargarSinProducto);
+
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getProductos();
+                ponerTodoOK();
+            }
+        });
         //listaProductos.setLayoutManager(manager);
 
         refrescarPorductos.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -100,9 +136,15 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                carrito = new DialogCarrito();
-                carrito.setProductosPedido(pedidoActual);
-                carrito.show(getSupportFragmentManager(),"example dialog");
+                if(!pedidoActual.isEmpty()) {
+                    carrito = new DialogCarrito();
+                    carrito.setProductosPedido(pedidoActual);
+                    carrito.setIdUsuario(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    carrito.setIdTienda(tiendaKey);
+                    carrito.show(getSupportFragmentManager(), "example dialog");
+                }else{
+                    Toast.makeText(getApplicationContext(),"No tienes articulos en el carrito",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -148,7 +190,7 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
 
         BokyTakeAPI bokyTakeAPI = retrofit.create(BokyTakeAPI.class);
 
-        Call<List<ProductoDTO>> llamada = bokyTakeAPI.getProductos("keytienda1");
+        Call<List<ProductoDTO>> llamada = bokyTakeAPI.getProductos(tiendaKey);
 
         llamada.enqueue(new Callback<List<ProductoDTO>>() {
             @Override
@@ -163,11 +205,34 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
                         }
                     }
 
+                    if(filtro.getEditText().getText().toString().isEmpty()){
+                        if(!listaCorrecta.isEmpty()) {
+                            listaProductos.setVisibility(View.VISIBLE);
+                            noProductos.setVisibility(View.GONE);
+                            adaptador = new AdapterProductosRV(listaCorrecta, TiendaUsuarios.this::onButtonClick);
+                            listaProductos.setAdapter(adaptador);
+                        }else{
+                            listaProductos.setVisibility(View.GONE);
+                            noProductos.setVisibility(View.VISIBLE);
+                        }
+                    }else{
+                        for(ProductoDTO filtrado:listaCorrecta){
+                            if(filtrado.getNombre().contains(filtro.getEditText().getText().toString())){
+                                listafiltrada.add(filtrado);
+                            }
+                            if(!listafiltrada.isEmpty()) {
+                                listaProductos.setVisibility(View.VISIBLE);
+                                noProductos.setVisibility(View.GONE);
+                                adaptador = new AdapterProductosRV(listafiltrada, TiendaUsuarios.this::onButtonClick);
+                                listaProductos.setAdapter(adaptador);
+                            }else{
+                                listaProductos.setVisibility(View.GONE);
+                                noProductos.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }
 
-                    adaptador = new AdapterProductosRV(listaCorrecta,TiendaUsuarios.this::onButtonClick);
-                    Toast.makeText(getApplicationContext(),"HOLA???"+adaptador.getItemCount(),Toast.LENGTH_SHORT).show();
 
-                    listaProductos.setAdapter(adaptador);
                 }
             }
 

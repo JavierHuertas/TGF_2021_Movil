@@ -55,6 +55,8 @@ public class AdapterTiendasRV extends FirestoreRecyclerAdapter<TiendaDTO, Adapte
             @Override
             public void onClick(View v) {
                Intent intent = new Intent(holder.itemView.getContext(), TiendaUsuarios.class);
+               intent.putExtra("keyTienda",tienda.getKey());
+               intent.putExtra("nombreTienda",tienda.getNombreComercio());
                 holder.itemView.getContext().startActivity(intent);
             }
         });

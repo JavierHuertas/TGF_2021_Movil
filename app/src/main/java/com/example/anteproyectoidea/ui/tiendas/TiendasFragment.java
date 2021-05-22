@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import com.example.anteproyectoidea.adaptadores.AdapterTiendasRV;
 import com.example.anteproyectoidea.dto.TiendaDTO;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -32,6 +34,8 @@ import java.util.List;
 public class TiendasFragment extends Fragment {
 
     private FirebaseFirestore db;
+    private TextInputLayout tiendaPorNombre;
+    private Button botonBuscarNombre;
     private TiendasViewModel tiendasViewModel;
     private AdapterTiendasRV adapterRV;
     private RecyclerView tiendasView;
@@ -42,7 +46,15 @@ public class TiendasFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         tiendasView = root.findViewById(R.id.tiendaList);
         db = FirebaseFirestore.getInstance();
+        tiendaPorNombre = root.findViewById(R.id.buscarPorNombreTienda);
+        botonBuscarNombre = root.findViewById(R.id.buscarfiltro2);
 
+        botonBuscarNombre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                allShops();
+            }
+        });
         allShops();
 
 
@@ -57,9 +69,17 @@ public class TiendasFragment extends Fragment {
 
 
     public void allShops(){
+        Query query;
+        if(tiendaPorNombre.getEditText().getText().toString().isEmpty()){
+            query = FirebaseFirestore.getInstance()
+                    .collection("shops");
+        }else {
+            query = FirebaseFirestore.getInstance().collection("shops").whereEqualTo("nombreComercio",tiendaPorNombre.getEditText().getText().toString());
+        }
 
-        Query query = FirebaseFirestore.getInstance()
-                .collection("shops");
+
+
+
         FirestoreRecyclerOptions<TiendaDTO> options = new FirestoreRecyclerOptions.Builder<TiendaDTO>().setQuery(query,TiendaDTO.class).build();
         adapterRV = new AdapterTiendasRV(options);
         tiendasView.setAdapter(adapterRV);

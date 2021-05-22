@@ -10,10 +10,12 @@ import com.example.anteproyectoidea.dialogos.DialogHacerPedido;
 import com.example.anteproyectoidea.dto.ProductoDTO;
 import com.example.anteproyectoidea.registro.Registro;
 import com.example.anteproyectoidea.ui.TiendaUsuarios;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
@@ -26,9 +28,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -42,8 +47,13 @@ public class MainTienda extends AppCompatActivity implements AdapterProductosTie
     private RecyclerView listaProductos;
     private AdapterProductosTiendaRV adaptador;
     private List<ProductoDTO> lista;
+    private TextInputLayout busquedaPorNombre;
+    private List<ProductoDTO> listafiltro = new ArrayList<>();
+    LinearLayout tieneProductos,noTieneProductos;
+    private Button filtroname;
     private SwipeRefreshLayout refrescarPorductos;
     private Retrofit retrofit;
+    private FloatingActionButton newProducto,pedidos;
     CollapsingToolbarLayout toolBarLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +62,21 @@ public class MainTienda extends AppCompatActivity implements AdapterProductosTie
         LinearLayoutManager manager = new LinearLayoutManager(this);
         toolBarLayout = findViewById(R.id.toolbar_layout_tienda);
         findNameShop();
+        busquedaPorNombre =findViewById(R.id.buscarPorNombre);
+        newProducto = findViewById(R.id.newProducto);
+        tieneProductos = findViewById(R.id.tieneProductos);
+        noTieneProductos= findViewById(R.id.noTieneProductos);
+        newProducto.setOnClickListener(this::btnProductoNuevo);
+        filtroname = findViewById(R.id.buscarfiltro1);
+        filtroname.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ponerTodoOK();
+                getProductos();
+            }
+        });
 
+        pedidos = findViewById(R.id.pedidosTienda);
         refrescarPorductos = findViewById(R.id.refreshProductostienda);
         retrofit = new Retrofit.Builder()
                 .baseUrl(getResources().getString(R.string.conexionAPI))
@@ -82,7 +106,7 @@ public class MainTienda extends AppCompatActivity implements AdapterProductosTie
     private void findNameShop() {
       String nameShop = "error";
 
-        FirebaseFirestore.getInstance().collection("shops").document(Registro.mAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        FirebaseFirestore.getInstance().collection("shops").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if(documentSnapshot.exists()){
@@ -101,7 +125,7 @@ public class MainTienda extends AppCompatActivity implements AdapterProductosTie
 
         BokyTakeAPI bokyTakeAPI = retrofit.create(BokyTakeAPI.class);
 
-        Call<List<ProductoDTO>> llamada = bokyTakeAPI.getProductos("keytienda1");
+        Call<List<ProductoDTO>> llamada = bokyTakeAPI.getProductos(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         llamada.enqueue(new Callback<List<ProductoDTO>>() {
             @Override
@@ -109,9 +133,25 @@ public class MainTienda extends AppCompatActivity implements AdapterProductosTie
                 if(response.isSuccessful()){
                     lista = response.body();
 
+                    if(busquedaPorNombre.getEditText().getText().toString().isEmpty()){
+                        listafiltro = lista;
+                    }else{
+                        for(ProductoDTO filtro:lista){
+                            if(filtro.getNombre().contains(busquedaPorNombre.getEditText().getText().toString())){
+                                listafiltro.add(filtro);
+                            }
+                        }
+                    }
 
-                    adaptador = new AdapterProductosTiendaRV(lista ,  MainTienda.this::onButtonClick);
-                    listaProductos.setAdapter(adaptador);
+                    if(lista.isEmpty()){
+                        noTieneProductos.setVisibility(View.VISIBLE);
+                        tieneProductos.setVisibility(View.GONE);
+                    }else {
+                        noTieneProductos.setVisibility(View.GONE);
+                        tieneProductos.setVisibility(View.VISIBLE);
+                        adaptador = new AdapterProductosTiendaRV(listafiltro, MainTienda.this::onButtonClick);
+                        listaProductos.setAdapter(adaptador);
+                    }
                 }
             }
 
@@ -124,15 +164,25 @@ public class MainTienda extends AppCompatActivity implements AdapterProductosTie
     }
 
     public void ponerTodoOK(){
+        listafiltro.clear();
         refrescarPorductos.setEnabled(false);
         refrescarPorductos.setEnabled(true);
         refrescarPorductos.setRefreshing(false);
         //refrescarPorductos.setRefreshing(true);
     }
+
+    public void btnProductoNuevo(View v){
+        Toast.makeText(getApplicationContext(),"nuevo Producto",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(),EditarProducto.class);
+        intent.putExtra("esEditar",false);
+        startActivity(intent);
+    }
+
     @Override
     public void onButtonClick(int posicion) {
         Intent intent = new Intent(getApplicationContext(),EditarProducto.class);
         intent.putExtra("editar",lista.get(posicion));
+        intent.putExtra("esEditar",true);
         startActivity(intent);
     }
 

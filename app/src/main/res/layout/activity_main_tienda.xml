@@ -48,6 +48,7 @@
 
 
     <include
+
         layout="@layout/content_scrolling_tienda" />
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
@@ -61,22 +62,26 @@
         app:fab_addButtonColorNormal="@color/logo"
         app:fab_addButtonColorPressed="@color/black"
         app:fab_labelsPosition="left"
-        app:fab_labelStyle="@style/Theme.AnteproyectoIdea">
+        app:fab_labelStyle="@style/menu_labels_style">
 
 
 
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/pedidosTienda"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/transparent"
+            app:fab_colorNormal="@color/logo"
             app:fab_colorPressed="@color/logo"
+            app:fab_title="Pedidos"
             app:fab_icon="@drawable/ic_pedidos_tienda"/>
-            <!--app:fab_title="hola"-->
+
 
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/newProducto"
             android:layout_width="wrap_content"
-            app:fab_colorNormal="@color/transparent"
+            app:fab_colorNormal="@color/logo"
             app:fab_colorPressed="@color/logo"
+            app:fab_title="añadir producto"
             android:layout_height="wrap_content"
             app:fab_icon="@drawable/ic_plus_new"
            />

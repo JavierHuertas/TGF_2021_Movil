@@ -2,21 +2,21 @@ package com.example.anteproyectoidea.dto;
 
 public class ProductosCantidad {
 
-    private ProductoDTO productoDTO;
+    private ProductoDTO producto;
     private int cantidad;
 
 
     public ProductosCantidad(ProductoDTO productoDTO, int cantidad) {
-        this.productoDTO = productoDTO;
+        this.producto = productoDTO;
         this.cantidad = cantidad;
     }
 
     public ProductoDTO getProductoDTO() {
-        return productoDTO;
+        return producto;
     }
 
     public void setProductoDTO(ProductoDTO productoDTO) {
-        this.productoDTO = productoDTO;
+        this.producto = productoDTO;
     }
 
     public int getCantidad() {

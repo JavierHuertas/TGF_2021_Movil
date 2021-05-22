@@ -28,6 +28,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
@@ -45,27 +46,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-class hiloimagen2 extends Thread{
-    Context context;
-
-    public hiloimagen2(Context context) {
-        this.context = context;
-    }
-
-    @Override
-    public void run() {
-        super.run();
-                Toast.makeText(context, "supuestaURL ", Toast.LENGTH_SHORT).show();
-
-
-
-    }
-}
 
 
 public class EditarProducto extends AppCompatActivity {
 
 
+    private Boolean editar;
     private String urlImagen;
     private Uri foto;
     private StorageReference mReference;
@@ -75,15 +61,12 @@ public class EditarProducto extends AppCompatActivity {
     private ImageView imagen;
     private NumberPicker cantidad;
     private TextInputLayout precio;
-    String imageReference;
-    Thread hiloImagen;
     private CheckBox mosntrar;
-    private String keyTienda;
-    private ProductoDTO productoEditar;
+    private ProductoDTO productoEditar,productoNuevo;
     private RelativeLayout btnConfirmar, btnCancelar;
     private Retrofit retrofit;
     private Context context;
-    hiloimagen2 hilo;
+
 
 
     @Override
@@ -107,20 +90,26 @@ public class EditarProducto extends AppCompatActivity {
         cantidad = findViewById(R.id.editarcantidaTienda);
         cantidad.setMinValue(1);
         context = this;
-        hilo = new hiloimagen2(context);
-
         cantidad.setMaxValue(9999);
+
         Bundle bundle = getIntent().getExtras();
-        productoEditar = (ProductoDTO) bundle.get("editar");
+        editar =  bundle.getBoolean("esEditar");
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(getResources().getString(R.string.conexionAPI))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        if(editar){
+            //editar Producto
+            productoEditar = (ProductoDTO) bundle.get("editar");
+            meterValores();
+        }else{
+            //crear Producto
+
+        }
 
 
-        meterValores();
     }
 
     private void meterValores() {
@@ -138,24 +127,13 @@ public class EditarProducto extends AppCompatActivity {
 
     public void btnAceptar(View v) {
         BokyTakeAPI bokyTakeAPI = retrofit.create(BokyTakeAPI.class);
+        if(editar){
         productoEditar.setPrecio(Double.parseDouble(precio.getEditText().getText().toString()));
         productoEditar.setCantidad(cantidad.getValue());
         productoEditar.setDescripcion(descripcion.getEditText().getText().toString());
         productoEditar.setNombre(nombre.getEditText().getText().toString());
         productoEditar.setMostrarApp(mosntrar.isChecked());
-        //Toast.makeText(getApplicationContext(),productoEditar.getUrlImagen()+" Fallo 1",Toast.LENGTH_SHORT).show();
-        //String urlImagne = subirImagen();
-        //productoEditar.setUrlImagen(urlImagne);
-
-        //subirImagen();
-
-
-        //Toast.makeText(getApplicationContext(),productoEditar.getUrlImagen()+" Despues de la imagen 2 ",Toast.LENGTH_LONG).show();
-        //productoEditar.setUrlImagen(imageReference);
-
-
         Call<Map<String, Object>> llamada = bokyTakeAPI.editarProducto(productoEditar);
-
         llamada.enqueue(new Callback<Map<String, Object>>() {
             @Override
             public void onResponse(Call<Map<String, Object>> calll, Response<Map<String, Object>> response) {
@@ -178,6 +156,35 @@ public class EditarProducto extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Ha habido un error de servidor", Toast.LENGTH_SHORT).show();
             }
         });
+        }else{
+            //String nombre, double precio, int cantidad, Boolean mostrarApp, String descripcion, String urlImg
+            productoNuevo = new ProductoDTO(nombre.getEditText().getText().toString(),Double.parseDouble( precio.getEditText().getText().toString()),cantidad.getValue(),mosntrar.isChecked(),descripcion.getEditText().getText().toString(),urlImagen);
+
+            Call<Map<String, Object>> llamada = bokyTakeAPI.nuevoProducto(productoNuevo,FirebaseAuth.getInstance().getUid());
+
+            llamada.enqueue(new Callback<Map<String, Object>>() {
+                @Override
+                public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Nuevo Producto");
+                    builder.setMessage("Producto creado");
+                    builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            onBackPressed();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+
+                @Override
+                public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                    Toast.makeText(context, "error", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
     }
 
     public void btnCancelar(View view) {
@@ -220,7 +227,7 @@ public class EditarProducto extends AppCompatActivity {
     public  String subirImagen() {
         if(foto != null) {
             Date fecha = new Date();
-            mReference = mReference.child("/imagenProdcutos/" +"Tienda"+ Registro.mAuth.getUid() + "/Producto" + productoEditar.getId()+"-"+fecha.getTime());
+            mReference = mReference.child("/imagenProdcutos/" +"Tienda"+ Registro.mAuth.getUid() + "/Producto"+"-"+fecha.getTime());
             mReference.putFile(foto).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -230,7 +237,9 @@ public class EditarProducto extends AppCompatActivity {
                             final Uri downloadUrl = uri;
                             urlImagen = downloadUrl.toString();
                             //Toast.makeText(context, "supuestaURL "+urlImagen , Toast.LENGTH_SHORT).show();
-                            productoEditar.setUrlImagen(urlImagen);
+                            if(editar) {
+                                productoEditar.setUrlImagen(urlImagen);
+                            }
                         }
                     });
                 }

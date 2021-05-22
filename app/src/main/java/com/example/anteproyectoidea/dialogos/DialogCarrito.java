@@ -13,17 +13,27 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.example.anteproyectoidea.BokyTakeAPI;
 import com.example.anteproyectoidea.R;
 import com.example.anteproyectoidea.adaptadores.AdapterProductosCarrito;
 import com.example.anteproyectoidea.dto.ProductosCantidad;
 
 import java.util.ArrayList;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DialogCarrito extends AppCompatDialogFragment {
 
     public ArrayList<ProductosCantidad> productosPedido;
     public ListView listaPedidos;
     public TextView preciototal;
+    private Retrofit retrofit;
+    public String idUsuario,idTienda;
     public AdapterProductosCarrito productosCarrito;
 
     @NonNull
@@ -34,7 +44,10 @@ public class DialogCarrito extends AppCompatDialogFragment {
         View view =inflater.inflate(R.layout.dialog_cart,null);
         listaPedidos= view.findViewById(R.id.itemsCarts);
         preciototal = view.findViewById(R.id.totalPedido);
-
+        retrofit = new Retrofit.Builder()
+                .baseUrl(getResources().getString(R.string.conexionAPI))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
         productosCarrito = new AdapterProductosCarrito(productosPedido,builder.getContext());
         listaPedidos.setAdapter(productosCarrito);
 
@@ -43,6 +56,22 @@ public class DialogCarrito extends AppCompatDialogFragment {
                 .setPositiveButton("Realizar pedido", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        BokyTakeAPI bokyTakeAPI = retrofit.create(BokyTakeAPI.class);
+
+                        Call<Map<String,Object>> creaccionPedido = bokyTakeAPI.nuevoPedido(idTienda,idUsuario,productosPedido);
+
+                        creaccionPedido.enqueue(new Callback<Map<String, Object>>() {
+                            @Override
+                            public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+
+                            }
+                        });
+
 
                     }
                 })
@@ -58,6 +87,23 @@ public class DialogCarrito extends AppCompatDialogFragment {
 
 
 
+    }
+
+
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getIdTienda() {
+        return idTienda;
+    }
+
+    public void setIdTienda(String idTienda) {
+        this.idTienda = idTienda;
     }
 
     public ArrayList<ProductosCantidad> getProductosPedido() {

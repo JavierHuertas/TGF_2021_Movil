@@ -7,4 +7,9 @@
         <item name="colorAccent">@color/primaryLightColor</item>
     </style>
 
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/menu_floating_buttons</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
 </resources>
