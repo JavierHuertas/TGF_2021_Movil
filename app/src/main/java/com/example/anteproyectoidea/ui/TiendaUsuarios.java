@@ -10,11 +10,14 @@ import com.example.anteproyectoidea.adaptadores.AdapterProductosRV;
 import com.example.anteproyectoidea.dto.ProductoDTO;
 import com.example.anteproyectoidea.dto.ProductosCantidad;
 import com.example.anteproyectoidea.dto.UserDTOAPI;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -100,9 +103,48 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
                 .build();
 
 
-        UserDTOAPI user = new UserDTOAPI(FirebaseAuth.getInstance().getCurrentUser().getUid(),"preuba",FirebaseAuth.getInstance().getCurrentUser().getEmail());
-        
-        cogerDatos(user);
+
+       //llamada para que recoja el nombre y esas vainas y meterlo en la base de datos
+        FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+            //String id, String nombre, String apellido, String email
+                UserDTOAPI user = new UserDTOAPI(documentSnapshot.getString("key"),documentSnapshot.getString("nombre"),documentSnapshot.getString("apellidos"),documentSnapshot.getString("email"));
+
+                /*user.setEmail(documentSnapshot.getString("email"));
+                user.setNombre(documentSnapshot.getString("nombre"));
+                user.setApellido(documentSnapshot.getString("apellidos"));
+                user.setId(documentSnapshot.getString("key"));
+                */
+                BokyTakeAPI bokyTakeAPI = retrofit.create(BokyTakeAPI.class);
+
+                Call<Map<String,String>> llamada = bokyTakeAPI.crearUsuario(user);
+
+                llamada.enqueue(new Callback<Map<String, String>>() {
+                    @Override
+                    public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                        if(response.isSuccessful()){
+
+                        }else{
+                            Toast.makeText(getApplicationContext(),"fallito",Toast.LENGTH_SHORT).show();
+                        }
+                        //Toast.makeText(getApplicationContext(),"Exito "+response.body().get("message").toString(),Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Map<String, String>> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(),"fallito",Toast.LENGTH_SHORT).show();
+                        t.printStackTrace();
+                    }
+                });
+
+
+            }
+        });
+
+
+
         
 
         listaProductos = findViewById(R.id.listProductos);
@@ -151,32 +193,6 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
         getProductos();
 
     }
-
-    private void cogerDatos(UserDTOAPI user) {
-        BokyTakeAPI bokyTakeAPI = retrofit.create(BokyTakeAPI.class);
-
-        Call<Map<String,String>> llamada = bokyTakeAPI.crearUsuario(user);
-
-        llamada.enqueue(new Callback<Map<String, String>>() {
-            @Override
-            public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
-                if(response.isSuccessful()){
-
-                }else{
-                    Toast.makeText(getApplicationContext(),"fallito",Toast.LENGTH_SHORT).show();
-                }
-                //Toast.makeText(getApplicationContext(),"Exito "+response.body().get("message").toString(),Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void onFailure(Call<Map<String, String>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(),"fallito",Toast.LENGTH_SHORT).show();
-                t.printStackTrace();
-            }
-        });
-    }
-
 
     public void ponerTodoOK(){
         refrescarPorductos.setEnabled(false);

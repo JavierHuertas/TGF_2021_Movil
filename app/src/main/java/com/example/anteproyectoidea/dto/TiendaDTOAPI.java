@@ -1,5 +1,8 @@
 package com.example.anteproyectoidea.dto;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+
 public class TiendaDTOAPI {
 
     private String id;
@@ -58,4 +61,6 @@ public class TiendaDTOAPI {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
 }

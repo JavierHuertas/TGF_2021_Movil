@@ -1,6 +1,8 @@
 package com.example.anteproyectoidea.dto;
 
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 
 public class TiendaDTO  implements Serializable {
 
@@ -45,7 +47,7 @@ public class TiendaDTO  implements Serializable {
     }
 
     public String getContrasenia() {
-        return contrasenia;
+        return  contrasenia;
     }
 
     public void setContrasenia(String contrasenia) {
@@ -131,4 +133,7 @@ public class TiendaDTO  implements Serializable {
     public void setLatitud(double latitud) {
         this.latitud = latitud;
     }
+
+
+
 }

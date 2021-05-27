@@ -53,6 +53,7 @@ public class MainTienda extends AppCompatActivity implements AdapterProductosTie
     private Button filtroname;
     private SwipeRefreshLayout refrescarPorductos;
     private Retrofit retrofit;
+    private Button nuevoDeCero;
     private FloatingActionButton newProducto,pedidos;
     CollapsingToolbarLayout toolBarLayout;
     @Override
@@ -62,6 +63,13 @@ public class MainTienda extends AppCompatActivity implements AdapterProductosTie
         LinearLayoutManager manager = new LinearLayoutManager(this);
         toolBarLayout = findViewById(R.id.toolbar_layout_tienda);
         findNameShop();
+        nuevoDeCero = findViewById(R.id.crearNuevosinNotiene);
+        nuevoDeCero.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnProductoNuevo(null);
+            }
+        });
         busquedaPorNombre =findViewById(R.id.buscarPorNombre);
         newProducto = findViewById(R.id.newProducto);
         tieneProductos = findViewById(R.id.tieneProductos);

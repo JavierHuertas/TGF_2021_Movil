@@ -2,21 +2,26 @@ package com.example.anteproyectoidea.registro;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.anteproyectoidea.BokyTakeAPI;
@@ -36,6 +41,7 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -45,7 +51,12 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -69,9 +80,14 @@ public class RegistroTienda extends AppCompatActivity {
     private TiendaDTO tiendaDTO;
     private final String ImagenDefault = "https://firebasestorage.googleapis.com/v0/b/jardinerias-paca.appspot.com/o/imagenTiendas%2Ftienda.png?alt=media&token=95b7b55a-b968-4ae9-844b-bf0f04a6566d";
     private LatLng latLng;
+    private TextView abrirCamara;
     private static int AUTOCOMPLETE_REQUEST_CODE = 1;
+    private static  int PERMISO_CODE_CAMERA = 2;
+    private Bitmap imageBitmap;
     private double longitudTienda;
     private double latitudTienda;
+    private Context contexto;
+    private Boolean esCamara;
     private ProgressBarCargando progressBarCargando = new ProgressBarCargando(RegistroTienda.this);
 
     @Override
@@ -82,8 +98,19 @@ public class RegistroTienda extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         getSupportActionBar().hide();
         String key = getString(R.string.google_api_key) ;
-
+        contexto = this;
         uri = null;
+        esCamara=true;
+        abrirCamara = findViewById(R.id.sacarcamara);
+        abrirCamara.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(takePictureIntent, PERMISO_CODE_CAMERA);
+
+            }
+        });
         nombreDuenio = findViewById(R.id.editTextNombreDuenio);
         nombreEstabelecimiento = findViewById(R.id.editTextNombreNegocio);
         contraseñaUno = findViewById(R.id.editTextTextPasswordTienda);
@@ -141,37 +168,61 @@ public class RegistroTienda extends AppCompatActivity {
                             //Toast.makeText(getApplicationContext(),longitudTienda+" "+latitudTienda,Toast.LENGTH_SHORT).show();
                             tiendaDTO = new TiendaDTO(Registro.mAuth.getUid(),"tienda",nombreDuenio.getEditText().getText().toString().trim(),email.getEditText().getText().toString().trim()
                                     ,ImagenDefault,nombreEstabelecimiento.getEditText().getText().toString().trim(),direccionTienda.getEditText().getText().toString().trim(),longitudTienda,latitudTienda);
-                            tiendaDTO.setContrasenia(contrasenia);
+                            tiendaDTO.setContrasenia(getSHA256(contrasenia));
                             db.collection("shops").document(Registro.mAuth.getUid()).set(tiendaDTO);
+                            if(esCamara) {
+                                if (uri != null) {
+                                    mReference = mReference.child("imagenTiendas/" + uri.getLastPathSegment() + "Tienda" + Registro.mAuth.getUid());
+                                    UploadTask uploadTask = mReference.putFile(uri);
+                                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.i("fallo?", e.getMessage());
+                                        }
+                                    });
+                                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                        @Override
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            StorageMetadata snapshotMetadata = taskSnapshot.getMetadata();
+                                            Task<Uri> downloadUrl = mReference.getDownloadUrl();
+                                            downloadUrl.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                @Override
+                                                public void onSuccess(Uri pe) {
+                                                    String imageReference = pe.toString();
+                                                    db.collection("shops").document(Registro.mAuth.getUid()).update("logoTienda", imageReference.toString());
+                                                    //tiendaDTO.setLogoTienda("hola");
 
-                            if (uri != null) {
-                                mReference = mReference.child("imagenTiendas/"+ uri.getLastPathSegment() + "Tienda" + Registro.mAuth.getUid());
-                                UploadTask uploadTask = mReference.putFile(uri);
-                                uploadTask.addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.i("fallo?",e.getMessage());
-                                    }
-                                });
-                                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            }else{
+                                mReference = mReference.child("imagenTiendas/" + "Tienda" + Registro.mAuth.getUid());
+                                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                                byte[] datas = baos.toByteArray();
+
+                                mReference.putBytes(datas).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                     @Override
                                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                        StorageMetadata snapshotMetadata = taskSnapshot.getMetadata();
-                                        Task<Uri> downloadUrl = mReference.getDownloadUrl();
-                                        downloadUrl.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        mReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                             @Override
-                                            public void onSuccess(Uri pe) {
-                                                String imageReference = pe.toString();
+                                            public void onSuccess(Uri uri) {
+                                                String imageReference = uri.toString();
                                                 db.collection("shops").document(Registro.mAuth.getUid()).update("logoTienda", imageReference.toString());
                                                 //tiendaDTO.setLogoTienda("hola");
-
                                             }
                                         });
                                     }
                                 });
+
                             }
 
                             progressBarCargando.StarProgressBar();
+
+
+
                             db.collection("shops").document(Registro.mAuth.getUid()).set(tiendaDTO);
                             Retrofit retro = new Retrofit.Builder()
                                     .baseUrl(getResources().getString(R.string.conexionAPI))
@@ -199,8 +250,24 @@ public class RegistroTienda extends AppCompatActivity {
                                 @Override
                                 public void run() {
 
+                                    MaterialAlertDialogBuilder cerrarventana = new MaterialAlertDialogBuilder(contexto);
+                                    cerrarventana.setTitle("Operacion correcta");
+                                    cerrarventana.setMessage("esta actividad se cerrara");
+                                cerrarventana.setPositiveButton(("Aceptar"),(dialog, which) -> {
+                                        //Toast.makeText(getContext(),"operacion cancelada",Toast.LENGTH_LONG).show();
                                     Intent intent = new Intent(getApplicationContext(), Registro.class);
                                     startActivity(intent);
+                                        try {
+                                            finalize();
+                                        } catch (Throwable throwable) {
+                                            throwable.printStackTrace();
+                                        }
+                                    });
+                                    cerrarventana.show();;
+
+
+
+
                                     progressBarCargando.finishProgressBar();
 
                                 }
@@ -256,6 +323,16 @@ public class RegistroTienda extends AppCompatActivity {
                 Toast.makeText(this,"no has cogido nada de la galeria",Toast.LENGTH_SHORT).show();
             }
         }
+
+        if (requestCode == PERMISO_CODE_CAMERA && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            imageBitmap = (Bitmap) extras.get("data");
+            LogoTienda.setImageBitmap(imageBitmap);
+           esCamara=false;
+
+        }
+
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -331,6 +408,22 @@ public class RegistroTienda extends AppCompatActivity {
 
         }
         return  comprobador;
+    }
+
+
+    public static String getSHA256(final String input) {
+
+        String toReturn = null;
+        try {
+            final MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            digest.reset();
+            digest.update(input.getBytes("utf8"));
+            toReturn = String.format("%064x", new BigInteger(1, digest.digest()));
+        } catch (final Exception e) {
+            e.printStackTrace();
+        }
+
+        return toReturn;
     }
 
 

@@ -88,7 +88,7 @@ public class Registro extends AppCompatActivity {
 
         switch (view.getId()){
             case R.id.btnGoogle:
-                Toast.makeText(getApplicationContext(),"google",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"google",Toast.LENGTH_SHORT).show();
                 // Configure Google Sign In
                 mGoogleSingInClient.signOut();
                 mAuth.signOut();
@@ -96,13 +96,13 @@ public class Registro extends AppCompatActivity {
 
                 break;
             case R.id.btnEmailPasww:
-                Toast.makeText(getApplicationContext(),"Email y contraseña",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"Email y contraseña",Toast.LENGTH_SHORT).show();
                 Intent intent2 = new Intent(getApplicationContext(), login.class);
                 startActivity(intent2);
 
                 break;
             case R.id.btnregistrar:
-                Toast.makeText(getApplicationContext(),"Rellena todos los campos",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"Rellena todos los campos",Toast.LENGTH_SHORT).show();
                 mAuth.signOut();
                     Intent intent = new Intent(getApplicationContext(), RegistrarseUsuarios.class);
                     intent.putExtra("mAuth",mAuth.toString());
@@ -111,7 +111,7 @@ public class Registro extends AppCompatActivity {
             case R.id.btnRegistrarEmpresa:
                 intent = new Intent(getApplicationContext(), RegistroTienda.class);
                 startActivity(intent);
-                Toast.makeText(getApplicationContext(),"Iniciar actividad registrase",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"Iniciar actividad registrase",Toast.LENGTH_SHORT).show();
                 break;
 
         }
@@ -151,19 +151,12 @@ public class Registro extends AppCompatActivity {
                     FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                           // public UserDTO(String key, String nombre, String email, String direccion, String imagenUri)
 
-                            //Location location = new Location( LocationManager.GPS_PROVIDER);
-
-                            //double latitud = location.getLatitude();
-                            //double longitud = location.getLongitude();
-
-                            UserDTO userDTO = new UserDTO(mAuth.getCurrentUser().getUid(),"usuario",account.getDisplayName(),account.getEmail(),account.getPhotoUrl().toString(),0,0);
-
-                            db.collection("usersGoogle").document(mAuth.getCurrentUser().getUid()).set(userDTO);
-
+                            String nombreSolo = account.getDisplayName().split(" ")[0];
+                            Toast.makeText(getApplicationContext(),nombreSolo,Toast.LENGTH_SHORT).show();
+                            UserDTO userDTO = new UserDTO(mAuth.getCurrentUser().getUid(),"usuarioGoogle",nombreSolo,account.getFamilyName(),account.getEmail(),account.getPhotoUrl().toString(),0.0,0.0);
+                            db.collection("users").document(mAuth.getCurrentUser().getUid()).set(userDTO);
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-
                             intent.putExtra("esGoogle",true);
                             startActivity(intent);
                         }

@@ -8,9 +8,9 @@ public class PedidoDTO {
 
     private Integer id;
     private String estado;
-    private String TiendaDTO;
+    private String tienda;
     private UserDTOAPI UsuarioPedidoDTO;
-    private Date freservas;
+    private Date freserva;
     private Date frecogida;
     private Float importe;
     private List<ProductosCantidad> productoses;
@@ -27,9 +27,9 @@ public class PedidoDTO {
     public PedidoDTO(Integer id, String estados, String tiendaDTO, UserDTOAPI usuarioPedidoDTO, Date freservas, Date frecogida, Float importe, List<ProductosCantidad> productosCantidads) {
         this.id = id;
         estado = estados;
-        TiendaDTO = tiendaDTO;
+        tienda = tiendaDTO;
         UsuarioPedidoDTO = usuarioPedidoDTO;
-        this.freservas = freservas;
+        this.freserva = freservas;
         this.frecogida = frecogida;
         this.importe = importe;
         this.productoses = productosCantidads;
@@ -38,9 +38,9 @@ public class PedidoDTO {
     public PedidoDTO(Integer id, String estados, String tiendaDTO, UserDTOAPI usuarioPedidoDTO, Date freservas, Date frecogida, Float importe) {
         this.id = id;
         estado = estados;
-        TiendaDTO = tiendaDTO;
+        tienda = tiendaDTO;
         UsuarioPedidoDTO = usuarioPedidoDTO;
-        this.freservas = freservas;
+        this.freserva = freservas;
         this.frecogida = frecogida;
         this.importe = importe;
     }
@@ -62,11 +62,11 @@ public class PedidoDTO {
     }
 
     public String getTiendaDTO() {
-        return TiendaDTO;
+        return tienda;
     }
 
     public void setTiendaDTO(String tiendaDTO) {
-        TiendaDTO = tiendaDTO;
+        tienda = tiendaDTO;
     }
 
     public UserDTOAPI getUsuarioPedidoDTO() {
@@ -78,11 +78,11 @@ public class PedidoDTO {
     }
 
     public Date getFreservas() {
-        return freservas;
+        return freserva;
     }
 
     public void setFreservas(Date freservas) {
-        this.freservas = freservas;
+        this.freserva = freservas;
     }
 
     public Date getFrecogida() {

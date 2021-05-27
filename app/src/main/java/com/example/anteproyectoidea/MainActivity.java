@@ -60,56 +60,24 @@ public class MainActivity extends AppCompatActivity {
         f = header.findViewById(R.id.NombreUsuario);
         t = header.findViewById(R.id.ImagenUsuario);
 
+        db.collection("users").document(Registro.mAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()){
+                    String name2 =  documentSnapshot.getString("nombre");
+                    String email2 = documentSnapshot.getString("email");
+                    String surname = documentSnapshot.getString("apellidos");
+                    Uri uri2 = Uri.parse(documentSnapshot.getString("imagenUri"));
+                    r.setText(email2);
+                    String surname2 = surname==null?" ":surname;
 
-
-        if(esGoogle){
-            //Login google
-            db.collection("usersGoogle").document(Registro.mAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    if(documentSnapshot.exists()){
-                        String name2 =  documentSnapshot.getString("nombre");
-                        String email2 = documentSnapshot.getString("email");
-                        Uri uri2 = Uri.parse(documentSnapshot.getString("imagenUri"));
-
-                        r.setText(email2);
-                        f.setText(name2);
-                        Picasso.get().load(uri2).into(t);
-                    }else{
-                        Toast.makeText(getApplicationContext(),"Hay un error buscar solucioness",Toast.LENGTH_LONG).show();
-                    }
+                    f.setText(name2+" " +surname2);
+                    Picasso.get().load(uri2).into(t);
+                }else{
+                    Toast.makeText(getApplicationContext(),"Hay un error buscar solucioness",Toast.LENGTH_LONG).show();
                 }
-            });
-            Toast.makeText(getApplicationContext(),"email"+ email,Toast.LENGTH_LONG).show();
-
-        }else{
-            db.collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    if(documentSnapshot.exists()){
-
-                       String name2 =  documentSnapshot.getString("nombre");
-                       String email2 = documentSnapshot.getString("email");
-                       Uri uri2 = Uri.parse(documentSnapshot.getString("imagenUri"));
-                        Toast.makeText(getApplicationContext(),"email"+ email2,Toast.LENGTH_LONG).show();
-                        r.setText(email2);
-                        f.setText(name2);
-                        Picasso.get().load(uri2).into(t);
-
-                    }else{
-                        Toast.makeText(getApplicationContext(),"Hay un error buscar solucioness",Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
-
-
-
-        }
-
-
-
-
-
+            }
+        });
 
 
         FloatingActionButton fab = findViewById(R.id.fab);

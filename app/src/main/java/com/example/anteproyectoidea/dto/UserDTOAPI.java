@@ -6,11 +6,14 @@ public class UserDTOAPI implements Serializable {
 
     private String id;
     private String nombre;
+    private String apellidos;
     private String email;
 
-    public UserDTOAPI(String id, String nombre, String email) {
+
+    public UserDTOAPI(String id, String nombre, String apellido, String email) {
         this.id = id;
         this.nombre = nombre;
+        this.apellidos = apellido;
         this.email = email;
     }
 
@@ -39,5 +42,13 @@ public class UserDTOAPI implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 }

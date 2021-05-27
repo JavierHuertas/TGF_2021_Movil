@@ -37,7 +37,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class EditarPerfilFragment extends Fragment {
 
-    TextInputLayout editarNombreUsuario;
+    TextInputLayout editarNombreUsuario,editarApellidoUsuario;
     ImageView editarImagenUsuario;
     Button editarContraseña;
     private static int PERMISO_CODE=100;
@@ -52,6 +52,7 @@ public class EditarPerfilFragment extends Fragment {
         //Toast.makeText(getActivity(),"preuba usuario"+usuario.getNombre().toString(),Toast.LENGTH_LONG).show();
         View root = inflater.inflate(R.layout.fragment_editar_usuario, container, false);
         editarNombreUsuario = root.findViewById(R.id.editNombreUsuario);
+        editarApellidoUsuario = root.findViewById(R.id.editApellidoUsuario);
         editarImagenUsuario = root.findViewById(R.id.imagenEditarusuario);
         editarContraseña = root.findViewById(R.id.btnChangePass);
         editarImagenUsuario.setOnClickListener(this::abrirGaleria);
@@ -72,14 +73,13 @@ public class EditarPerfilFragment extends Fragment {
 
 
     public void ponerDatos(){
-
-
         FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot docu) {
                  //usuario= docu.toObject(UserDTO.class);
                 if(docu.exists()){
                     editarNombreUsuario.getEditText().setText(docu.getString("nombre"));
+                    editarApellidoUsuario.getEditText().setText(docu.getString("apellidos"));
                     Picasso.get().load(Uri.parse(docu.getString("imagenUri"))).into(editarImagenUsuario);
                     //userdevolver = new UserDTO(docu.getString("key"),docu.getString("tipo"),docu.getString("nombre"),docu.getString("email"),docu.getString("imagenUri"),docu.getDouble("latitud"),docu.getDouble("longitud"));
                 }else{

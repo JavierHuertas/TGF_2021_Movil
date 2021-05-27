@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.location.Location;
@@ -18,8 +19,10 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.anteproyectoidea.dialogos.ProgressBarCargando;
@@ -30,6 +33,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,22 +44,29 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+
 public class RegistrarseUsuarios extends AppCompatActivity {
 
     private ImageView defaultUser;
     private FirebaseAuth mAuth;
-    private TextInputLayout email, nombre, contraseñaUno, contraseñaDos;
+    private TextInputLayout email, nombre, apellido,contraseñaUno, contraseñaDos;
     private double latitud, longitud;
     private static final int PERMISO_CODE = 100;
     private static final int IMAGEN_GALLERY = 101;
+    private static  int PERMISO_CODE_CAMERA = 2;
     private FirebaseFirestore db;
     private Uri uri;
     private String defaultImagen ="https://firebasestorage.googleapis.com/v0/b/jardinerias-paca.appspot.com/o/Imagenusuario%2Fdefault_users.png?alt=media&token=a3487ccd-64f3-4872-8c0d-6335cbbf8b64";
     private StorageReference mReference;
     private FusedLocationProviderClient client;
     private UserDTO userDTO;
+    private Bitmap imageBitmap;
+    private TextView abrirCamara;
     private LocationManager locManager;
     private LocationListener locationListenerGPS;
+    private Boolean comprobarCamara;
+    private Context contexto;
     //MaterialAlertDialogBuilder correcto;
     private ProgressBarCargando progressBarCargando = new ProgressBarCargando(RegistrarseUsuarios.this);
 
@@ -66,9 +77,18 @@ public class RegistrarseUsuarios extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_registrarse_usuarios);
+        contexto = this;
         defaultUser = findViewById(R.id.ImagenUsuarioLogin);
         mReference = FirebaseStorage.getInstance().getReference();
-
+        abrirCamara = findViewById(R.id.abrircamara);
+        comprobarCamara = true;
+        abrirCamara.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(takePictureIntent, PERMISO_CODE_CAMERA);
+            }
+        });
        /*correcto = new MaterialAlertDialogBuilder(getBaseContext());
         correcto.setMessage("Cuenta creada exitosamente");
         correcto.setPositiveButton(("Aceptar"),(dialog, which) -> {
@@ -84,7 +104,7 @@ public class RegistrarseUsuarios extends AppCompatActivity {
             }
         });
 
-
+        apellido = findViewById(R.id.editTextTextPersonSurname);
         email = findViewById(R.id.editTextTextEmailAddress);
         nombre = findViewById(R.id.editTextTextPersonName);
         contraseñaUno = findViewById(R.id.editTextTextPassword);
@@ -100,7 +120,7 @@ public class RegistrarseUsuarios extends AppCompatActivity {
                 public void onLocationChanged(@NonNull Location location) {
                     latitud = location.getLatitude();
                     longitud = location.getLongitude();
-                    Toast.makeText(getApplicationContext(),longitud+" "+ latitud,Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(),longitud+" "+ latitud,Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -139,31 +159,58 @@ public class RegistrarseUsuarios extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        userDTO = new UserDTO(Registro.mAuth.getUid(),"usuario", nombre.getEditText().getText().toString().trim(), email.getEditText().getText().toString().trim(), defaultImagen, latitud, longitud);
-                                        if (uri != null) {
-                                            mReference = mReference.child("Imagenusuario/" + uri.getLastPathSegment() + "User" + Registro.mAuth.getUid());
-                                            UploadTask uploadTask = mReference.putFile(uri);
-                                            uploadTask.addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                }
-                                            });
-                                            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                        userDTO = new UserDTO(Registro.mAuth.getUid(),"usuario", nombre.getEditText().getText().toString().trim(), apellido.getEditText().getText().toString().trim(),email.getEditText().getText().toString().trim(), defaultImagen, latitud, longitud);
+                                        Toast.makeText(getApplicationContext(),apellido.getEditText().getText().toString().trim(),Toast.LENGTH_SHORT).show();
+                                        if(comprobarCamara) {
+                                            if (uri != null) {
+                                                mReference = mReference.child("Imagenusuario/" + uri.getLastPathSegment() + "User" + Registro.mAuth.getUid());
+                                                UploadTask uploadTask = mReference.putFile(uri);
+                                                uploadTask.addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                    }
+                                                });
+                                                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                        StorageMetadata snapshotMetadata = taskSnapshot.getMetadata();
+                                                        Task<Uri> downloadUrl = mReference.getDownloadUrl();
+                                                        downloadUrl.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                            @Override
+                                                            public void onSuccess(Uri uri) {
+                                                                String imageReference = uri.toString();
+                                                                db.collection("users").document(Registro.mAuth.getUid()).update("imagenUri", imageReference);
+                                                                userDTO.setImagenUri(imageReference);
+                                                                locManager.removeUpdates(locationListenerGPS);
+                                                            }
+                                                        });
+                                                    }
+                                                });
+                                            }
+                                        }else{
+
+                                            mReference = mReference.child("Imagenusuario/" + "User" + Registro.mAuth.getUid());
+                                            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                                            byte[] datas = baos.toByteArray();
+
+                                            mReference.putBytes(datas).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                                 @Override
                                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                                    StorageMetadata snapshotMetadata = taskSnapshot.getMetadata();
-                                                    Task<Uri> downloadUrl = mReference.getDownloadUrl();
-                                                    downloadUrl.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                    mReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                                         @Override
                                                         public void onSuccess(Uri uri) {
                                                             String imageReference = uri.toString();
                                                             db.collection("users").document(Registro.mAuth.getUid()).update("imagenUri", imageReference);
-                                                            userDTO.setImagenUri(imageReference);
-                                                            locManager.removeUpdates(locationListenerGPS);
+                                                            //tiendaDTO.setLogoTienda("hola");
                                                         }
                                                     });
                                                 }
                                             });
+
+
+
+
                                         }
 
                                         progressBarCargando.StarProgressBar();
@@ -174,10 +221,24 @@ public class RegistrarseUsuarios extends AppCompatActivity {
                                             public void run() {
 
 
+                                                MaterialAlertDialogBuilder cerrarventana = new MaterialAlertDialogBuilder(contexto);
+                                                cerrarventana.setTitle("Operacion correcta");
+                                                cerrarventana.setIcon(R.drawable.ic_ok);
+                                                cerrarventana.setMessage("esta actividad se cerrara");
+                                                cerrarventana.setPositiveButton(("Aceptar"),(dialog, which) -> {
+                                                    //Toast.makeText(getContext(),"operacion cancelada",Toast.LENGTH_LONG).show();
+                                                    irNuevaActividad();
+                                                    try {
+                                                        finalize();
+                                                    } catch (Throwable throwable) {
+                                                        throwable.printStackTrace();
+                                                    }
+                                                });
+                                                cerrarventana.show();;
 
 
                                                 progressBarCargando.finishProgressBar();
-                                                irNuevaActividad();
+
                                             }
                                         }, 3000);
 
@@ -213,6 +274,15 @@ public class RegistrarseUsuarios extends AppCompatActivity {
                 Toast.makeText(this,"no has cogido nada de la galeria",Toast.LENGTH_SHORT).show();
             }
         }
+
+        if (requestCode == PERMISO_CODE_CAMERA && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            imageBitmap = (Bitmap) extras.get("data");
+            defaultUser.setImageBitmap(imageBitmap);
+            comprobarCamara=false;
+
+        }
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -226,6 +296,7 @@ public class RegistrarseUsuarios extends AppCompatActivity {
 
             }
         }
+
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 

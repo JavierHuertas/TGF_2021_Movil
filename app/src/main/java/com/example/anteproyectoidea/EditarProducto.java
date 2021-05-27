@@ -11,14 +11,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.anteproyectoidea.dto.ProductoDTO;
@@ -36,6 +39,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -54,11 +59,13 @@ public class EditarProducto extends AppCompatActivity {
     private Boolean editar;
     private String urlImagen;
     private Uri foto;
+    Bitmap imageBitmap;
     private StorageReference mReference;
     private static final int PERMISO_CODE = 100;
     private static final int PERMISO_CODE_CAMERA = 101;
     private TextInputLayout nombre, descripcion;
     private ImageView imagen;
+    TextView openCamara;
     private NumberPicker cantidad;
     private TextInputLayout precio;
     private CheckBox mosntrar;
@@ -88,9 +95,20 @@ public class EditarProducto extends AppCompatActivity {
         precio = findViewById(R.id.editarprecioProducto);
         mosntrar = findViewById(R.id.editarVisibleProducto);
         cantidad = findViewById(R.id.editarcantidaTienda);
+        openCamara = findViewById(R.id.openCamera);
         cantidad.setMinValue(1);
         context = this;
         cantidad.setMaxValue(9999);
+
+        openCamara.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                    startActivityForResult(takePictureIntent, PERMISO_CODE_CAMERA);
+
+            }
+        });
 
         Bundle bundle = getIntent().getExtras();
         editar =  bundle.getBoolean("esEditar");
@@ -158,7 +176,7 @@ public class EditarProducto extends AppCompatActivity {
         });
         }else{
             //String nombre, double precio, int cantidad, Boolean mostrarApp, String descripcion, String urlImg
-            productoNuevo = new ProductoDTO(nombre.getEditText().getText().toString(),Double.parseDouble( precio.getEditText().getText().toString()),cantidad.getValue(),mosntrar.isChecked(),descripcion.getEditText().getText().toString(),urlImagen);
+            productoNuevo = new ProductoDTO(nombre.getEditText().getText().toString(),Double.parseDouble( precio.getEditText().getText().toString()),cantidad.getValue(),mosntrar.isChecked(),descripcion.getEditText().getText().toString(), (urlImagen==null)?"https://firebasestorage.googleapis.com/v0/b/jardinerias-paca.appspot.com/o/imagenProdcutos%2Fabrir-caja.png?alt=media&token=ec96957b-efb0-4097-ac32-fd5056db1d13":urlImagen);
 
             Call<Map<String, Object>> llamada = bokyTakeAPI.nuevoProducto(productoNuevo,FirebaseAuth.getInstance().getUid());
 
@@ -214,21 +232,51 @@ public class EditarProducto extends AppCompatActivity {
                 //urlImagen = foto;
                 //Toast.makeText(this,data.getData().toString() +" pqwer", Toast.LENGTH_SHORT).show();
                 imagen.setImageURI(foto);
-                subirImagen();
-
-
-
+                subirImagen(true);
             } else {
                 Toast.makeText(this, "no has elegido nada de la galeria", Toast.LENGTH_SHORT).show();
             }
         }
+        if (requestCode == PERMISO_CODE_CAMERA && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            imageBitmap = (Bitmap) extras.get("data");
+            imagen.setImageBitmap(imageBitmap);
+            subirImagen(false);
+
+        }
     }
 
-    public  String subirImagen() {
-        if(foto != null) {
-            Date fecha = new Date();
-            mReference = mReference.child("/imagenProdcutos/" +"Tienda"+ Registro.mAuth.getUid() + "/Producto"+"-"+fecha.getTime());
-            mReference.putFile(foto).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+    public  String subirImagen(Boolean camara) {
+        if(camara) {
+            if (foto != null) {
+                Date fecha = new Date();
+                mReference = mReference.child("/imagenProdcutos/" + "Tienda" + Registro.mAuth.getUid() + "/Producto" + "-" + fecha.getTime());
+                mReference.putFile(foto).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        mReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                final Uri downloadUrl = uri;
+                                urlImagen = downloadUrl.toString();
+                                //Toast.makeText(context, "supuestaURL "+urlImagen , Toast.LENGTH_SHORT).show();
+                                if (editar) {
+                                    productoEditar.setUrlImagen(urlImagen);
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+            return urlImagen;
+        }else{
+            String timeStamp = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss").format(new Date());
+            mReference = mReference.child("/imagenProdcutos/" + "Tienda" + Registro.mAuth.getUid() + "/Producto" + "-" + timeStamp);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] datas = baos.toByteArray();
+
+            mReference.putBytes(datas).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     mReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -237,7 +285,7 @@ public class EditarProducto extends AppCompatActivity {
                             final Uri downloadUrl = uri;
                             urlImagen = downloadUrl.toString();
                             //Toast.makeText(context, "supuestaURL "+urlImagen , Toast.LENGTH_SHORT).show();
-                            if(editar) {
+                            if (editar) {
                                 productoEditar.setUrlImagen(urlImagen);
                             }
                         }
@@ -245,11 +293,8 @@ public class EditarProducto extends AppCompatActivity {
                 }
             });
 
-
-
-
+            return urlImagen;
         }
-        return urlImagen;
     }
 
 

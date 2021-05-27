@@ -75,7 +75,7 @@ public class AdaptadorProductosPedidosUsuarioRV extends RecyclerView.Adapter<Ada
         dia = gregorianCalendar.get(Calendar.DAY_OF_MONTH);
         holder.fechaPedido.setText(dia+"/"+mes+"/"+anio);
         holder.precioTotal.setText(pedidos.get(position).getImporte()+" €");
-        holder.nombreTienda.setText(pedidos.get(position).getTiendaDTO());
+        holder.nombreTienda.setText(  pedidos.get(position).getTiendaDTO().toString()  );
         AdapterProductosPedidosUsuario adapter = new AdapterProductosPedidosUsuario(holder.itemView.getContext(),pedidos.get(position).getProductosCantidads());
         holder.productos.setAdapter(adapter);
     }

@@ -34,9 +34,20 @@
 
             <RelativeLayout
                 android:layout_width="334dp"
-                android:layout_height="191dp"
+                android:layout_height="200dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/fondo_registros_inputs">
+
+                <TextView
+                    android:id="@+id/sacarcamara"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:textStyle="bold"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="99dp"
+                    android:layout_marginBottom="6dp"
+                    android:text="¿hacer una foto ahora?" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/imagenLogoTienda"

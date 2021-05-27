@@ -3,6 +3,8 @@ package com.example.anteproyectoidea.dto;
 import com.google.gson.annotations.JsonAdapter;
 
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 
 public class UserDTO implements Serializable {
 
@@ -10,6 +12,7 @@ public class UserDTO implements Serializable {
     private String key;
     private String tipo;
     private String nombre;
+    private String apellidos;
     private String email;
     private  Double latitud;
     private Double longitud;
@@ -24,8 +27,21 @@ public class UserDTO implements Serializable {
         this.longitud = longitud;
         this.imagenUri = imagenUri;
     }
+
+    public UserDTO(String key, String tipo, String nombre, String apellidos, String email, String imagenUri,Double latitud, Double longitud) {
+        this.key = key;
+        this.tipo = tipo;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.email = email;
+        this.latitud = latitud;
+        this.longitud = longitud;
+        this.imagenUri = imagenUri;
+    }
+
     //user para API
-    public UserDTO(String id, String nombre, String email) {
+    public UserDTO(String id, String nombre, String apellidos, String email) {
+        this.apellidos = apellidos;
         this.key = id;
         this.nombre = nombre;
         this.email = email;
@@ -79,6 +95,13 @@ public class UserDTO implements Serializable {
         this.email = email;
     }
 
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
 
     public String getImagenUri() {
         return imagenUri;
