@@ -31,6 +31,12 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="15dp"/>
+        <LinearLayout
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imagenEditarusuario"
         android:layout_width="150dp"
@@ -39,8 +45,22 @@
         app:civ_border_width="2dp"
         android:src="@drawable/default_users"
         app:layout_constraintBottom_toTopOf="@+id/editTextTextEmailAddress"
-
         app:srcCompat="@drawable/default_users" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="25dp"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/sacarcamaraEditarPerfil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¿hacer una foto ahora?"
+                android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
     <Space
         android:layout_width="match_parent"
         android:layout_height="35dp"/>
@@ -102,8 +122,15 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="55dp"/>
-
+        android:layout_height="35dp"/>
+        <TextView
+            android:id="@+id/esGooglebro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/quantum_error_dark"
+            android:textSize="30dp"
+            android:text="No puedes editar este perfil \n ¡es de Google!"/>
     <Button
         android:id="@+id/btnChangePass"
         android:layout_width="wrap_content"

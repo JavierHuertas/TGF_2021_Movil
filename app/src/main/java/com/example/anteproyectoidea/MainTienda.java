@@ -54,7 +54,7 @@ public class MainTienda extends AppCompatActivity implements AdapterProductosTie
     private SwipeRefreshLayout refrescarPorductos;
     private Retrofit retrofit;
     private Button nuevoDeCero;
-    private FloatingActionButton newProducto,pedidos;
+    private FloatingActionButton newProducto,pedidos,volver;
     CollapsingToolbarLayout toolBarLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +85,22 @@ public class MainTienda extends AppCompatActivity implements AdapterProductosTie
         });
 
         pedidos = findViewById(R.id.pedidosTienda);
+        pedidos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),PedidosTienda.class);
+                startActivity(intent);
+            }
+        });
+
+        volver = findViewById(R.id.vovlerAtras);
+        volver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         refrescarPorductos = findViewById(R.id.refreshProductostienda);
         retrofit = new Retrofit.Builder()
                 .baseUrl(getResources().getString(R.string.conexionAPI))

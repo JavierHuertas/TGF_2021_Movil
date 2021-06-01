@@ -1,7 +1,10 @@
 package com.example.anteproyectoidea.dialogos;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +17,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.example.anteproyectoidea.BokyTakeAPI;
+import com.example.anteproyectoidea.MainActivity;
 import com.example.anteproyectoidea.R;
 import com.example.anteproyectoidea.adaptadores.AdapterProductosCarrito;
 import com.example.anteproyectoidea.dto.ProductosCantidad;
+import com.example.anteproyectoidea.ui.TiendaUsuarios;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -33,6 +38,8 @@ public class DialogCarrito extends AppCompatDialogFragment {
     public ListView listaPedidos;
     public TextView preciototal;
     private Retrofit retrofit;
+    private Context context;
+    private Activity actividad;
     public String idUsuario,idTienda;
     public AdapterProductosCarrito productosCarrito;
 
@@ -48,7 +55,7 @@ public class DialogCarrito extends AppCompatDialogFragment {
                 .baseUrl(getResources().getString(R.string.conexionAPI))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        productosCarrito = new AdapterProductosCarrito(productosPedido,builder.getContext());
+        productosCarrito = new AdapterProductosCarrito(TiendaUsuarios.pedidoActual,builder.getContext());
         listaPedidos.setAdapter(productosCarrito);
 
 
@@ -58,16 +65,21 @@ public class DialogCarrito extends AppCompatDialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         BokyTakeAPI bokyTakeAPI = retrofit.create(BokyTakeAPI.class);
 
-                        Call<Map<String,Object>> creaccionPedido = bokyTakeAPI.nuevoPedido(idTienda,idUsuario,productosPedido);
+                        Call<Map<String,Object>> creaccionPedido = bokyTakeAPI.nuevoPedido(idTienda,idUsuario,TiendaUsuarios.pedidoActual);
 
                         creaccionPedido.enqueue(new Callback<Map<String, Object>>() {
                             @Override
                             public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
 
+
                             }
 
                             @Override
                             public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                                TiendaUsuarios.pedidoActual.clear();
+                                actividad.onBackPressed();
+                                /*Intent nuevo = new Intent(context,MainActivity.class);
+                                startActivity(nuevo);*/
 
                             }
                         });
@@ -89,6 +101,14 @@ public class DialogCarrito extends AppCompatDialogFragment {
 
     }
 
+
+    public void setActividad(Activity actividad) {
+        this.actividad = actividad;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
 
     public String getIdUsuario() {
         return idUsuario;

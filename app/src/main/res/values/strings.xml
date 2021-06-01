@@ -12,7 +12,6 @@
     <string name="menu_slideshow">EditarPerfil</string>
 
 
-
     <string-array name="estados_array">
         <item>Elige opcion filtrado</item>
         <item>En espera...</item>

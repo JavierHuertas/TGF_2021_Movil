@@ -9,6 +9,7 @@ public class PedidoDTO {
     private Integer id;
     private String estado;
     private String tienda;
+    private String email;
     private UserDTOAPI UsuarioPedidoDTO;
     private Date freserva;
     private Date frecogida;
@@ -24,23 +25,23 @@ public class PedidoDTO {
     }
 
 
-    public PedidoDTO(Integer id, String estados, String tiendaDTO, UserDTOAPI usuarioPedidoDTO, Date freservas, Date frecogida, Float importe, List<ProductosCantidad> productosCantidads) {
+    public PedidoDTO(Integer id, String estados, String tiendaDTO, UserDTOAPI usuarioPedidoDTO, Date freserva, Date frecogida, Float importe, List<ProductosCantidad> productosCantidads) {
         this.id = id;
         estado = estados;
         tienda = tiendaDTO;
         UsuarioPedidoDTO = usuarioPedidoDTO;
-        this.freserva = freservas;
+        this.freserva = freserva;
         this.frecogida = frecogida;
         this.importe = importe;
         this.productoses = productosCantidads;
     }
 
-    public PedidoDTO(Integer id, String estados, String tiendaDTO, UserDTOAPI usuarioPedidoDTO, Date freservas, Date frecogida, Float importe) {
+    public PedidoDTO(Integer id, String estados, String tiendaDTO, UserDTOAPI usuarioPedidoDTO, Date freserva, Date frecogida, Float importe) {
         this.id = id;
         estado = estados;
         tienda = tiendaDTO;
         UsuarioPedidoDTO = usuarioPedidoDTO;
-        this.freserva = freservas;
+        this.freserva = freserva;
         this.frecogida = frecogida;
         this.importe = importe;
     }
@@ -77,12 +78,12 @@ public class PedidoDTO {
         UsuarioPedidoDTO = usuarioPedidoDTO;
     }
 
-    public Date getFreservas() {
+    public Date getFreserva() {
         return freserva;
     }
 
-    public void setFreservas(Date freservas) {
-        this.freserva = freservas;
+    public void setFreserva(Date freserva) {
+        this.freserva = freserva;
     }
 
     public Date getFrecogida() {
@@ -99,5 +100,13 @@ public class PedidoDTO {
 
     public void setImporte(Float importe) {
         this.importe = importe;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

@@ -3,8 +3,6 @@ package com.example.anteproyectoidea.adaptadores;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,22 +11,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.anteproyectoidea.R;
 import com.example.anteproyectoidea.dto.PedidoDTO;
-import com.example.anteproyectoidea.dto.ProductoDTO;
-import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 
-public class AdaptadorProductosPedidosUsuarioRV extends RecyclerView.Adapter<AdaptadorProductosPedidosUsuarioRV.ViewHolder> {
+public class AdaptadorProductosPedidosTiendaRV extends RecyclerView.Adapter<AdaptadorProductosPedidosTiendaRV.ViewHolder> {
 
 
 
 
     private List<PedidoDTO> pedidos;
 
-    public AdaptadorProductosPedidosUsuarioRV(List<PedidoDTO> pedidos) {
+    public AdaptadorProductosPedidosTiendaRV(List<PedidoDTO> pedidos) {
         this.pedidos = pedidos;
 
     }
@@ -59,7 +55,7 @@ public class AdaptadorProductosPedidosUsuarioRV extends RecyclerView.Adapter<Ada
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.items_pedidos_usuario, parent, false);
 
-        return new AdaptadorProductosPedidosUsuarioRV.ViewHolder(view);
+        return new AdaptadorProductosPedidosTiendaRV.ViewHolder(view);
     }
 
     @Override
@@ -75,7 +71,7 @@ public class AdaptadorProductosPedidosUsuarioRV extends RecyclerView.Adapter<Ada
         dia = gregorianCalendar.get(Calendar.DAY_OF_MONTH);
         holder.fechaPedido.setText(dia+"/"+mes+"/"+anio);
         holder.precioTotal.setText(pedidos.get(position).getImporte()+" €");
-        holder.nombreTienda.setText(  pedidos.get(position).getTiendaDTO().toString()  );
+        holder.nombreTienda.setText("Usuario "+  pedidos.get(position).getEmail());
         AdapterProductosPedidosUsuario adapter = new AdapterProductosPedidosUsuario(holder.itemView.getContext(),pedidos.get(position).getProductosCantidads());
         holder.productos.setAdapter(adapter);
     }

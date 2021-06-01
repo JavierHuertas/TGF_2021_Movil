@@ -48,45 +48,62 @@
 
 
     <include
-
         layout="@layout/content_scrolling_tienda" />
 
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:layout_marginTop="390dp"
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:fab_expandDirection="up"
-        app:layout_anchor="@+id/app_bar"
-        app:layout_anchorGravity="end|bottom"
-        app:fab_addButtonColorNormal="@color/logo"
-        app:fab_addButtonColorPressed="@color/black"
-        app:fab_labelsPosition="left"
-        app:fab_labelStyle="@style/menu_labels_style">
+        android:layout_gravity="right|bottom">
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
 
-
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/pedidosTienda"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/logo"
-            app:fab_colorPressed="@color/logo"
-            app:fab_title="Pedidos"
-            app:fab_icon="@drawable/ic_pedidos_tienda"/>
+            android:layout_gravity="right|bottom"
+            app:fab_expandDirection="up"
+            app:layout_anchor="@+id/app_bar"
+            app:layout_anchorGravity="right|bottom"
+            app:fab_addButtonColorNormal="@color/logo"
+            app:fab_addButtonColorPressed="@color/black"
+            app:fab_labelsPosition="left"
+            app:fab_labelStyle="@style/menu_labels_style">
 
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/newProducto"
-            android:layout_width="wrap_content"
-            app:fab_colorNormal="@color/logo"
-            app:fab_colorPressed="@color/logo"
-            app:fab_title="añadir producto"
-            android:layout_height="wrap_content"
-            app:fab_icon="@drawable/ic_plus_new"
-           />
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/pedidosTienda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="@color/logo"
+                app:fab_colorPressed="@color/logo"
+                app:fab_title="Pedidos"
+                app:fab_icon="@drawable/ic_pedidos_tienda"/>
 
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/newProducto"
+                android:layout_width="wrap_content"
+                app:fab_colorNormal="@color/logo"
+                app:fab_colorPressed="@color/logo"
+                app:fab_title="añadir producto"
+                android:layout_height="wrap_content"
+                app:fab_icon="@drawable/ic_plus_new"
+                />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/vovlerAtras"
+                android:layout_width="wrap_content"
+                app:fab_colorNormal="@color/logo"
+                app:fab_colorPressed="@color/logo"
+                app:fab_title="Volver atras"
+                android:layout_height="wrap_content"
+                app:fab_icon="@drawable/ic_flecha_atras"
+                />
+
+
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+    </LinearLayout>
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

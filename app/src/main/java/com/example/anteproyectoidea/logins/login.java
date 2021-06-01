@@ -84,7 +84,6 @@ public class login extends AppCompatActivity {
     public void login(View view) {
 
         if(isEmailValid(testEmail.getEditText().getText().toString().trim())){
-
             Registro.mAuth.signInWithEmailAndPassword(testEmail.getEditText().getText().toString().trim(),testContra.getEditText().getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -95,8 +94,7 @@ public class login extends AppCompatActivity {
                         String uid = Registro.mAuth.getCurrentUser().getUid();
                         user = Registro.mAuth.getCurrentUser();
 
-                        if(true){
-
+                        if(user.isEmailVerified()){
                             db.collection("shops").whereEqualTo("key",uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -110,14 +108,17 @@ public class login extends AppCompatActivity {
                                             }
                                 }
                             });
+                        }else{
+                            Toast.makeText(getApplicationContext(),"Tu email no se ha verificado comprueba tu correo",Toast.LENGTH_LONG).show();
                         }
                     }else{
+
                        errorAnimation(task.getException().getMessage());
                     }
                 }
             });
         }else{
-
+            Toast.makeText(getApplicationContext(),"Tu email no es valido",Toast.LENGTH_LONG).show();
 
         }
 

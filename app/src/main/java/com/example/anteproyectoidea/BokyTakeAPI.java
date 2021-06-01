@@ -38,5 +38,8 @@ public interface BokyTakeAPI {
     @GET("/pedidos/usuario/{idUsuario}")
     Call<List<PedidoDTO>> getPedidousuario(@Path("idUsuario") String idUsuario);
 
+    @GET("/pedidos/tienda/{idTienda}")
+    Call<List<PedidoDTO>> getPedidosTienda(@Path("idTienda") String idTienda);
+
 
 }

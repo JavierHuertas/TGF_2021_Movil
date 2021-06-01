@@ -1,5 +1,6 @@
 package com.example.anteproyectoidea.ui;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import com.example.anteproyectoidea.BokyTakeAPI;
@@ -52,13 +53,15 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
     private LinearLayout noProductos;
     private TextInputLayout filtro;
     private Button filtrar;
+    static public Boolean cerrar;
+    private Activity esta;
     private Button refresh;
     private SwipeRefreshLayout refrescarPorductos;
     private Retrofit retrofit;
     private String tiendaKey;
     private String tiendaNombre;
     FloatingActionButton fab;
-    private ArrayList<ProductosCantidad> pedidoActual = new ArrayList<ProductosCantidad>();
+   public static ArrayList<ProductosCantidad> pedidoActual = new ArrayList<ProductosCantidad>();
     DialogHacerPedido hacerPedido;
     DialogCarrito carrito;
     @Override
@@ -69,7 +72,8 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
         tiendaNombre= getIntent().getStringExtra("nombreTienda");
         Toast.makeText(getApplicationContext(),tiendaKey,Toast.LENGTH_SHORT).show();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
+        cerrar = false;
+        esta = TiendaUsuarios.this;
         NestedScrollView scrollview = (NestedScrollView) findViewById(R.id.scrollViewUp);
         scrollview.setNestedScrollingEnabled(true);
 
@@ -104,18 +108,12 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
 
 
 
-       //llamada para que recoja el nombre y esas vainas y meterlo en la base de datos
         FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
             //String id, String nombre, String apellido, String email
                 UserDTOAPI user = new UserDTOAPI(documentSnapshot.getString("key"),documentSnapshot.getString("nombre"),documentSnapshot.getString("apellidos"),documentSnapshot.getString("email"));
 
-                /*user.setEmail(documentSnapshot.getString("email"));
-                user.setNombre(documentSnapshot.getString("nombre"));
-                user.setApellido(documentSnapshot.getString("apellidos"));
-                user.setId(documentSnapshot.getString("key"));
-                */
                 BokyTakeAPI bokyTakeAPI = retrofit.create(BokyTakeAPI.class);
 
                 Call<Map<String,String>> llamada = bokyTakeAPI.crearUsuario(user);
@@ -180,10 +178,14 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
             public void onClick(View view) {
                 if(!pedidoActual.isEmpty()) {
                     carrito = new DialogCarrito();
-                    carrito.setProductosPedido(pedidoActual);
+                    //carrito.setProductosPedido(pedidoActual);
                     carrito.setIdUsuario(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     carrito.setIdTienda(tiendaKey);
+                    carrito.setActividad(esta);
+                    carrito.setContext(getApplicationContext());
                     carrito.show(getSupportFragmentManager(), "example dialog");
+                    getProductos();
+
                 }else{
                     Toast.makeText(getApplicationContext(),"No tienes articulos en el carrito",Toast.LENGTH_SHORT).show();
                 }
@@ -299,11 +301,28 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
 
     }
 
+
+
     private void reCargar() {
 
-        Toast.makeText(getApplicationContext(),"numero de items metidos"+ pedidoActual.size(),Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),"numero de items metidos"+ pedidoActual.size(),Toast.LENGTH_SHORT).show();
 
         fab.setImageDrawable(getDrawable(R.drawable.cart_shopping_items));
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    public void finalizar(){
+        onBackPressed();
+    }
+
+    public void setCerrar() {
+        if(cerrar) {
+            onBackPressed();
+        }
     }
 }

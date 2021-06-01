@@ -220,21 +220,27 @@ public class RegistrarseUsuarios extends AppCompatActivity {
                                             @Override
                                             public void run() {
 
-
-                                                MaterialAlertDialogBuilder cerrarventana = new MaterialAlertDialogBuilder(contexto);
-                                                cerrarventana.setTitle("Operacion correcta");
-                                                cerrarventana.setIcon(R.drawable.ic_ok);
-                                                cerrarventana.setMessage("esta actividad se cerrara");
-                                                cerrarventana.setPositiveButton(("Aceptar"),(dialog, which) -> {
-                                                    //Toast.makeText(getContext(),"operacion cancelada",Toast.LENGTH_LONG).show();
-                                                    irNuevaActividad();
-                                                    try {
-                                                        finalize();
-                                                    } catch (Throwable throwable) {
-                                                        throwable.printStackTrace();
+                                                FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        MaterialAlertDialogBuilder cerrarventana = new MaterialAlertDialogBuilder(contexto);
+                                                        cerrarventana.setTitle("Operacion correcta");
+                                                        cerrarventana.setIcon(R.drawable.ic_ok);
+                                                        cerrarventana.setMessage("Se ha envidado un correo de verificacion a tu cuenta");
+                                                        cerrarventana.setPositiveButton(("Aceptar"),(dialog, which) -> {
+                                                            //Toast.makeText(getContext(),"operacion cancelada",Toast.LENGTH_LONG).show();
+                                                            irNuevaActividad();
+                                                            try {
+                                                                finalize();
+                                                            } catch (Throwable throwable) {
+                                                                throwable.printStackTrace();
+                                                            }
+                                                        });
+                                                        cerrarventana.show();;
                                                     }
                                                 });
-                                                cerrarventana.show();;
+
+
 
 
                                                 progressBarCargando.finishProgressBar();

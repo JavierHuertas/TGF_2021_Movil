@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView r;
     private TextView f;
     private ImageView t;
+    NavigationView navigationView;
     private StorageReference mReference;
     private FirebaseFirestore db;
     private String name;
@@ -48,19 +49,16 @@ public class MainActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         mReference = FirebaseStorage.getInstance().getReference();
 
-        Bundle bundle = getIntent().getExtras();
-        Boolean esGoogle =bundle.getBoolean("esGoogle");
 
-        //Toast.makeText(getApplicationContext(),esGoogle+"",Toast.LENGTH_LONG).show();
-       // Toast.makeText(getApplicationContext(),Registro.mAuth.getUid(),Toast.LENGTH_LONG).show();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        navigationView = findViewById(R.id.nav_view);
         View header = navigationView.getHeaderView(0);
         r = header.findViewById(R.id.EmailUsuario);
         f = header.findViewById(R.id.NombreUsuario);
         t = header.findViewById(R.id.ImagenUsuario);
 
-        db.collection("users").document(Registro.mAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+           db.collection("users").document(Registro.mAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if(documentSnapshot.exists()){
@@ -108,11 +106,21 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
 
+    public void changeNavHeaderData(String nombre,Uri uri) {
 
 
+        View header = navigationView.getHeaderView(0);
+        f = header.findViewById(R.id.NombreUsuario);
+        t = header.findViewById(R.id.ImagenUsuario);
+        f.setText(nombre);
+        Picasso.get().load(uri).into(t);
     }
+
+
+}
