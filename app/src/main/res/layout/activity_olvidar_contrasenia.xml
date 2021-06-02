@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Carne"
+    tools:context=".OlvidarContrasenia"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cambio de contraseña"
+        android:textSize="35dp"
+        android:layout_marginBottom="150dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="Introduce tu correo electronico:"/>
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"></Space>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/changePasswordEmail"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:background="@android:color/transparent"
+        android:hint="Correo electronico"
+        android:textColorHint="@color/quantum_grey700"
+        app:boxBackgroundColor="@android:color/transparent"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeErrorColor="@android:color/holo_red_dark"
+        app:errorEnabled="true"
+        app:errorIconDrawable="@android:drawable/stat_notify_error"
+        app:errorIconTint="@android:color/holo_red_dark"
+        app:placeholderTextColor="@color/black"
+        app:startIconDrawable="@android:drawable/ic_dialog_email"
+        app:startIconTint="@color/black">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:text=""
+            android:textColor="@color/black"
+            android:textColorHint="@android:color/black" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+<Space
+    android:layout_width="wrap_content"
+    android:layout_height="50dp"></Space>
+    <RelativeLayout
+        android:id="@+id/btnCambiarContraseña"
+        android:layout_width="177dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:background="@drawable/boton_login_empresa"
+        android:gravity="center"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ralewayregular"
+            android:gravity="center"
+            android:text="Confirmar"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

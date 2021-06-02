@@ -21,7 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AnteproyectoIdea">
-        <activity android:name=".PedidosTienda"></activity>
+        <activity android:name=".OlvidarContrasenia" android:theme="@style/Theme.AnteproyectoIdea.NoActionBar"/>
+        <activity android:name=".PedidosTienda" />
         <activity android:name=".EditarProducto" />
         <activity
             android:name=".MainTienda"

@@ -44,6 +44,7 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
@@ -251,20 +252,27 @@ public class RegistroTienda extends AppCompatActivity {
                                 @Override
                                 public void run() {
 
-                                    MaterialAlertDialogBuilder cerrarventana = new MaterialAlertDialogBuilder(contexto);
-                                    cerrarventana.setTitle("Operacion correcta");
-                                    cerrarventana.setMessage("esta actividad se cerrara");
-                                cerrarventana.setPositiveButton(("Aceptar"),(dialog, which) -> {
-                                        //Toast.makeText(getContext(),"operacion cancelada",Toast.LENGTH_LONG).show();
-                                    Intent intent = new Intent(getApplicationContext(), Registro.class);
-                                    startActivity(intent);
-                                        try {
-                                            finalize();
-                                        } catch (Throwable throwable) {
-                                            throwable.printStackTrace();
+                                    FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            MaterialAlertDialogBuilder cerrarventana = new MaterialAlertDialogBuilder(contexto);
+                                            cerrarventana.setTitle("Operacion correcta");
+                                            cerrarventana.setIcon(R.drawable.ic_ok);
+                                            cerrarventana.setMessage("Se ha envidado un correo de verificacion a tu cuenta");
+                                            cerrarventana.setPositiveButton(("Aceptar"),(dialog, which) -> {
+                                                //Toast.makeText(getContext(),"operacion cancelada",Toast.LENGTH_LONG).show();
+                                                FirebaseAuth.getInstance().signOut();
+                                                Intent intent = new Intent(getApplicationContext(), Registro.class);
+                                                startActivity(intent);
+                                                try {
+                                                    finalize();
+                                                } catch (Throwable throwable) {
+                                                    throwable.printStackTrace();
+                                                }
+                                            });
+                                            cerrarventana.show();;
                                         }
                                     });
-                                    cerrarventana.show();;
 
 
 

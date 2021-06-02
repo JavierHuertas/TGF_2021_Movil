@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.anteproyectoidea.MainActivity;
 import com.example.anteproyectoidea.MainTienda;
+import com.example.anteproyectoidea.OlvidarContrasenia;
 import com.example.anteproyectoidea.dialogos.ProgressBarCargando;
 import com.example.anteproyectoidea.R;
 import com.example.anteproyectoidea.registro.Registro;
@@ -29,6 +31,7 @@ public class login extends AppCompatActivity {
     private FirebaseFirestore db;
     private TextInputLayout testEmail,testContra;
     boolean EsTienda ;
+    private TextView changePassword;
     private FirebaseUser user;
     private String tipo;
     private LottieAnimationView animation;
@@ -40,6 +43,14 @@ public class login extends AppCompatActivity {
         getSupportActionBar().hide();
         testEmail = findViewById(R.id.emailLogin);
         testContra = findViewById(R.id.passwordlogin);
+        changePassword = findViewById(R.id.changePassword);
+        changePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent nuevo = new Intent(getApplicationContext(), OlvidarContrasenia.class);
+                startActivity(nuevo);
+            }
+        });
         db = FirebaseFirestore.getInstance();
         animation = findViewById(R.id.loginAnimation);
 
@@ -82,6 +93,10 @@ public class login extends AppCompatActivity {
 
 
     public void login(View view) {
+
+        if(Registro.mAuth.getCurrentUser() !=null) {
+            Registro.mAuth.signOut();
+        }
 
         if(isEmailValid(testEmail.getEditText().getText().toString().trim())){
             Registro.mAuth.signInWithEmailAndPassword(testEmail.getEditText().getText().toString().trim(),testContra.getEditText().getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
