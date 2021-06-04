@@ -94,7 +94,7 @@
                 android:layout_width="wrap_content"
                 app:fab_colorNormal="@color/logo"
                 app:fab_colorPressed="@color/logo"
-                app:fab_title="Volver atras"
+                app:fab_title="Cerrar sesion"
                 android:layout_height="wrap_content"
                 app:fab_icon="@drawable/ic_flecha_atras"
                 />

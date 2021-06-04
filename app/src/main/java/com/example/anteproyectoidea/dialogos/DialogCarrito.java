@@ -39,6 +39,7 @@ public class DialogCarrito extends AppCompatDialogFragment {
     public TextView preciototal;
     private Retrofit retrofit;
     private Context context;
+    View view;
     private Activity actividad;
     public String idUsuario,idTienda;
     public AdapterProductosCarrito productosCarrito;
@@ -48,7 +49,7 @@ public class DialogCarrito extends AppCompatDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View view =inflater.inflate(R.layout.dialog_cart,null);
+        view =inflater.inflate(R.layout.dialog_cart,null);
         listaPedidos= view.findViewById(R.id.itemsCarts);
         preciototal = view.findViewById(R.id.totalPedido);
         retrofit = new Retrofit.Builder()
@@ -57,6 +58,12 @@ public class DialogCarrito extends AppCompatDialogFragment {
                 .build();
         productosCarrito = new AdapterProductosCarrito(TiendaUsuarios.pedidoActual,builder.getContext());
         listaPedidos.setAdapter(productosCarrito);
+
+        productosCarrito.notifyDataSetChanged();
+
+        preciototal.setText(" ");
+
+
 
 
         builder.setTitle("SuCompra").setView(view)
@@ -101,6 +108,12 @@ public class DialogCarrito extends AppCompatDialogFragment {
 
     }
 
+
+    public void editarPrecioFinal(){
+
+
+
+    }
 
     public void setActividad(Activity actividad) {
         this.actividad = actividad;

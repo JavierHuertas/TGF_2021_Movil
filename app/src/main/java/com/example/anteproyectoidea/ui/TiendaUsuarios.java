@@ -101,18 +101,18 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         refrescarPorductos = findViewById(R.id.refreshProductos);
+
        retrofit = new Retrofit.Builder()
                 .baseUrl(getResources().getString(R.string.conexionAPI))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
-
-
-        FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
             //String id, String nombre, String apellido, String email
-                UserDTOAPI user = new UserDTOAPI(documentSnapshot.getString("key"),documentSnapshot.getString("nombre"),documentSnapshot.getString("apellidos"),documentSnapshot.getString("email"));
+                UserDTOAPI user = new UserDTOAPI(documentSnapshot.getString("key"),documentSnapshot.getString("nombre"),
+                        documentSnapshot.getString("apellidos"),documentSnapshot.getString("email"));
 
                 BokyTakeAPI bokyTakeAPI = retrofit.create(BokyTakeAPI.class);
 
@@ -182,8 +182,10 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
                     carrito.setIdUsuario(FirebaseAuth.getInstance().getCurrentUser().getUid());
                     carrito.setIdTienda(tiendaKey);
                     carrito.setActividad(esta);
+
                     carrito.setContext(getApplicationContext());
                     carrito.show(getSupportFragmentManager(), "example dialog");
+                    carrito.editarPrecioFinal();
                     getProductos();
 
                 }else{
@@ -285,6 +287,7 @@ public class TiendaUsuarios extends AppCompatActivity implements AdapterProducto
                 if(pedidoActual.contains(productosCantidad)){
                     pedidoActual.remove(productosCantidad);
                     carrito.productosCarrito.notifyDataSetChanged();
+                    carrito.editarPrecioFinal();
                     productosCantidad.setCantidad(productosCantidad.getCantidad()+ productosCantidad.getCantidad());
                     pedidoActual.add(productosCantidad);
 

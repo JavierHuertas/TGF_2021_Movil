@@ -127,6 +127,7 @@ public class EditarPerfilFragment extends Fragment {
                 if(docu.exists()){
                     editarNombreUsuario.getEditText().setText(docu.getString("nombre"));
                     editarApellidoUsuario.getEditText().setText(docu.getString("apellidos"));
+
                     Picasso.get().load(Uri.parse(docu.getString("imagenUri"))).into(editarImagenUsuario);
 
                     if(docu.getString("tipo").equalsIgnoreCase("usuarioGoogle")){

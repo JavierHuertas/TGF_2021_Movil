@@ -160,7 +160,7 @@ public class RegistrarseUsuarios extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         userDTO = new UserDTO(Registro.mAuth.getUid(),"usuario", nombre.getEditText().getText().toString().trim(), apellido.getEditText().getText().toString().trim(),email.getEditText().getText().toString().trim(), defaultImagen, latitud, longitud);
-                                        Toast.makeText(getApplicationContext(),apellido.getEditText().getText().toString().trim(),Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(getApplicationContext(),apellido.getEditText().getText().toString().trim(),Toast.LENGTH_SHORT).show();
                                         if(comprobarCamara) {
                                             if (uri != null) {
                                                 mReference = mReference.child("Imagenusuario/" + uri.getLastPathSegment() + "User" + Registro.mAuth.getUid());

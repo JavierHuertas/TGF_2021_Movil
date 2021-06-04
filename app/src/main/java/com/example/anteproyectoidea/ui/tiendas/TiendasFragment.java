@@ -74,7 +74,7 @@ public class TiendasFragment extends Fragment {
             query = FirebaseFirestore.getInstance()
                     .collection("shops");
         }else {
-            query = FirebaseFirestore.getInstance().collection("shops").whereEqualTo("nombreComercio",tiendaPorNombre.getEditText().getText().toString());
+            query = FirebaseFirestore.getInstance().collection("shops").orderBy("nombreComercio").startAt(tiendaPorNombre.getEditText().getText().toString()).endAt(tiendaPorNombre.getEditText().getText().toString()+'\uf8ff');
         }
 
 

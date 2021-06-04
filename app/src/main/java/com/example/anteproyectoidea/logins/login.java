@@ -52,6 +52,7 @@ public class login extends AppCompatActivity {
             }
         });
         db = FirebaseFirestore.getInstance();
+
         animation = findViewById(R.id.loginAnimation);
 
 
@@ -62,7 +63,7 @@ public class login extends AppCompatActivity {
 
 
 
-    private void goodAnimation(){
+    private void goodAnimation(Boolean tienda){
         animation.setAnimation(R.raw.spinner_only);
         animation.playAnimation();
         animation.setAnimation(R.raw.spinner_good);
@@ -70,12 +71,18 @@ public class login extends AppCompatActivity {
         animation.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                goHomeUser();
+
+                if(tienda){
+                    goHomeShop();
+                }else {
+                    goHomeUser();
+                }
+
+
             }
 
             @Override
@@ -108,18 +115,15 @@ public class login extends AppCompatActivity {
                     if(task.isSuccessful()){
                         String uid = Registro.mAuth.getCurrentUser().getUid();
                         user = Registro.mAuth.getCurrentUser();
-
+                        //user.isEmailVerified()
                         if(user.isEmailVerified()){
                             db.collection("shops").whereEqualTo("key",uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
                                             if(task.getResult().isEmpty()){
-
-                                                goodAnimation();
-
+                                                goodAnimation(false);
                                             }else{
-                                                goHomeShop();
+                                                goodAnimation(true);
                                             }
                                 }
                             });
@@ -141,18 +145,8 @@ public class login extends AppCompatActivity {
 
 
 
-    public void comprobarCheckShop(){
-
-
-
-
-
-
-    }
-
     public void goHomeUser(){
         progressBarCargando.StarProgressBar();
-
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -170,8 +164,22 @@ public class login extends AppCompatActivity {
 
     }
     public void goHomeShop(){
-        Intent intent = new Intent(getApplicationContext(), MainTienda.class);
-        startActivity(intent);
+
+        progressBarCargando.StarProgressBar();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressBarCargando.finishProgressBar();
+                Intent intent = new Intent(getApplicationContext(), MainTienda.class);
+                progressBarCargando.finishProgressBar();
+                startActivity(intent);
+                finish();
+            }
+        }, 2000);
+
+
+
         //progressBarCargando.finishProgressBar();
         Toast.makeText(getApplicationContext(),"es tienda",Toast.LENGTH_SHORT).show();
 

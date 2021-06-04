@@ -31,7 +31,7 @@ public class splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         getSupportActionBar().hide();
-        prueba = findViewById(R.id.preubajdbc);
+
 
         TimerTask task = new TimerTask() {
             @Override

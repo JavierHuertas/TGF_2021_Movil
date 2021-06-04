@@ -29,6 +29,7 @@ public interface BokyTakeAPI {
 
     @POST("/productos/tienda/{idTienda}/nuevo")
     Call<Map<String,Object>> nuevoProducto(@Body ProductoDTO nuevo,@Path("idTienda") String idTienda);
+
     @PUT("/productos/editar")
     Call<Map<String,Object>> editarProducto(@Body ProductoDTO productoDTO);
 

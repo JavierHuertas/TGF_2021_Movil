@@ -14,6 +14,7 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="100dp"/>
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/loginAnimation"
         android:layout_width="150dp"
@@ -25,7 +26,6 @@
         android:id="@+id/emailLogin"
         android:layout_width="300dp"
         android:layout_height="80dp"
-
         android:background="@android:color/transparent"
         android:hint="Correo Electronico"
         android:textColorHint="@color/quantum_grey700"
@@ -49,6 +49,7 @@
             android:textColorHint="@android:color/white" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordlogin"
         android:layout_width="300dp"

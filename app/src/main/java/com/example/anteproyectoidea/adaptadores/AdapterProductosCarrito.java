@@ -53,6 +53,7 @@ public class AdapterProductosCarrito extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 productosCatidad.remove(position);
+
                 notifyDataSetChanged();
             }
         });
