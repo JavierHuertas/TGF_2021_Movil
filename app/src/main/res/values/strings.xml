@@ -26,6 +26,7 @@
     <string name="facebook">Facebook</string>
     <string name="google">Google</string>
     <string name="login">Login</string>
+    <!--localhost fail cambiar a api gcloud  https://jardinerias-paca.ew.r.appspot.com/-->
     <string name="conexionAPI">http://bokytake.sytes.net:8080</string>
     <string name="text_subrayado"><u>Informacion Personal</u></string>
     <string name="elige_imagen"><u>Seleciona una imagen</u></string>
