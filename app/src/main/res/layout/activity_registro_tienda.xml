@@ -80,7 +80,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextNombreDuenio"
                 android:layout_width="300dp"
-                android:layout_height="80dp"
+                android:layout_height="100dp"
                 android:background="@android:color/transparent"
                 android:hint="Nombre dueño"
                 android:textColorHint="@color/quantum_grey700"
@@ -105,10 +105,14 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"/>
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextNombreNegocio"
                 android:layout_width="300dp"
-                android:layout_height="80dp"
+                android:layout_height="100dp"
                 android:background="@android:color/transparent"
                 android:hint="Nombre negocio"
                 android:textColorHint="@color/quantum_grey700"
@@ -132,7 +136,9 @@
                     android:textColorHint="@android:color/white" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -142,11 +148,13 @@
                 android:textColor="@color/secondaryColor"
                 android:textSize="25dp"
                 android:textStyle="italic" />
-
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"/>
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextDireccionTienda"
                 android:layout_width="300dp"
-                android:layout_height="80dp"
+                android:layout_height="100dp"
 
                 android:background="@android:color/transparent"
                 android:hint="Direccion"
@@ -171,7 +179,9 @@
                     android:textColorHint="@android:color/white" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"/>
             <RelativeLayout
                 android:id="@+id/intetnDirecion"
                 android:layout_width="177dp"
@@ -210,7 +220,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextTextEmailAddressTienda"
                 android:layout_width="300dp"
-                android:layout_height="80dp"
+                android:layout_height="100dp"
 
                 android:background="@android:color/transparent"
                 android:hint="Correo Electronico"
@@ -236,10 +246,14 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"/>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextTextPasswordTienda"
                 android:layout_width="300dp"
-                android:layout_height="80dp"
+                android:layout_height="100dp"
 
                 android:background="@android:color/transparent"
                 android:hint="Contraseña"
@@ -264,11 +278,14 @@
                     android:textColorHint="@android:color/white" />
 
             </com.google.android.material.textfield.TextInputLayout>
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/editTextTextPassword2Tienda"
                 android:layout_width="300dp"
-                android:layout_height="80dp"
+                android:layout_height="100dp"
 
                 android:background="@android:color/transparent"
                 android:hint="Repetir Contraseña"

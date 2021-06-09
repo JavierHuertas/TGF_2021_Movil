@@ -158,142 +158,138 @@ public class RegistroTienda extends AppCompatActivity {
     }
 
     void registrarse(View view){
-        String correo = email.getEditText().getText().toString().trim();
-        String contrasenia = contraseñaUno.getEditText().getText().toString().trim();
-        Registro.mAuth.createUserWithEmailAndPassword(correo, contrasenia)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            longitudTienda = latLng.longitude;
-                            latitudTienda = latLng.latitude;
-                            //Toast.makeText(getApplicationContext(),longitudTienda+" "+latitudTienda,Toast.LENGTH_SHORT).show();
-                            tiendaDTO = new TiendaDTO(Registro.mAuth.getUid(),"tienda",nombreDuenio.getEditText().getText().toString().trim(),email.getEditText().getText().toString().trim()
-                                    ,ImagenDefault,nombreEstabelecimiento.getEditText().getText().toString().trim(),direccionTienda.getEditText().getText().toString().trim(),longitudTienda,latitudTienda);
-                            tiendaDTO.setContrasenia(getSHA256(contrasenia));
-                            db.collection("shops").document(Registro.mAuth.getUid()).set(tiendaDTO);
-                            if(esCamara) {
-                                if (uri != null) {
-                                    mReference = mReference.child("imagenTiendas/" + uri.getLastPathSegment() + "Tienda" + Registro.mAuth.getUid());
-                                    UploadTask uploadTask = mReference.putFile(uri);
-                                    uploadTask.addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.i("fallo?", e.getMessage());
-                                        }
-                                    });
-                                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                        @Override
-                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                            StorageMetadata snapshotMetadata = taskSnapshot.getMetadata();
-                                            Task<Uri> downloadUrl = mReference.getDownloadUrl();
-                                            downloadUrl.addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                                @Override
-                                                public void onSuccess(Uri pe) {
-                                                    String imageReference = pe.toString();
-                                                    db.collection("shops").document(Registro.mAuth.getUid()).update("logoTienda", imageReference.toString());
-                                                    //tiendaDTO.setLogoTienda("hola");
-
-                                                }
-                                            });
-                                        }
-                                    });
-                                }
-                            }else{
-                                mReference = mReference.child("imagenTiendas/" + "Tienda" + Registro.mAuth.getUid());
-                                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                                imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                                byte[] datas = baos.toByteArray();
-
-                                mReference.putBytes(datas).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                        mReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        if(comprobarCosasIntroducidas()==0) {
+            String correo = email.getEditText().getText().toString().trim();
+            String contrasenia = contraseñaUno.getEditText().getText().toString().trim();
+            Registro.mAuth.createUserWithEmailAndPassword(correo, contrasenia)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                longitudTienda = latLng.longitude;
+                                latitudTienda = latLng.latitude;
+                                //Toast.makeText(getApplicationContext(),longitudTienda+" "+latitudTienda,Toast.LENGTH_SHORT).show();
+                                tiendaDTO = new TiendaDTO(Registro.mAuth.getUid(), "tienda", nombreDuenio.getEditText().getText().toString().trim(), email.getEditText().getText().toString().trim()
+                                        , ImagenDefault, nombreEstabelecimiento.getEditText().getText().toString().trim(), direccionTienda.getEditText().getText().toString().trim(), longitudTienda, latitudTienda);
+                                tiendaDTO.setContrasenia(getSHA256(contrasenia));
+                                db.collection("shops").document(Registro.mAuth.getUid()).set(tiendaDTO);
+                                if (esCamara) {
+                                    if (uri != null) {
+                                        mReference = mReference.child("imagenTiendas/" + uri.getLastPathSegment() + "Tienda" + Registro.mAuth.getUid());
+                                        UploadTask uploadTask = mReference.putFile(uri);
+                                        uploadTask.addOnFailureListener(new OnFailureListener() {
                                             @Override
-                                            public void onSuccess(Uri uri) {
-                                                String imageReference = uri.toString();
-                                                db.collection("shops").document(Registro.mAuth.getUid()).update("logoTienda", imageReference.toString());
-                                                //tiendaDTO.setLogoTienda("hola");
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.i("fallo?", e.getMessage());
+                                            }
+                                        });
+                                        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                StorageMetadata snapshotMetadata = taskSnapshot.getMetadata();
+                                                Task<Uri> downloadUrl = mReference.getDownloadUrl();
+                                                downloadUrl.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                    @Override
+                                                    public void onSuccess(Uri pe) {
+                                                        String imageReference = pe.toString();
+                                                        db.collection("shops").document(Registro.mAuth.getUid()).update("logoTienda", imageReference.toString());
+                                                        //tiendaDTO.setLogoTienda("hola");
+
+                                                    }
+                                                });
                                             }
                                         });
                                     }
-                                });
+                                } else {
+                                    mReference = mReference.child("imagenTiendas/" + "Tienda" + Registro.mAuth.getUid());
+                                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                    imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                                    byte[] datas = baos.toByteArray();
 
-                            }
-
-                            progressBarCargando.StarProgressBar();
-
-
-
-                            db.collection("shops").document(Registro.mAuth.getUid()).set(tiendaDTO);
-                            Retrofit retro = new Retrofit.Builder()
-                                    .baseUrl(getResources().getString(R.string.conexionAPI))
-                                    .addConverterFactory(GsonConverterFactory.create())
-                                    .build();
-
-                            BokyTakeAPI bokyTakeAPI = retro.create(BokyTakeAPI.class);
-
-                            Call<Map<String,String>> llamada = bokyTakeAPI.crearTienda(new TiendaDTOAPI(tiendaDTO.getKey(),tiendaDTO.getNombreComercio(),tiendaDTO.getLocalizacion(),tiendaDTO.getContrasenia(),tiendaDTO.getEmail()));
-
-                            llamada.enqueue(new Callback<Map<String, String>>() {
-                                @Override
-                                public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
-
-                                }
-
-                                @Override
-                                public void onFailure(Call<Map<String, String>> call, Throwable t) {
-
-                                }
-                            });
-
-                            Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-
-                                    FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    mReference.putBytes(datas).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                         @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            MaterialAlertDialogBuilder cerrarventana = new MaterialAlertDialogBuilder(contexto);
-                                            cerrarventana.setTitle("Operacion correcta");
-                                            cerrarventana.setIcon(R.drawable.ic_ok);
-                                            cerrarventana.setMessage("Se ha envidado un correo de verificacion a tu cuenta");
-                                            cerrarventana.setPositiveButton(("Aceptar"),(dialog, which) -> {
-                                                //Toast.makeText(getContext(),"operacion cancelada",Toast.LENGTH_LONG).show();
-                                                FirebaseAuth.getInstance().signOut();
-                                                Intent intent = new Intent(getApplicationContext(), Registro.class);
-                                                startActivity(intent);
-                                                try {
-                                                    finalize();
-                                                } catch (Throwable throwable) {
-                                                    throwable.printStackTrace();
+                                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                            mReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                @Override
+                                                public void onSuccess(Uri uri) {
+                                                    String imageReference = uri.toString();
+                                                    db.collection("shops").document(Registro.mAuth.getUid()).update("logoTienda", imageReference.toString());
+                                                    //tiendaDTO.setLogoTienda("hola");
                                                 }
                                             });
-                                            cerrarventana.show();;
                                         }
                                     });
 
-
-
-
-                                    progressBarCargando.finishProgressBar();
-
                                 }
-                            }, 3000);
+
+                                progressBarCargando.StarProgressBar();
 
 
+                                db.collection("shops").document(Registro.mAuth.getUid()).set(tiendaDTO);
+                                Retrofit retro = new Retrofit.Builder()
+                                        .baseUrl(getResources().getString(R.string.conexionAPI))
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .build();
+
+                                BokyTakeAPI bokyTakeAPI = retro.create(BokyTakeAPI.class);
+
+                                Call<Map<String, String>> llamada = bokyTakeAPI.crearTienda(new TiendaDTOAPI(tiendaDTO.getKey(), tiendaDTO.getNombreComercio(), tiendaDTO.getLocalizacion(), tiendaDTO.getContrasenia(), tiendaDTO.getEmail()));
+
+                                llamada.enqueue(new Callback<Map<String, String>>() {
+                                    @Override
+                                    public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Map<String, String>> call, Throwable t) {
+
+                                    }
+                                });
+
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        FirebaseAuth.getInstance().getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                MaterialAlertDialogBuilder cerrarventana = new MaterialAlertDialogBuilder(contexto);
+                                                cerrarventana.setTitle("Operacion correcta");
+                                                cerrarventana.setIcon(R.drawable.ic_ok);
+                                                cerrarventana.setMessage("Se ha envidado un correo de verificacion a tu cuenta");
+                                                cerrarventana.setPositiveButton(("Aceptar"), (dialog, which) -> {
+                                                    //Toast.makeText(getContext(),"operacion cancelada",Toast.LENGTH_LONG).show();
+                                                    FirebaseAuth.getInstance().signOut();
+                                                    Intent intent = new Intent(getApplicationContext(), Registro.class);
+                                                    startActivity(intent);
+                                                    try {
+                                                        finalize();
+                                                    } catch (Throwable throwable) {
+                                                        throwable.printStackTrace();
+                                                    }
+                                                });
+                                                cerrarventana.show();
+                                                ;
+                                            }
+                                        });
 
 
+                                        progressBarCargando.finishProgressBar();
+
+                                    }
+                                }, 3000);
 
 
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            task.getException().getMessage();
-                            Toast.makeText(getApplicationContext(), "Authentication failed." + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                task.getException().getMessage();
+                                Toast.makeText(getApplicationContext(), "Authentication failed." + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
 
 
@@ -352,13 +348,13 @@ public class RegistroTienda extends AppCompatActivity {
 
     private int comprobarCosasIntroducidas(){
 
-        nombreEstabelecimiento.getBackground().setColorFilter(getResources().getColor(R.color.logo) , PorterDuff.Mode.SRC_ATOP);
-        nombreDuenio.getBackground().setColorFilter(getResources().getColor(R.color.logo) , PorterDuff.Mode.SRC_ATOP);
-        direccionTienda.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-        contraseñaUno.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-        email.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-        contraseñaDos.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-        contraseñaDos.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        nombreEstabelecimiento.setErrorEnabled(false);
+        nombreDuenio.setErrorEnabled(false);
+        direccionTienda.setErrorEnabled(false);
+        contraseñaUno.setErrorEnabled(false);
+        email.setErrorEnabled(false);
+        contraseñaDos.setErrorEnabled(false);
+        contraseñaDos.setErrorEnabled(false);
         int comprobador =0;
         if(nombreDuenio.getEditText().getText().toString().trim().isEmpty()){
             //Toast.makeText(getApplicationContext(),"No has introdfucido ningun nombre",Toast.LENGTH_SHORT).show();

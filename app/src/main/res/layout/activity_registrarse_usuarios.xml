@@ -74,7 +74,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editTextTextPersonName"
         android:layout_width="300dp"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:background="@android:color/transparent"
         android:hint="Nombre"
         android:textColorHint="@color/quantum_grey700"
@@ -86,7 +86,8 @@
         app:errorIconTint="@android:color/holo_red_dark"
         app:placeholderTextColor="@color/black"
         app:startIconDrawable="@drawable/ic_user_loginregister"
-        app:startIconTint="@color/black">
+        app:startIconTint="@color/black"
+        >
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -98,12 +99,14 @@
             android:textColorHint="@android:color/white" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/editTextTextPersonSurname"
             android:layout_width="300dp"
-            android:layout_height="80dp"
+            android:layout_height="100dp"
             android:background="@android:color/transparent"
             android:hint="Apellidos"
             android:textColorHint="@color/quantum_grey700"
@@ -127,12 +130,14 @@
                 android:textColorHint="@android:color/white" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editTextTextEmailAddress"
         android:layout_width="300dp"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:background="@android:color/transparent"
         android:hint="Correo electronico"
         android:textColorHint="@color/quantum_grey700"
@@ -157,10 +162,14 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"/>
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editTextTextPassword"
         android:layout_width="300dp"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:background="@android:color/transparent"
         android:hint="Contraseña"
         android:textColorHint="@color/quantum_grey700"
@@ -185,13 +194,16 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"/>
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editTextTextPassword2"
         android:layout_width="300dp"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="15dp"
         android:background="@android:color/transparent"
         android:hint="Repetir Contraseña"
         android:textColorHint="@color/quantum_grey700"
@@ -213,12 +225,12 @@
             android:text=""
             android:textColor="@color/black"
             android:textColorHint="@android:color/white" />
-
     </com.google.android.material.textfield.TextInputLayout>
+
         </LinearLayout>
     <Space
         android:layout_width="match_parent"
-        android:layout_height="25dp"></Space>
+        android:layout_height="15dp"></Space>
     <RelativeLayout
         android:id="@+id/buttonRegistrarse"
         android:layout_width="168dp"
@@ -240,6 +252,7 @@
         app:layout_constraintVertical_bias="0.703">
 
 
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="40dp"
@@ -252,6 +265,9 @@
             android:textStyle="bold" />
 
     </RelativeLayout>
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"/>
     </LinearLayout>
 </ScrollView>
 

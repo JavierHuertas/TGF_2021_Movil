@@ -27,7 +27,7 @@ public class DialogHacerPedido extends AppCompatDialogFragment{
 
 
     public ImageView imagenProducto;
-    public TextView nombreProducto,precioProducto,importeTotal;
+    public TextView nombreProducto,precioProducto,importeTotal,descripcion;
     public ProductoDTO producto;
     public NumberPicker cantidad;
 
@@ -44,6 +44,8 @@ public class DialogHacerPedido extends AppCompatDialogFragment{
         nombreProducto= view.findViewById(R.id.nombreArticuloDialog);
         importeTotal = view.findViewById(R.id.importeTotal);
         importeTotal.setText(producto.getPrecio()+" €");
+        descripcion = view.findViewById(R.id.descripcionProductoDialog);
+        descripcion.setText(producto.getDescripcion());
         precioProducto= view.findViewById(R.id.producPrecioDialog);
         precioProducto.setText(producto.getPrecio()+" €");
         nombreProducto.setText("precio");

@@ -25,7 +25,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailLogin"
         android:layout_width="300dp"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:background="@android:color/transparent"
         android:hint="Correo Electronico"
         android:textColorHint="@color/quantum_grey700"
@@ -53,7 +53,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/passwordlogin"
         android:layout_width="300dp"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
 
         android:background="@android:color/transparent"
         android:hint="Contraseña"

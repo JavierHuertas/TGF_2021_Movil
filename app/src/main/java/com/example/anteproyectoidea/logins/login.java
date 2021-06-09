@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.Animator;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -105,42 +107,44 @@ public class login extends AppCompatActivity {
             Registro.mAuth.signOut();
         }
 
-        if(isEmailValid(testEmail.getEditText().getText().toString().trim())){
-            Registro.mAuth.signInWithEmailAndPassword(testEmail.getEditText().getText().toString().trim(),testContra.getEditText().getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+        if(comprobarCosasIntroducidas()==0) {
+
+            if (isEmailValid(testEmail.getEditText().getText().toString().trim())) {
+                Registro.mAuth.signInWithEmailAndPassword(testEmail.getEditText().getText().toString().trim(), testContra.getEditText().getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
 
 
+                        if (task.isSuccessful()) {
+                            String uid = Registro.mAuth.getCurrentUser().getUid();
+                            user = Registro.mAuth.getCurrentUser();
+                            //user.isEmailVerified()
+                            if (user.isEmailVerified()) {
+                                db.collection("shops").whereEqualTo("key", uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.getResult().isEmpty()) {
+                                            goodAnimation(false);
+                                        } else {
+                                            goodAnimation(true);
+                                        }
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Tu email no se ha verificado comprueba tu correo", Toast.LENGTH_LONG).show();
+                            }
+                        } else {
 
-                    if(task.isSuccessful()){
-                        String uid = Registro.mAuth.getCurrentUser().getUid();
-                        user = Registro.mAuth.getCurrentUser();
-                        //user.isEmailVerified()
-                        if(user.isEmailVerified()){
-                            db.collection("shops").whereEqualTo("key",uid).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                            if(task.getResult().isEmpty()){
-                                                goodAnimation(false);
-                                            }else{
-                                                goodAnimation(true);
-                                            }
-                                }
-                            });
-                        }else{
-                            Toast.makeText(getApplicationContext(),"Tu email no se ha verificado comprueba tu correo",Toast.LENGTH_LONG).show();
+                            errorAnimation(task.getException().getMessage());
                         }
-                    }else{
-
-                       errorAnimation(task.getException().getMessage());
                     }
-                }
-            });
-        }else{
-            Toast.makeText(getApplicationContext(),"Tu email no es valido",Toast.LENGTH_LONG).show();
+                });
+            } else {
+                Toast.makeText(getApplicationContext(), "Tu email no es valido", Toast.LENGTH_LONG).show();
+
+            }
 
         }
-
     }
 
 
@@ -218,4 +222,37 @@ public class login extends AppCompatActivity {
             }
         });
     }
+
+    private int comprobarCosasIntroducidas(){
+
+        testEmail.setErrorEnabled(false);
+        //direcion.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        testContra.setErrorEnabled(false);
+        int comprobador =0;
+        if(testEmail.getEditText().getText().toString().trim().isEmpty()){
+            //Toast.makeText(getApplicationContext(),"No has introducido ningun email",Toast.LENGTH_SHORT).show();
+            testEmail.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+            testEmail.setError("no has intricucido niungun email");
+            comprobador =1;
+        }
+        if(!isEmailValid(testEmail.getEditText().getText().toString().trim())){
+            testEmail.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+            testEmail.setError("Email no valido");
+            comprobador =1;
+        }
+        if(testContra.getEditText().getText().toString().trim().isEmpty()){
+            testContra.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+            //Toast.makeText(getApplicationContext(),"No has introducido ninguna Contraseña o es demasiado pequeña",Toast.LENGTH_SHORT).show();
+            comprobador =1;
+            testContra.setError("No has introducido ninguna Contraseña");
+        }
+        if(!(testContra.getEditText().getText().toString().trim().length()>6)){
+            testContra.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+            //Toast.makeText(getApplicationContext(),"No has introducido ninguna Contraseña o es demasiado pequeña",Toast.LENGTH_SHORT).show();
+            testContra.setError("La contraseña es demasiado pequeña minimo 6 caracteres");
+            comprobador =1;
+        }
+        return  comprobador;
+    }
+
 }

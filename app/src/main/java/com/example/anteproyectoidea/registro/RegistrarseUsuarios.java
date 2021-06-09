@@ -320,13 +320,20 @@ public class RegistrarseUsuarios extends AppCompatActivity {
 
     private int comprobarCosasIntroducidas(){
 
-        nombre.getBackground().setColorFilter(getResources().getColor(R.color.logo) , PorterDuff.Mode.SRC_ATOP);
+        nombre.setErrorEnabled(false);
         //direcion.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-        contraseñaUno.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-        email.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-        contraseñaDos.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-        contraseñaDos.getBackground().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        contraseñaUno.setErrorEnabled(false);
+        apellido.setErrorEnabled(false);
+        email.setErrorEnabled(false);
+        contraseñaDos.setErrorEnabled(false);
+        contraseñaDos.setErrorEnabled(false);
         int comprobador =0;
+        if(apellido.getEditText().getText().toString().trim().isEmpty()){
+            //Toast.makeText(getApplicationContext(),"No has introdfucido ningun nombre",Toast.LENGTH_SHORT).show();
+            apellido.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+            apellido.setError("No has introdfucido ningun apellido");
+            comprobador =1;
+        }
         if(nombre.getEditText().getText().toString().trim().isEmpty()){
             //Toast.makeText(getApplicationContext(),"No has introdfucido ningun nombre",Toast.LENGTH_SHORT).show();
             nombre.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
